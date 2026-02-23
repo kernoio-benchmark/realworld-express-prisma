@@ -1,0 +1,138 @@
+{
+  "response": [
+    {
+      "type": "ai.koog.prompt.message.Message.Assistant",
+      "parts": [
+        {
+          "type": "text",
+          "text": "{\"endpoints\": [], \"code_type\": \"configuration\"}"
+        }
+      ],
+      "metaInfo": {
+        "timestamp": "2026-02-23T12:09:42.063505646Z",
+        "totalTokensCount": 786,
+        "inputTokensCount": 688,
+        "outputTokensCount": 12
+      },
+      "finishReason": "STOP"
+    }
+  ],
+  "request": {
+    "prompt": {
+      "messages": [
+        {
+          "type": "ai.koog.prompt.message.Message.System",
+          "parts": [
+            {
+              "text": "You are a precise code analyzer. Extract only what is explicitly present in the code or derivable from the file path.\nDo not speculate, infer, or guess about what might exist - only report what you can directly observe.\nWhen uncertain, return empty results rather than guessing.\n"
+            }
+          ],
+          "metaInfo": {
+            "timestamp": "2026-02-23T12:09:39.284811552Z"
+          }
+        },
+        {
+          "type": "ai.koog.prompt.message.Message.User",
+          "parts": [
+            {
+              "type": "text",
+              "text": "# .gitignore\nNote: the following text has been prefixed with line numbers and a | which is not part of the original content\n```gitignore\n1|# See http://help.github.com/ignore-files/ for more about ignoring files.\n2|\n3|# dependencies\n4|/node_modules\n5|/dist\n6|\n7|# IDEs and editors\n8|/.idea\n9|.project\n10|.classpath\n11|.c9/\n12|*.launch\n13|.settings/\n14|*.sublime-workspace\n15|\n16|# IDE - VSCode\n17|.vscode/*\n18|!.vscode/settings.json\n19|!.vscode/tasks.json\n20|!.vscode/launch.json\n21|!.vscode/extensions.json\n22|.history/*\n23|\n24|#System Files\n25|.DS_Store\n26|Thumbs.db\n27|\n28|#log files\n29|npm-debug.log*\n30|yarn-debug.log*\n31|yarn-error.log*\n32|\n33|#Environment files\n34|.env\n35|.env.development\n36|\n37|#Logs\n38|logs/\n39|\n40|#Database\n41|prisma/dev.db\n42|\n43|#Coverage\n44|coverage/\n45|\n```"
+            }
+          ],
+          "metaInfo": {
+            "timestamp": "2026-02-23T12:09:39.284847256Z"
+          }
+        },
+        {
+          "type": "ai.koog.prompt.message.Message.User",
+          "parts": [
+            {
+              "type": "text",
+              "text": "# Constraints\nIn the following tasks, do not extract meaning from comments within files\n\n# Task 1: Identify Code Type\nFirst, identify if the attached file is code. If it is not code, return empty lists for all fields.\n\n# Task 2: Extract Endpoints\nIf this is code, identify (if any at all) blocks of code that directly register routes in this application's HTTP server.\nOnly extract endpoints where you can determine the concrete HTTP method and path - do not guess or speculate about what paths might exist.\nDo not extract code that merely creates a server or groups routes without binding a specific path to a handler.\nThese routes must be valid RFC HTTP verbs (GET, POST, PUT, DELETE, PATCH).\nParameterised URL path segments must be expressed in the {id} format. For example, /users/:id/config should be /users/{id}/config, and /users/<userId> should be /users/{userId}.\nIf you cannot confidently determine the path, return an empty list for endpoints.\nThe start and end line must capture the entire syntactic chunk registering the endpoint.\nThis includes the handler code for the endpoint if the line that registers it is immediately followed\nby a function/method/lambda that is the entrypoint for that endpoint when it's called\n\n--ANTHROPIC-CACHE--"
+            }
+          ],
+          "metaInfo": {
+            "timestamp": "2026-02-23T12:09:39.284873245Z"
+          }
+        },
+        {
+          "type": "ai.koog.prompt.message.Message.Assistant",
+          "parts": [
+            {
+              "type": "text",
+              "text": "{\"endpoints\": [], \"code_type\": \"configuration\"}"
+            }
+          ],
+          "metaInfo": {
+            "timestamp": "2026-02-23T12:09:41.142090332Z",
+            "totalTokensCount": 757,
+            "inputTokensCount": 675,
+            "outputTokensCount": 12
+          },
+          "finishReason": "STOP"
+        }
+      ],
+      "id": "",
+      "params": {
+        "temperature": 0.0,
+        "schema": {
+          "type": "ai.koog.prompt.params.LLMParams.Schema.JSON.Standard",
+          "name": "ExtractedEndpoints",
+          "schema": {
+            "$id": "ExtractedEndpoints",
+            "$defs": {
+              "io.kerno.agent.index.EndpointMetadata": {
+                "type": "object",
+                "properties": {
+                  "method": {
+                    "type": "string",
+                    "enum": [
+                      "GET",
+                      "POST",
+                      "PUT",
+                      "DELETE",
+                      "PATCH"
+                    ]
+                  },
+                  "path": {
+                    "type": "string",
+                    "description": "A valid RFC URL path e.g. / or /api/some/end/point"
+                  },
+                  "startLine": {
+                    "type": "integer",
+                    "description": "The first line of code registering this route, ignoring comments"
+                  },
+                  "endLine": {
+                    "type": "integer",
+                    "description": "The last line of code registering this route, ignoring comments"
+                  }
+                },
+                "required": [
+                  "method",
+                  "path",
+                  "startLine",
+                  "endLine"
+                ],
+                "additionalProperties": false
+              },
+              "io.kerno.agent.index.ExtractedEndpoints": {
+                "type": "object",
+                "properties": {
+                  "endpoints": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/$defs/io.kerno.agent.index.EndpointMetadata"
+                    }
+                  }
+                },
+                "required": [],
+                "additionalProperties": false
+              }
+            },
+            "$ref": "#/$defs/io.kerno.agent.index.ExtractedEndpoints"
+          }
+        }
+      }
+    }
+  }
+}

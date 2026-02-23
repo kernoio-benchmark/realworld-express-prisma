@@ -1,0 +1,189 @@
+{
+  "response": [
+    {
+      "type": "ai.koog.prompt.message.Message.Assistant",
+      "parts": [
+        {
+          "type": "text",
+          "text": "[\n  {\n    \"external_services\": [],\n    \"security_schemes\": [],\n    \"env_vars\": [\n      \"NODE_ENV\"\n    ]\n  }\n]"
+        }
+      ],
+      "metaInfo": {
+        "timestamp": "2026-02-23T12:09:50.194087292Z",
+        "totalTokensCount": 1285,
+        "inputTokensCount": 703,
+        "outputTokensCount": 44
+      },
+      "finishReason": "STOP"
+    }
+  ],
+  "request": {
+    "prompt": {
+      "messages": [
+        {
+          "type": "ai.koog.prompt.message.Message.System",
+          "parts": [
+            {
+              "text": "You are a precise code analyzer. Extract only what is explicitly present in the code or derivable from the file path.\nDo not speculate, infer, or guess about what might exist - only report what you can directly observe.\nWhen uncertain, return empty results rather than guessing.\n"
+            }
+          ],
+          "metaInfo": {
+            "timestamp": "2026-02-23T12:09:46.370093721Z"
+          }
+        },
+        {
+          "type": "ai.koog.prompt.message.Message.User",
+          "parts": [
+            {
+              "type": "text",
+              "text": "# src/utils/logger.ts\nNote: the following text has been prefixed with line numbers and a | which is not part of the original content\n```ts\n1|import winston from \"winston\";\n2|\n3|const logger = winston.createLogger({\n4|  level: \"info\",\n5|  format: winston.format.json(),\n6|  defaultMeta: { service: \"realworld-express-prisma\" },\n7|  transports: [\n8|    //\n9|    // - Write all logs with importance level of `error` or less to `error.log`\n10|    // - Write all logs with importance level of `info` or less to `combined.log`\n11|    //\n12|    new winston.transports.File({\n13|      filename: \"./logs/error.log\",\n14|      level: \"error\",\n15|    }),\n16|    new winston.transports.File({ filename: \"./logs/combined.log\" }),\n17|  ],\n18|});\n19|\n20|//\n21|// If we're not in production then log to the `console` with the format:\n22|// `${info.level}: ${info.message} JSON.stringify({ ...rest }) `\n23|//\n24|if (process.env.NODE_ENV !== \"production\") {\n25|  logger.add(\n26|    new winston.transports.Console({\n27|      format: winston.format.simple(),\n28|      level: \"debug\",\n29|    })\n30|  );\n31|  logger.add(\n32|    new winston.transports.File({\n33|      filename: \"./logs/debug.log\",\n34|      level: \"debug\",\n35|    })\n36|  );\n37|}\n38|\n39|export default logger;\n40|\n```"
+            }
+          ],
+          "metaInfo": {
+            "timestamp": "2026-02-23T12:09:46.3701564Z"
+          }
+        },
+        {
+          "type": "ai.koog.prompt.message.Message.User",
+          "parts": [
+            {
+              "type": "text",
+              "text": "# Constraints\nIn the following tasks, do not extract meaning from comments within files\n\n# Task 1: Extract External Services\nList all ExternalTcpService that can be inferred from this code.\nIf the name of external service used cannot be determined, then do not include it.\nIf this code does not perform any registration of routes in an HTTP server, return an empty list for endpoints.\nThe start and end line must capture the entire syntactic chunk that infers the external service\n\n# Task 2: Extract Security Schemes\nList all the HttpSecurityScheme that are configured by this code.\nList all the HttpSecurityScheme that are configured by this code.\nThe start and end line must capture the entire syntactic configuring the scheme\n\n# Task 4: Extract Environment Variables\nList all EnvVars accessed by this code.\n--ANTHROPIC-CACHE--"
+            }
+          ],
+          "metaInfo": {
+            "timestamp": "2026-02-23T12:09:46.370180434Z"
+          }
+        },
+        {
+          "type": "ai.koog.prompt.message.Message.Assistant",
+          "parts": [
+            {
+              "type": "text",
+              "text": "[]"
+            }
+          ],
+          "metaInfo": {
+            "timestamp": "2026-02-23T12:09:47.19708456Z",
+            "totalTokensCount": 814,
+            "inputTokensCount": 701,
+            "outputTokensCount": 1
+          },
+          "finishReason": "STOP"
+        }
+      ],
+      "id": "",
+      "params": {
+        "temperature": 0.0,
+        "schema": {
+          "type": "ai.koog.prompt.params.LLMParams.Schema.JSON.Standard",
+          "name": "ExtractedSemanticOutput",
+          "schema": {
+            "$id": "ExtractedSemanticOutput",
+            "$defs": {
+              "io.kerno.agent.index.ExternalTcpService": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "lineStart": {
+                    "type": "integer",
+                    "description": "The first line of code communicating with this external service, ignoring comments"
+                  },
+                  "lineEnd": {
+                    "type": "integer",
+                    "description": "The last line of code communicating with this external service, ignoring comments"
+                  }
+                },
+                "required": [
+                  "name",
+                  "lineStart",
+                  "lineEnd"
+                ],
+                "additionalProperties": false
+              },
+              "io.kerno.agent.index.HttpSecurityScheme": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "enum": [
+                      "http",
+                      "apiKey",
+                      "openIdConnect",
+                      "oauth2"
+                    ],
+                    "description": "The first line of code implying this security scheme, ignoring comments"
+                  },
+                  "lineStart": {
+                    "type": "integer",
+                    "description": "The first line of code implying this security scheme, ignoring comments"
+                  },
+                  "lineEnd": {
+                    "type": "integer",
+                    "description": "The last line of code implying this security scheme, ignoring comments"
+                  }
+                },
+                "required": [
+                  "type",
+                  "lineStart",
+                  "lineEnd"
+                ],
+                "additionalProperties": false
+              },
+              "io.kerno.agent.index.EnvVar": {
+                "type": "object",
+                "properties": {
+                  "key": {
+                    "type": "string"
+                  },
+                  "lineStart": {
+                    "type": "integer",
+                    "description": "The first line of code reading this environment variable, ignoring comments"
+                  },
+                  "lineEnd": {
+                    "type": "integer",
+                    "description": "The last line of code reading this environment variable, ignoring comments"
+                  }
+                },
+                "required": [
+                  "key",
+                  "lineStart",
+                  "lineEnd"
+                ],
+                "additionalProperties": false
+              },
+              "io.kerno.agent.index.ExtractedSemanticOutput": {
+                "type": "object",
+                "properties": {
+                  "externalServices": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/$defs/io.kerno.agent.index.ExternalTcpService"
+                    }
+                  },
+                  "securitySchemes": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/$defs/io.kerno.agent.index.HttpSecurityScheme"
+                    }
+                  },
+                  "envVars": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/$defs/io.kerno.agent.index.EnvVar"
+                    }
+                  }
+                },
+                "required": [],
+                "additionalProperties": false
+              }
+            },
+            "$ref": "#/$defs/io.kerno.agent.index.ExtractedSemanticOutput"
+          }
+        }
+      }
+    }
+  }
+}

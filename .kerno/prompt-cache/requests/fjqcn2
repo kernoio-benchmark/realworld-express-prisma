@@ -1,0 +1,50 @@
+{
+  "response": [
+    {
+      "type": "ai.koog.prompt.message.Message.Assistant",
+      "parts": [
+        {
+          "type": "text",
+          "text": "```json\n{\n  \"paths\": [\n    {\n      \"baseUrlPath\": \"/api/user\",\n      \"lineStart\": 6,\n      \"lineEnd\": 12\n    }\n  ]\n}\n```"
+        }
+      ],
+      "metaInfo": {
+        "timestamp": "2026-02-23T12:18:28.708693363Z",
+        "totalTokensCount": 802,
+        "inputTokensCount": 747,
+        "outputTokensCount": 55
+      },
+      "finishReason": "end_turn"
+    }
+  ],
+  "request": {
+    "prompt": {
+      "messages": [
+        {
+          "type": "ai.koog.prompt.message.Message.System",
+          "parts": [
+            {
+              "text": "You are agent responsible for converting incorrectly generated LLM Structured Output into valid format that adheres to the given schema.\nYour sole responsibility is to fix the generated content to conform to the given schema.\n## PROCESS\n- Evaluate what parts are incorrect and fix them.\n- Drop unknown fields and come-up with values for missing fields based on semantics.\n- Carefully check the types of the fields and fix if any are incorrect.\n- Utilize the provided exception to determine the possible error, but do not forget about other possible mistakes.\n## KEY PRINCIPLES\n- You MUST stick to the original data, make as few changes as possible to convert it into valid schema.\n- Do not drop, alter or change any semantic data unless it is necessary to fit into schema.\n## RESULT\nProvide ONLY the fixed structured data, WITHOUT any comments and backticks.\n## DEFINITION### DEFINITION OF ExtractedBasePaths\nThe ExtractedBasePaths format is defined only and solely with JSON, without any additional characters, comments, backticks or anything similar.\n\nYou must adhere to the following JSON schema:\n{\n    \"$id\": \"ExtractedBasePaths\",\n    \"$defs\": {\n        \"io.kerno.agent.index.BaseURLPath\": {\n            \"type\": \"object\",\n            \"properties\": {\n                \"baseUrlPath\": {\n                    \"type\": \"string\"\n                },\n                \"lineStart\": {\n                    \"type\": \"integer\",\n                    \"description\": \"The first line of code implying this base path, ignoring comments\"\n                },\n                \"lineEnd\": {\n                    \"type\": \"integer\",\n                    \"description\": \"The last line of code implying this base path, ignoring comments\"\n                }\n            },\n            \"required\": [\n                \"baseUrlPath\",\n                \"lineStart\",\n                \"lineEnd\"\n            ],\n            \"additionalProperties\": false\n        },\n        \"io.kerno.agent.index.ExtractedBasePaths\": {\n            \"type\": \"object\",\n            \"properties\": {\n                \"paths\": {\n                    \"type\": \"array\",\n                    \"items\": {\n                        \"$ref\": \"#/$defs/io.kerno.agent.index.BaseURLPath\"\n                    }\n                }\n            },\n            \"required\": [],\n            \"additionalProperties\": false\n        }\n    },\n    \"$ref\": \"#/$defs/io.kerno.agent.index.ExtractedBasePaths\"\n}\n\n## RESULT\nProvide ONLY the resulting JSON, WITHOUT ANY free text comments, backticks, or other symbols.\nOutput should start with { and end with }\n"
+            }
+          ],
+          "metaInfo": {
+            "timestamp": "2026-02-23T12:18:26.668124277Z"
+          }
+        },
+        {
+          "type": "ai.koog.prompt.message.Message.User",
+          "parts": [
+            {
+              "type": "text",
+              "text": "## EXCEPTION\n```\nUnexpected JSON token at offset 0: Expected start of the object '{', but had '[' instead at path: $\nJSON input: [\n  {\n    \"path\": \"/api/user\",\n    \"start_line\": 6,\n    \"end_line\": 12\n  }\n]\n```\n## CONTENT\n```\n[\n  {\n    \"path\": \"/api/user\",\n    \"start_line\": 6,\n    \"end_line\": 12\n  }\n]\n```"
+            }
+          ],
+          "metaInfo": {
+            "timestamp": "2026-02-23T12:18:26.668191066Z"
+          }
+        }
+      ],
+      "id": "structure-fixing"
+    }
+  }
+}

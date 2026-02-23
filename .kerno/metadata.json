@@ -1,0 +1,321 @@
+{
+    "endpoints": [
+        {
+            "location": {
+                "filePath": "src/routes/api/articles.ts",
+                "startLine": 10,
+                "endLine": 15
+            },
+            "method": "GET",
+            "path": "/"
+        },
+        {
+            "location": {
+                "filePath": "src/routes/api/articles.ts",
+                "startLine": 17,
+                "endLine": 22
+            },
+            "method": "GET",
+            "path": "/feed"
+        },
+        {
+            "location": {
+                "filePath": "src/routes/api/articles.ts",
+                "startLine": 24,
+                "endLine": 24
+            },
+            "method": "GET",
+            "path": "/{slug}"
+        },
+        {
+            "location": {
+                "filePath": "src/routes/api/articles.ts",
+                "startLine": 26,
+                "endLine": 31
+            },
+            "method": "POST",
+            "path": "/"
+        },
+        {
+            "location": {
+                "filePath": "src/routes/api/articles.ts",
+                "startLine": 33,
+                "endLine": 38
+            },
+            "method": "PUT",
+            "path": "/{slug}"
+        },
+        {
+            "location": {
+                "filePath": "src/routes/api/articles.ts",
+                "startLine": 40,
+                "endLine": 40
+            },
+            "method": "DELETE",
+            "path": "/{slug}"
+        },
+        {
+            "location": {
+                "filePath": "src/routes/api/articles.ts",
+                "startLine": 42,
+                "endLine": 47
+            },
+            "method": "POST",
+            "path": "/{slug}/comments"
+        },
+        {
+            "location": {
+                "filePath": "src/routes/api/articles.ts",
+                "startLine": 49,
+                "endLine": 49
+            },
+            "method": "GET",
+            "path": "/{slug}/comments"
+        },
+        {
+            "location": {
+                "filePath": "src/routes/api/articles.ts",
+                "startLine": 51,
+                "endLine": 55
+            },
+            "method": "DELETE",
+            "path": "/{slug}/comments/{id}"
+        },
+        {
+            "location": {
+                "filePath": "src/routes/api/articles.ts",
+                "startLine": 57,
+                "endLine": 57
+            },
+            "method": "POST",
+            "path": "/{slug}/favorite"
+        },
+        {
+            "location": {
+                "filePath": "src/routes/api/articles.ts",
+                "startLine": 59,
+                "endLine": 63
+            },
+            "method": "DELETE",
+            "path": "/{slug}/favorite"
+        },
+        {
+            "location": {
+                "filePath": "src/routes/api/users.ts",
+                "startLine": 7,
+                "endLine": 7
+            },
+            "method": "POST",
+            "path": "/login"
+        },
+        {
+            "location": {
+                "filePath": "src/routes/api/users.ts",
+                "startLine": 9,
+                "endLine": 9
+            },
+            "method": "POST",
+            "path": "/"
+        }
+    ],
+    "envVars": [
+        {
+            "location": {
+                "filePath": "prisma/schema.prisma",
+                "startLine": 11,
+                "endLine": 11
+            },
+            "key": "DATABASE_URL"
+        },
+        {
+            "location": {
+                "filePath": "src/utils/logger.ts",
+                "startLine": 1,
+                "endLine": 1
+            },
+            "key": "NODE_ENV"
+        },
+        {
+            "location": {
+                "filePath": "src/middleware/auth/authenticator.ts",
+                "startLine": 1,
+                "endLine": 1
+            },
+            "key": "JWT_SECRET"
+        },
+        {
+            "location": {
+                "filePath": "README.md",
+                "startLine": 30,
+                "endLine": 30
+            },
+            "key": "DATABASE_URL"
+        },
+        {
+            "location": {
+                "filePath": "README.md",
+                "startLine": 31,
+                "endLine": 31
+            },
+            "key": "JWT_SECRET"
+        },
+        {
+            "location": {
+                "filePath": "README.md",
+                "startLine": 32,
+                "endLine": 32
+            },
+            "key": "NODE_ENV"
+        }
+    ],
+    "externalServices": [
+        {
+            "location": {
+                "filePath": "prisma/schema.prisma",
+                "startLine": 8,
+                "endLine": 11
+            },
+            "serviceName": "postgresql"
+        },
+        {
+            "location": {
+                "filePath": "README.md",
+                "startLine": 5,
+                "endLine": 5
+            },
+            "serviceName": "Demo"
+        },
+        {
+            "location": {
+                "filePath": "README.md",
+                "startLine": 5,
+                "endLine": 5
+            },
+            "serviceName": "RealWorld"
+        },
+        {
+            "location": {
+                "filePath": "README.md",
+                "startLine": 17,
+                "endLine": 17
+            },
+            "serviceName": "PostgreSQL"
+        },
+        {
+            "location": {
+                "filePath": "src/controllers/userController/userGet.ts",
+                "startLine": 22,
+                "endLine": 22
+            },
+            "serviceName": "Prisma"
+        },
+        {
+            "location": {
+                "filePath": "src/controllers/articlesController/articlesCreate.ts",
+                "startLine": 34,
+                "endLine": 34
+            },
+            "serviceName": "Prisma Database"
+        },
+        {
+            "location": {
+                "filePath": "src/controllers/articlesController/articlesCreate.ts",
+                "startLine": 40,
+                "endLine": 40
+            },
+            "serviceName": "Prisma Database"
+        },
+        {
+            "location": {
+                "filePath": "src/controllers/articlesController/articlesCreate.ts",
+                "startLine": 44,
+                "endLine": 48
+            },
+            "serviceName": "Prisma Database"
+        },
+        {
+            "location": {
+                "filePath": "src/utils/db/tag/tagsCreatePrisma.ts",
+                "startLine": 7,
+                "endLine": 11
+            },
+            "serviceName": "Prisma"
+        }
+    ],
+    "securitySchemes": [
+        {
+            "location": {
+                "filePath": "src/middleware/auth/authenticator.ts",
+                "startLine": 1,
+                "endLine": 1
+            },
+            "type": "http"
+        },
+        {
+            "location": {
+                "filePath": "src/middleware/auth/authenticator.ts",
+                "startLine": 1,
+                "endLine": 1
+            },
+            "type": "http"
+        },
+        {
+            "location": {
+                "filePath": "src/controllers/commentsController/deleteComment.ts",
+                "startLine": 1,
+                "endLine": 1
+            },
+            "type": "http"
+        },
+        {
+            "location": {
+                "filePath": "src/controllers/userController/userUpdate.ts",
+                "startLine": 2,
+                "endLine": 2
+            },
+            "type": "http"
+        },
+        {
+            "location": {
+                "filePath": "README.md",
+                "startLine": 31,
+                "endLine": 31
+            },
+            "type": "http"
+        },
+        {
+            "location": {
+                "filePath": "src/controllers/userController/userGet.ts",
+                "startLine": 2,
+                "endLine": 2
+            },
+            "type": "http"
+        },
+        {
+            "location": {
+                "filePath": "src/controllers/articlesController/articlesGet.ts",
+                "startLine": 1,
+                "endLine": 1
+            },
+            "type": "http"
+        },
+        {
+            "location": {
+                "filePath": "src/controllers/articlesController/articlesCreate.ts",
+                "startLine": 3,
+                "endLine": 3
+            },
+            "type": "http"
+        }
+    ],
+    "basePaths": [
+        {
+            "location": {
+                "filePath": "src/routes/api/user.ts",
+                "startLine": 6,
+                "endLine": 12
+            },
+            "path": "/api/user"
+        }
+    ]
+}

@@ -1,0 +1,189 @@
+{
+  "response": [
+    {
+      "type": "ai.koog.prompt.message.Message.Assistant",
+      "parts": [
+        {
+          "type": "text",
+          "text": "{\"ExternalTcpService\": [], \"HttpSecurityScheme\": [], \"EnvVars\": []}"
+        }
+      ],
+      "metaInfo": {
+        "timestamp": "2026-02-23T12:09:50.978852636Z",
+        "totalTokensCount": 1139,
+        "inputTokensCount": 831,
+        "outputTokensCount": 17
+      },
+      "finishReason": "STOP"
+    }
+  ],
+  "request": {
+    "prompt": {
+      "messages": [
+        {
+          "type": "ai.koog.prompt.message.Message.System",
+          "parts": [
+            {
+              "text": "You are a precise code analyzer. Extract only what is explicitly present in the code or derivable from the file path.\nDo not speculate, infer, or guess about what might exist - only report what you can directly observe.\nWhen uncertain, return empty results rather than guessing.\n"
+            }
+          ],
+          "metaInfo": {
+            "timestamp": "2026-02-23T12:09:46.456419334Z"
+          }
+        },
+        {
+          "type": "ai.koog.prompt.message.Message.User",
+          "parts": [
+            {
+              "type": "text",
+              "text": "# src/middleware/userValidator/userLoginValidator.ts\nNote: the following text has been prefixed with line numbers and a | which is not part of the original content\n```ts\n1|import { NextFunction, Request, Response } from \"express\";\n2|import { ValidationError } from \"../../utils/types\";\n3|\n4|/**\n5| * This function is a middleware that validates the user information in the request in order to log the user.\n6| * If the request is malformed it responds accordingly and returns, stopping the flow of the express.\n7| * If the request is well formed, it passes control to the next handler.\n8| * @param req Request\n9| * @param res Response\n10| * @param next Next Function\n11| */\n12|export default async function userLoginValidator(\n13|  req: Request,\n14|  res: Response,\n15|  next: NextFunction\n16|) {\n17|  const errors: ValidationError = {};\n18|  errors.body = [];\n19|  if (!req.body) {\n20|    errors.body.push(\"can't be empty\");\n21|    return res.status(400).json({ errors });\n22|  }\n23|\n24|  const { user } = req.body;\n25|  if (!user) {\n26|    errors.body.push(\"user object must be defined\");\n27|    return res.status(400).json({ errors });\n28|  }\n29|\n30|  const { password, email } = user;\n31|\n32|  if (!password) {\n33|    errors.body.push(\"password property in user can't be empty\");\n34|  } else if (typeof password != \"string\") {\n35|    errors.body.push(\"password property in user must be a string\");\n36|  }\n37|\n38|  if (!email) {\n39|    errors.body.push(\"email property in user can't be empty\");\n40|  } else if (typeof email != \"string\") {\n41|    errors.body.push(\"email property in user must be a string\");\n42|  }\n43|\n44|  if (errors.body.length) return res.status(400).json({ errors });\n45|  next();\n46|}\n47|\n```"
+            }
+          ],
+          "metaInfo": {
+            "timestamp": "2026-02-23T12:09:46.456459675Z"
+          }
+        },
+        {
+          "type": "ai.koog.prompt.message.Message.User",
+          "parts": [
+            {
+              "type": "text",
+              "text": "# Constraints\nIn the following tasks, do not extract meaning from comments within files\n\n# Task 1: Extract External Services\nList all ExternalTcpService that can be inferred from this code.\nIf the name of external service used cannot be determined, then do not include it.\nIf this code does not perform any registration of routes in an HTTP server, return an empty list for endpoints.\nThe start and end line must capture the entire syntactic chunk that infers the external service\n\n# Task 2: Extract Security Schemes\nList all the HttpSecurityScheme that are configured by this code.\nList all the HttpSecurityScheme that are configured by this code.\nThe start and end line must capture the entire syntactic configuring the scheme\n\n# Task 4: Extract Environment Variables\nList all EnvVars accessed by this code.\n--ANTHROPIC-CACHE--"
+            }
+          ],
+          "metaInfo": {
+            "timestamp": "2026-02-23T12:09:46.456472653Z"
+          }
+        },
+        {
+          "type": "ai.koog.prompt.message.Message.Assistant",
+          "parts": [
+            {
+              "type": "text",
+              "text": "{\"ExternalTcpService\": [], \"HttpSecurityScheme\": [], \"EnvVars\": []}"
+            }
+          ],
+          "metaInfo": {
+            "timestamp": "2026-02-23T12:09:48.870842306Z",
+            "totalTokensCount": 1176,
+            "inputTokensCount": 813,
+            "outputTokensCount": 17
+          },
+          "finishReason": "STOP"
+        }
+      ],
+      "id": "",
+      "params": {
+        "temperature": 0.0,
+        "schema": {
+          "type": "ai.koog.prompt.params.LLMParams.Schema.JSON.Standard",
+          "name": "ExtractedSemanticOutput",
+          "schema": {
+            "$id": "ExtractedSemanticOutput",
+            "$defs": {
+              "io.kerno.agent.index.ExternalTcpService": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "lineStart": {
+                    "type": "integer",
+                    "description": "The first line of code communicating with this external service, ignoring comments"
+                  },
+                  "lineEnd": {
+                    "type": "integer",
+                    "description": "The last line of code communicating with this external service, ignoring comments"
+                  }
+                },
+                "required": [
+                  "name",
+                  "lineStart",
+                  "lineEnd"
+                ],
+                "additionalProperties": false
+              },
+              "io.kerno.agent.index.HttpSecurityScheme": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "enum": [
+                      "http",
+                      "apiKey",
+                      "openIdConnect",
+                      "oauth2"
+                    ],
+                    "description": "The first line of code implying this security scheme, ignoring comments"
+                  },
+                  "lineStart": {
+                    "type": "integer",
+                    "description": "The first line of code implying this security scheme, ignoring comments"
+                  },
+                  "lineEnd": {
+                    "type": "integer",
+                    "description": "The last line of code implying this security scheme, ignoring comments"
+                  }
+                },
+                "required": [
+                  "type",
+                  "lineStart",
+                  "lineEnd"
+                ],
+                "additionalProperties": false
+              },
+              "io.kerno.agent.index.EnvVar": {
+                "type": "object",
+                "properties": {
+                  "key": {
+                    "type": "string"
+                  },
+                  "lineStart": {
+                    "type": "integer",
+                    "description": "The first line of code reading this environment variable, ignoring comments"
+                  },
+                  "lineEnd": {
+                    "type": "integer",
+                    "description": "The last line of code reading this environment variable, ignoring comments"
+                  }
+                },
+                "required": [
+                  "key",
+                  "lineStart",
+                  "lineEnd"
+                ],
+                "additionalProperties": false
+              },
+              "io.kerno.agent.index.ExtractedSemanticOutput": {
+                "type": "object",
+                "properties": {
+                  "externalServices": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/$defs/io.kerno.agent.index.ExternalTcpService"
+                    }
+                  },
+                  "securitySchemes": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/$defs/io.kerno.agent.index.HttpSecurityScheme"
+                    }
+                  },
+                  "envVars": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/$defs/io.kerno.agent.index.EnvVar"
+                    }
+                  }
+                },
+                "required": [],
+                "additionalProperties": false
+              }
+            },
+            "$ref": "#/$defs/io.kerno.agent.index.ExtractedSemanticOutput"
+          }
+        }
+      }
+    }
+  }
+}

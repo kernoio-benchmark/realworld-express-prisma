@@ -1,0 +1,122 @@
+{
+  "response": [
+    {
+      "type": "ai.koog.prompt.message.Message.Assistant",
+      "parts": [
+        {
+          "type": "text",
+          "text": "{\"code_type\": \"CODE\", \"endpoints\": []}"
+        }
+      ],
+      "metaInfo": {
+        "timestamp": "2026-02-23T12:09:43.581052959Z",
+        "totalTokensCount": 1362,
+        "inputTokensCount": 775,
+        "outputTokensCount": 13
+      },
+      "finishReason": "STOP"
+    }
+  ],
+  "request": {
+    "prompt": {
+      "messages": [
+        {
+          "type": "ai.koog.prompt.message.Message.System",
+          "parts": [
+            {
+              "text": "You are a precise code analyzer. Extract only what is explicitly present in the code or derivable from the file path.\nDo not speculate, infer, or guess about what might exist - only report what you can directly observe.\nWhen uncertain, return empty results rather than guessing.\n"
+            }
+          ],
+          "metaInfo": {
+            "timestamp": "2026-02-23T12:09:39.165964658Z"
+          }
+        },
+        {
+          "type": "ai.koog.prompt.message.Message.User",
+          "parts": [
+            {
+              "type": "text",
+              "text": "# src/controllers/usersController/usersRegister.ts\nNote: the following text has been prefixed with line numbers and a | which is not part of the original content\n```ts\n1|import { NextFunction, Request, Response } from \"express\";\n2|import createUserToken from \"../../utils/auth/createUserToken\";\n3|import userCreatePrisma from \"../../utils/db/user/userCreatePrisma\";\n4|import { hashPassword } from \"../../utils/hashPasswords\";\n5|import userViewer from \"../../view/userViewer\";\n6|\n7|/**\n8| * Users controller that registers the user with information given in the body of the request.\n9| * @param req Request\n10| * @param res Response\n11| * @param next NextFunction\n12| * @returns\n13| */\n14|export default async function usersRegister(\n15|  req: Request,\n16|  res: Response,\n17|  next: NextFunction\n18|) {\n19|  const { email, password, username } = req.body.user;\n20|  try {\n21|    // Hash password\n22|    const hashed = hashPassword(password);\n23|\n24|    // Create the new user on the database\n25|    const user = await userCreatePrisma(username, email, hashed);\n26|\n27|    // Create the authentication token for future use\n28|    const token = createUserToken(user);\n29|\n30|    // Create the user view with the authentication token\n31|    const userView = userViewer(user, token);\n32|\n33|    return res.status(201).json(userView);\n34|  } catch (error) {\n35|    return next(error);\n36|  }\n37|}\n38|\n```"
+            }
+          ],
+          "metaInfo": {
+            "timestamp": "2026-02-23T12:09:39.169457075Z"
+          }
+        },
+        {
+          "type": "ai.koog.prompt.message.Message.User",
+          "parts": [
+            {
+              "type": "text",
+              "text": "# Constraints\nIn the following tasks, do not extract meaning from comments within files\n\n# Task 1: Identify Code Type\nFirst, identify if the attached file is code. If it is not code, return empty lists for all fields.\n\n# Task 2: Extract Endpoints\nIf this is code, identify (if any at all) blocks of code that directly register routes in this application's HTTP server.\nOnly extract endpoints where you can determine the concrete HTTP method and path - do not guess or speculate about what paths might exist.\nDo not extract code that merely creates a server or groups routes without binding a specific path to a handler.\nThese routes must be valid RFC HTTP verbs (GET, POST, PUT, DELETE, PATCH).\nParameterised URL path segments must be expressed in the {id} format. For example, /users/:id/config should be /users/{id}/config, and /users/<userId> should be /users/{userId}.\nIf you cannot confidently determine the path, return an empty list for endpoints.\nThe start and end line must capture the entire syntactic chunk registering the endpoint.\nThis includes the handler code for the endpoint if the line that registers it is immediately followed\nby a function/method/lambda that is the entrypoint for that endpoint when it's called\n\n--ANTHROPIC-CACHE--"
+            }
+          ],
+          "metaInfo": {
+            "timestamp": "2026-02-23T12:09:39.169516609Z"
+          }
+        }
+      ],
+      "id": "",
+      "params": {
+        "temperature": 0.0,
+        "schema": {
+          "type": "ai.koog.prompt.params.LLMParams.Schema.JSON.Standard",
+          "name": "ExtractedEndpoints",
+          "schema": {
+            "$id": "ExtractedEndpoints",
+            "$defs": {
+              "io.kerno.agent.index.EndpointMetadata": {
+                "type": "object",
+                "properties": {
+                  "method": {
+                    "type": "string",
+                    "enum": [
+                      "GET",
+                      "POST",
+                      "PUT",
+                      "DELETE",
+                      "PATCH"
+                    ]
+                  },
+                  "path": {
+                    "type": "string",
+                    "description": "A valid RFC URL path e.g. / or /api/some/end/point"
+                  },
+                  "startLine": {
+                    "type": "integer",
+                    "description": "The first line of code registering this route, ignoring comments"
+                  },
+                  "endLine": {
+                    "type": "integer",
+                    "description": "The last line of code registering this route, ignoring comments"
+                  }
+                },
+                "required": [
+                  "method",
+                  "path",
+                  "startLine",
+                  "endLine"
+                ],
+                "additionalProperties": false
+              },
+              "io.kerno.agent.index.ExtractedEndpoints": {
+                "type": "object",
+                "properties": {
+                  "endpoints": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/$defs/io.kerno.agent.index.EndpointMetadata"
+                    }
+                  }
+                },
+                "required": [],
+                "additionalProperties": false
+              }
+            },
+            "$ref": "#/$defs/io.kerno.agent.index.ExtractedEndpoints"
+          }
+        }
+      }
+    }
+  }
+}

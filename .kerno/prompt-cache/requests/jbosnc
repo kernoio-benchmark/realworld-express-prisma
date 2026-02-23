@@ -1,0 +1,50 @@
+{
+  "response": [
+    {
+      "type": "ai.koog.prompt.message.Message.Assistant",
+      "parts": [
+        {
+          "type": "text",
+          "text": "```json\n{\"endpoints\":[]}\n```"
+        }
+      ],
+      "metaInfo": {
+        "timestamp": "2026-02-23T12:16:36.20214412Z",
+        "totalTokensCount": 874,
+        "inputTokensCount": 861,
+        "outputTokensCount": 13
+      },
+      "finishReason": "end_turn"
+    }
+  ],
+  "request": {
+    "prompt": {
+      "messages": [
+        {
+          "type": "ai.koog.prompt.message.Message.System",
+          "parts": [
+            {
+              "text": "You are agent responsible for converting incorrectly generated LLM Structured Output into valid format that adheres to the given schema.\nYour sole responsibility is to fix the generated content to conform to the given schema.\n## PROCESS\n- Evaluate what parts are incorrect and fix them.\n- Drop unknown fields and come-up with values for missing fields based on semantics.\n- Carefully check the types of the fields and fix if any are incorrect.\n- Utilize the provided exception to determine the possible error, but do not forget about other possible mistakes.\n## KEY PRINCIPLES\n- You MUST stick to the original data, make as few changes as possible to convert it into valid schema.\n- Do not drop, alter or change any semantic data unless it is necessary to fit into schema.\n## RESULT\nProvide ONLY the fixed structured data, WITHOUT any comments and backticks.\n## DEFINITION### DEFINITION OF ExtractedEndpoints\nThe ExtractedEndpoints format is defined only and solely with JSON, without any additional characters, comments, backticks or anything similar.\n\nYou must adhere to the following JSON schema:\n{\n    \"$id\": \"ExtractedEndpoints\",\n    \"$defs\": {\n        \"io.kerno.agent.index.EndpointMetadata\": {\n            \"type\": \"object\",\n            \"properties\": {\n                \"method\": {\n                    \"type\": \"string\",\n                    \"enum\": [\n                        \"GET\",\n                        \"POST\",\n                        \"PUT\",\n                        \"DELETE\",\n                        \"PATCH\"\n                    ]\n                },\n                \"path\": {\n                    \"type\": \"string\",\n                    \"description\": \"A valid RFC URL path e.g. / or /api/some/end/point\"\n                },\n                \"startLine\": {\n                    \"type\": \"integer\",\n                    \"description\": \"The first line of code registering this route, ignoring comments\"\n                },\n                \"endLine\": {\n                    \"type\": \"integer\",\n                    \"description\": \"The last line of code registering this route, ignoring comments\"\n                }\n            },\n            \"required\": [\n                \"method\",\n                \"path\",\n                \"startLine\",\n                \"endLine\"\n            ],\n            \"additionalProperties\": false\n        },\n        \"io.kerno.agent.index.ExtractedEndpoints\": {\n            \"type\": \"object\",\n            \"properties\": {\n                \"endpoints\": {\n                    \"type\": \"array\",\n                    \"items\": {\n                        \"$ref\": \"#/$defs/io.kerno.agent.index.EndpointMetadata\"\n                    }\n                }\n            },\n            \"required\": [],\n            \"additionalProperties\": false\n        }\n    },\n    \"$ref\": \"#/$defs/io.kerno.agent.index.ExtractedEndpoints\"\n}\n\n## RESULT\nProvide ONLY the resulting JSON, WITHOUT ANY free text comments, backticks, or other symbols.\nOutput should start with { and end with }\n"
+            }
+          ],
+          "metaInfo": {
+            "timestamp": "2026-02-23T12:16:34.836328781Z"
+          }
+        },
+        {
+          "type": "ai.koog.prompt.message.Message.User",
+          "parts": [
+            {
+              "type": "text",
+              "text": "## EXCEPTION\n```\nUnexpected JSON token at offset 0: Expected start of the object '{', but had 'L' instead at path: $\nJSON input: Looking at the error and conte.....\n```\n## CONTENT\n```\nLooking at the error and content, the issue is clear: the `endpoints` array contains only `null` values instead of proper endpoint objects. The schema requires each endpoint to be an object with `method`, `path`, `startLine`, and `endLine` properties.\n\nSince all values are `null` and there's no actual endpoint data to preserve, the correct fix is to provide an empty array:\n\n```json\n{\"endpoints\":[]}\n```\n```"
+            }
+          ],
+          "metaInfo": {
+            "timestamp": "2026-02-23T12:16:34.836351517Z"
+          }
+        }
+      ],
+      "id": "structure-fixing"
+    }
+  }
+}

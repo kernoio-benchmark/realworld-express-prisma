@@ -1,0 +1,138 @@
+{
+  "response": [
+    {
+      "type": "ai.koog.prompt.message.Message.Assistant",
+      "parts": [
+        {
+          "type": "text",
+          "text": "{\"code_type\": \"documentation\", \"endpoints\": []}"
+        }
+      ],
+      "metaInfo": {
+        "timestamp": "2026-02-23T12:09:42.498505822Z",
+        "totalTokensCount": 1173,
+        "inputTokensCount": 968,
+        "outputTokensCount": 13
+      },
+      "finishReason": "STOP"
+    }
+  ],
+  "request": {
+    "prompt": {
+      "messages": [
+        {
+          "type": "ai.koog.prompt.message.Message.System",
+          "parts": [
+            {
+              "text": "You are a precise code analyzer. Extract only what is explicitly present in the code or derivable from the file path.\nDo not speculate, infer, or guess about what might exist - only report what you can directly observe.\nWhen uncertain, return empty results rather than guessing.\n"
+            }
+          ],
+          "metaInfo": {
+            "timestamp": "2026-02-23T12:09:39.283224223Z"
+          }
+        },
+        {
+          "type": "ai.koog.prompt.message.Message.User",
+          "parts": [
+            {
+              "type": "text",
+              "text": "# README.md\nNote: the following text has been prefixed with line numbers and a | which is not part of the original content\n```md\n1|# ![RealWorld Example App](logo.png)\n2|\n3|> ### Typescript + Express + Prisma codebase containing real world examples (CRUD, auth, advanced patterns, etc) that adheres to the [RealWorld](https://github.com/gothinkster/realworld) spec and API.\n4|\n5|### [Demo](https://realworld.seuronao.duckdns.org)&nbsp;&nbsp;&nbsp;&nbsp;[RealWorld](https://github.com/gothinkster/realworld)\n6|\n7|This codebase was created to demonstrate a backend built with **Typescript + Express + Prisma** including CRUD operations, authentication, routing, pagination, and more.\n8|\n9|We've gone to great lengths to adhere to the **Typescript** community styleguides & best practices.\n10|\n11|For more information on how to this works with other frontends/backends, head over to the [RealWorld](https://github.com/gothinkster/realworld) repo.\n12|\n13|# How it works\n14|\n15|The project is build using [TypeScript](https://www.typescriptlang.org/) for language, [Express](https://expressjs.com/) for routing and server framework and [Prisma](https://www.prisma.io/) as an _ORM_.\n16|\n17|The project uses [PostgreSQL](https://www.postgresql.org/) for the database.\n18|\n19|For unit testing it uses the [Jest](https://jestjs.io/) framework since it is what is promoted by prisma team to mock testing function that change the database.\n20|\n21|# Getting started\n22|\n23|To run this project you should have _node/npm_ installed.\n24|\n25|Run `npm install` to install the dependencies.\n26|\n27|Create a development environment file `.env.development` inside the root folder with the following attributes:\n28|\n29|```\n30|DATABASE_URL=file:./dev.db\n31|JWT_SECRET=theSecretForCreatingTheJWT\n32|NODE_ENV=development\n33|```\n34|\n35|- To update the database in development mode use `npm run migrate:develop`\n36|- To run the development version `npm run develop`.\n37|- To test the application `npm test`.\n38|- To build a production version `npm run build`.\n39|- To run the production build `npm run start`.\n40|\n```"
+            }
+          ],
+          "metaInfo": {
+            "timestamp": "2026-02-23T12:09:39.283288767Z"
+          }
+        },
+        {
+          "type": "ai.koog.prompt.message.Message.User",
+          "parts": [
+            {
+              "type": "text",
+              "text": "# Constraints\nIn the following tasks, do not extract meaning from comments within files\n\n# Task 1: Identify Code Type\nFirst, identify if the attached file is code. If it is not code, return empty lists for all fields.\n\n# Task 2: Extract Endpoints\nIf this is code, identify (if any at all) blocks of code that directly register routes in this application's HTTP server.\nOnly extract endpoints where you can determine the concrete HTTP method and path - do not guess or speculate about what paths might exist.\nDo not extract code that merely creates a server or groups routes without binding a specific path to a handler.\nThese routes must be valid RFC HTTP verbs (GET, POST, PUT, DELETE, PATCH).\nParameterised URL path segments must be expressed in the {id} format. For example, /users/:id/config should be /users/{id}/config, and /users/<userId> should be /users/{userId}.\nIf you cannot confidently determine the path, return an empty list for endpoints.\nThe start and end line must capture the entire syntactic chunk registering the endpoint.\nThis includes the handler code for the endpoint if the line that registers it is immediately followed\nby a function/method/lambda that is the entrypoint for that endpoint when it's called\n\n--ANTHROPIC-CACHE--"
+            }
+          ],
+          "metaInfo": {
+            "timestamp": "2026-02-23T12:09:39.283318449Z"
+          }
+        },
+        {
+          "type": "ai.koog.prompt.message.Message.Assistant",
+          "parts": [
+            {
+              "type": "text",
+              "text": "{\"code_type\": \"documentation\", \"endpoints\": []}"
+            }
+          ],
+          "metaInfo": {
+            "timestamp": "2026-02-23T12:09:41.128333336Z",
+            "totalTokensCount": 1065,
+            "inputTokensCount": 954,
+            "outputTokensCount": 13
+          },
+          "finishReason": "STOP"
+        }
+      ],
+      "id": "",
+      "params": {
+        "temperature": 0.0,
+        "schema": {
+          "type": "ai.koog.prompt.params.LLMParams.Schema.JSON.Standard",
+          "name": "ExtractedEndpoints",
+          "schema": {
+            "$id": "ExtractedEndpoints",
+            "$defs": {
+              "io.kerno.agent.index.EndpointMetadata": {
+                "type": "object",
+                "properties": {
+                  "method": {
+                    "type": "string",
+                    "enum": [
+                      "GET",
+                      "POST",
+                      "PUT",
+                      "DELETE",
+                      "PATCH"
+                    ]
+                  },
+                  "path": {
+                    "type": "string",
+                    "description": "A valid RFC URL path e.g. / or /api/some/end/point"
+                  },
+                  "startLine": {
+                    "type": "integer",
+                    "description": "The first line of code registering this route, ignoring comments"
+                  },
+                  "endLine": {
+                    "type": "integer",
+                    "description": "The last line of code registering this route, ignoring comments"
+                  }
+                },
+                "required": [
+                  "method",
+                  "path",
+                  "startLine",
+                  "endLine"
+                ],
+                "additionalProperties": false
+              },
+              "io.kerno.agent.index.ExtractedEndpoints": {
+                "type": "object",
+                "properties": {
+                  "endpoints": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/$defs/io.kerno.agent.index.EndpointMetadata"
+                    }
+                  }
+                },
+                "required": [],
+                "additionalProperties": false
+              }
+            },
+            "$ref": "#/$defs/io.kerno.agent.index.ExtractedEndpoints"
+          }
+        }
+      }
+    }
+  }
+}

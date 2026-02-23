@@ -1,0 +1,189 @@
+{
+  "response": [
+    {
+      "type": "ai.koog.prompt.message.Message.Assistant",
+      "parts": [
+        {
+          "type": "text",
+          "text": "{\"ExternalTcpService\": [], \"HttpSecurityScheme\": [], \"EnvVars\": []}"
+        }
+      ],
+      "metaInfo": {
+        "timestamp": "2026-02-23T12:09:48.720911654Z",
+        "totalTokensCount": 2255,
+        "inputTokensCount": 1750,
+        "outputTokensCount": 17
+      },
+      "finishReason": "STOP"
+    }
+  ],
+  "request": {
+    "prompt": {
+      "messages": [
+        {
+          "type": "ai.koog.prompt.message.Message.System",
+          "parts": [
+            {
+              "text": "You are a precise code analyzer. Extract only what is explicitly present in the code or derivable from the file path.\nDo not speculate, infer, or guess about what might exist - only report what you can directly observe.\nWhen uncertain, return empty results rather than guessing.\n"
+            }
+          ],
+          "metaInfo": {
+            "timestamp": "2026-02-23T12:09:42.99480244Z"
+          }
+        },
+        {
+          "type": "ai.koog.prompt.message.Message.User",
+          "parts": [
+            {
+              "type": "text",
+              "text": "# CODE_OF_CONDUCT.md\nNote: the following text has been prefixed with line numbers and a | which is not part of the original content\n```md\n1|# Contributor Covenant Code of Conduct\n2|\n3|## Our Pledge\n4|\n5|We as members, contributors, and leaders pledge to make participation in our\n6|community a harassment-free experience for everyone, regardless of age, body\n7|size, visible or invisible disability, ethnicity, sex characteristics, gender\n8|identity and expression, level of experience, education, socio-economic status,\n9|nationality, personal appearance, race, religion, or sexual identity\n10|and orientation.\n11|\n12|We pledge to act and interact in ways that contribute to an open, welcoming,\n13|diverse, inclusive, and healthy community.\n14|\n15|## Our Standards\n16|\n17|Examples of behavior that contributes to a positive environment for our\n18|community include:\n19|\n20|- Demonstrating empathy and kindness toward other people\n21|- Being respectful of differing opinions, viewpoints, and experiences\n22|- Giving and gracefully accepting constructive feedback\n23|- Accepting responsibility and apologizing to those affected by our mistakes,\n24|  and learning from the experience\n25|- Focusing on what is best not just for us as individuals, but for the\n26|  overall community\n27|\n28|Examples of unacceptable behavior include:\n29|\n30|- The use of sexualized language or imagery, and sexual attention or\n31|  advances of any kind\n32|- Trolling, insulting or derogatory comments, and personal or political attacks\n33|- Public or private harassment\n34|- Publishing others' private information, such as a physical or email\n35|  address, without their explicit permission\n36|- Other conduct which could reasonably be considered inappropriate in a\n37|  professional setting\n38|\n39|## Enforcement Responsibilities\n40|\n41|Community leaders are responsible for clarifying and enforcing our standards of\n42|acceptable behavior and will take appropriate and fair corrective action in\n43|response to any behavior that they deem inappropriate, threatening, offensive,\n44|or harmful.\n45|\n46|Community leaders have the right and responsibility to remove, edit, or reject\n47|comments, commits, code, wiki edits, issues, and other contributions that are\n48|not aligned to this Code of Conduct, and will communicate reasons for moderation\n49|decisions when appropriate.\n50|\n51|## Scope\n52|\n53|This Code of Conduct applies within all community spaces, and also applies when\n54|an individual is officially representing the community in public spaces.\n55|Examples of representing our community include using an official e-mail address,\n56|posting via an official social media account, or acting as an appointed\n57|representative at an online or offline event.\n58|\n59|## Enforcement\n60|\n61|Instances of abusive, harassing, or otherwise unacceptable behavior may be\n62|reported to the community leaders responsible for enforcement by contacting the maintainer team\n63|.\n64|All complaints will be reviewed and investigated promptly and fairly.\n65|\n66|All community leaders are obligated to respect the privacy and security of the\n67|reporter of any incident.\n68|\n69|## Enforcement Guidelines\n70|\n71|Community leaders will follow these Community Impact Guidelines in determining\n72|the consequences for any action they deem in violation of this Code of Conduct:\n73|\n74|### 1. Correction\n75|\n76|**Community Impact**: Use of inappropriate language or other behavior deemed\n77|unprofessional or unwelcome in the community.\n78|\n79|**Consequence**: A private, written warning from community leaders, providing\n80|clarity around the nature of the violation and an explanation of why the\n81|behavior was inappropriate. A public apology may be requested.\n82|\n83|### 2. Warning\n84|\n85|**Community Impact**: A violation through a single incident or series\n86|of actions.\n87|\n88|**Consequence**: A warning with consequences for continued behavior. No\n89|interaction with the people involved, including unsolicited interaction with\n90|those enforcing the Code of Conduct, for a specified period of time. This\n91|includes avoiding interactions in community spaces as well as external channels\n92|like social media. Violating these terms may lead to a temporary or\n93|permanent ban.\n94|\n95|### 3. Temporary Ban\n96|\n97|**Community Impact**: A serious violation of community standards, including\n98|sustained inappropriate behavior.\n99|\n100|**Consequence**: A temporary ban from any sort of interaction or public\n101|communication with the community for a specified period of time. No public or\n102|private interaction with the people involved, including unsolicited interaction\n103|with those enforcing the Code of Conduct, is allowed during this period.\n104|Violating these terms may lead to a permanent ban.\n105|\n106|### 4. Permanent Ban\n107|\n108|**Community Impact**: Demonstrating a pattern of violation of community\n109|standards, including sustained inappropriate behavior, harassment of an\n110|individual, or aggression toward or disparagement of classes of individuals.\n111|\n112|**Consequence**: A permanent ban from any sort of public interaction within\n113|the community.\n114|\n115|## Attribution\n116|\n117|This Code of Conduct is adapted from the [Contributor Covenant][homepage],\n118|version 2.0, available at\n119|https://www.contributor-covenant.org/version/2/0/code_of_conduct.html.\n120|\n121|Community Impact Guidelines were inspired by [Mozilla's code of conduct\n122|enforcement ladder](https://github.com/mozilla/diversity).\n123|\n124|[homepage]: https://www.contributor-covenant.org\n125|\n126|For answers to common questions about this code of conduct, see the FAQ at\n127|https://www.contributor-covenant.org/faq. Translations are available at\n128|https://www.contributor-covenant.org/translations.\n129|\n```"
+            }
+          ],
+          "metaInfo": {
+            "timestamp": "2026-02-23T12:09:42.994869999Z"
+          }
+        },
+        {
+          "type": "ai.koog.prompt.message.Message.User",
+          "parts": [
+            {
+              "type": "text",
+              "text": "# Constraints\nIn the following tasks, do not extract meaning from comments within files\n\n# Task 1: Extract External Services\nList all ExternalTcpService that can be inferred from this code.\nIf the name of external service used cannot be determined, then do not include it.\nIf this code does not perform any registration of routes in an HTTP server, return an empty list for endpoints.\nThe start and end line must capture the entire syntactic chunk that infers the external service\n\n# Task 2: Extract Security Schemes\nList all the HttpSecurityScheme that are configured by this code.\nList all the HttpSecurityScheme that are configured by this code.\nThe start and end line must capture the entire syntactic configuring the scheme\n\n# Task 4: Extract Environment Variables\nList all EnvVars accessed by this code.\n--ANTHROPIC-CACHE--"
+            }
+          ],
+          "metaInfo": {
+            "timestamp": "2026-02-23T12:09:42.994880598Z"
+          }
+        },
+        {
+          "type": "ai.koog.prompt.message.Message.Assistant",
+          "parts": [
+            {
+              "type": "text",
+              "text": "{\"ExternalTcpService\": [], \"HttpSecurityScheme\": [], \"EnvVars\": []}"
+            }
+          ],
+          "metaInfo": {
+            "timestamp": "2026-02-23T12:09:45.578871715Z",
+            "totalTokensCount": 2195,
+            "inputTokensCount": 1732,
+            "outputTokensCount": 17
+          },
+          "finishReason": "STOP"
+        }
+      ],
+      "id": "",
+      "params": {
+        "temperature": 0.0,
+        "schema": {
+          "type": "ai.koog.prompt.params.LLMParams.Schema.JSON.Standard",
+          "name": "ExtractedSemanticOutput",
+          "schema": {
+            "$id": "ExtractedSemanticOutput",
+            "$defs": {
+              "io.kerno.agent.index.ExternalTcpService": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "lineStart": {
+                    "type": "integer",
+                    "description": "The first line of code communicating with this external service, ignoring comments"
+                  },
+                  "lineEnd": {
+                    "type": "integer",
+                    "description": "The last line of code communicating with this external service, ignoring comments"
+                  }
+                },
+                "required": [
+                  "name",
+                  "lineStart",
+                  "lineEnd"
+                ],
+                "additionalProperties": false
+              },
+              "io.kerno.agent.index.HttpSecurityScheme": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "enum": [
+                      "http",
+                      "apiKey",
+                      "openIdConnect",
+                      "oauth2"
+                    ],
+                    "description": "The first line of code implying this security scheme, ignoring comments"
+                  },
+                  "lineStart": {
+                    "type": "integer",
+                    "description": "The first line of code implying this security scheme, ignoring comments"
+                  },
+                  "lineEnd": {
+                    "type": "integer",
+                    "description": "The last line of code implying this security scheme, ignoring comments"
+                  }
+                },
+                "required": [
+                  "type",
+                  "lineStart",
+                  "lineEnd"
+                ],
+                "additionalProperties": false
+              },
+              "io.kerno.agent.index.EnvVar": {
+                "type": "object",
+                "properties": {
+                  "key": {
+                    "type": "string"
+                  },
+                  "lineStart": {
+                    "type": "integer",
+                    "description": "The first line of code reading this environment variable, ignoring comments"
+                  },
+                  "lineEnd": {
+                    "type": "integer",
+                    "description": "The last line of code reading this environment variable, ignoring comments"
+                  }
+                },
+                "required": [
+                  "key",
+                  "lineStart",
+                  "lineEnd"
+                ],
+                "additionalProperties": false
+              },
+              "io.kerno.agent.index.ExtractedSemanticOutput": {
+                "type": "object",
+                "properties": {
+                  "externalServices": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/$defs/io.kerno.agent.index.ExternalTcpService"
+                    }
+                  },
+                  "securitySchemes": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/$defs/io.kerno.agent.index.HttpSecurityScheme"
+                    }
+                  },
+                  "envVars": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/$defs/io.kerno.agent.index.EnvVar"
+                    }
+                  }
+                },
+                "required": [],
+                "additionalProperties": false
+              }
+            },
+            "$ref": "#/$defs/io.kerno.agent.index.ExtractedSemanticOutput"
+          }
+        }
+      }
+    }
+  }
+}

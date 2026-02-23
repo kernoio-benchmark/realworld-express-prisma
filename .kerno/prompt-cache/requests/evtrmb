@@ -1,0 +1,77 @@
+{
+  "response": [
+    {
+      "type": "ai.koog.prompt.message.Message.Assistant",
+      "parts": [
+        {
+          "type": "text",
+          "text": "Looking at the code context provided, I can identify the environment variables used for configuring the application:\n\n<KEY>DATABASE_URL</KEY>\n<KEY>JWT_SECRET</KEY>\n<KEY>NODE_ENV</KEY>"
+        }
+      ],
+      "metaInfo": {
+        "timestamp": "2026-02-23T12:18:36.648493016Z",
+        "totalTokensCount": 304,
+        "inputTokensCount": 251,
+        "outputTokensCount": 53
+      },
+      "finishReason": "end_turn"
+    }
+  ],
+  "request": {
+    "prompt": {
+      "messages": [
+        {
+          "type": "ai.koog.prompt.message.Message.System",
+          "parts": [
+            {
+              "text": "You are a knowledgeable polyglot engineer and able to understand what external dependencies a software application\nrequires from reading the source files of an application."
+            }
+          ],
+          "metaInfo": {
+            "timestamp": "2026-02-23T12:18:34.524991094Z"
+          }
+        },
+        {
+          "type": "ai.koog.prompt.message.Message.System",
+          "parts": [
+            {
+              "text": "# Relevant Code Context\n### README.md\n#### Lines:30-30\n```md\nDATABASE_URL=file:./dev.db\n```\n#### Lines:31-31\n```md\nJWT_SECRET=theSecretForCreatingTheJWT\n```\n#### Lines:32-32\n```md\nNODE_ENV=development\n```\n### prisma/schema.prisma\n#### Lines:11-11\n```prisma\n}\n```\n### src/middleware/auth/authenticator.ts\n#### Lines:1-1\n```ts\nimport * as dotenv from \"dotenv\";\n```\n### src/utils/logger.ts\n#### Lines:1-1\n```ts\nimport winston from \"winston\";\n```"
+            }
+          ],
+          "metaInfo": {
+            "timestamp": "2026-02-23T12:18:34.526292364Z"
+          }
+        },
+        {
+          "type": "ai.koog.prompt.message.Message.User",
+          "parts": [
+            {
+              "type": "text",
+              "text": "Your task will follow next:"
+            }
+          ],
+          "metaInfo": {
+            "timestamp": "2026-02-23T12:18:34.526295793Z"
+          }
+        },
+        {
+          "type": "ai.koog.prompt.message.Message.User",
+          "parts": [
+            {
+              "type": "text",
+              "text": "# Task\nDetermine which environment variables are for configuring the SUT\n# Desired Outcomes\nReturn in the format <KEY> with one per line with NOTHING ELSE in your output\n--ANTHROPIC-CACHE--"
+            }
+          ],
+          "metaInfo": {
+            "timestamp": "2026-02-23T12:18:34.526302272Z"
+          }
+        }
+      ],
+      "id": "",
+      "params": {
+        "temperature": 0.0,
+        "maxTokens": 64000
+      }
+    }
+  }
+}

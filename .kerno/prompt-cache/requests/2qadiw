@@ -1,0 +1,77 @@
+{
+  "response": [
+    {
+      "type": "ai.koog.prompt.message.Message.Assistant",
+      "parts": [
+        {
+          "type": "text",
+          "text": "```\npackage.json\nprisma/schema.prisma\nsrc/utils/db/prisma.ts\n```"
+        }
+      ],
+      "metaInfo": {
+        "timestamp": "2026-02-23T12:18:36.526624749Z",
+        "totalTokensCount": 31,
+        "inputTokensCount": 2,
+        "outputTokensCount": 29
+      },
+      "finishReason": "end_turn"
+    }
+  ],
+  "request": {
+    "prompt": {
+      "messages": [
+        {
+          "type": "ai.koog.prompt.message.Message.System",
+          "parts": [
+            {
+              "text": "You are a knowledgeable polyglot engineer and able to understand what external dependencies a software application\nrequires from reading the source files of an application."
+            }
+          ],
+          "metaInfo": {
+            "timestamp": "2026-02-23T12:18:34.525158778Z"
+          }
+        },
+        {
+          "type": "ai.koog.prompt.message.Message.System",
+          "parts": [
+            {
+              "text": "# Supporting information\nHere is a complete list in markdown format of the filesystem\n- .vscode\n  - settings.json\n- prisma\n  - schema.prisma\n- src\n  - app.ts\n  - controllers\n    - articlesController\n      - articlesCreate.ts\n      - articlesDelete.ts\n      - articlesFavorite.ts\n      - articlesFeed.ts\n      - articlesGet.ts\n      - articlesList.ts\n      - articlesUnFavorite.ts\n      - articlesUpdate.ts\n      - index.ts\n    - commentsController\n      - createComment.test.ts\n      - createComment.ts\n      - deleteComment.ts\n      - getComments.ts\n      - index.ts\n    - profileController\n      - followProfile.ts\n      - getProfile.ts\n      - index.ts\n      - unFollowProfile.ts\n    - tagsController\n      - getTags.ts\n      - index.ts\n    - userController\n      - index.ts\n      - userGet.ts\n      - userUpdate.ts\n    - usersController\n      - index.ts\n      - usersLogin.ts\n      - usersRegister.ts\n  - middleware\n    - articlesValidator\n      - articlesCreateValidator.test.ts\n      - articlesCreateValidator.ts\n      - articlesFeedValidator.test.ts\n      - articlesFeedValidator.ts\n      - articlesListValidator.test.ts\n      - articlesListValidator.ts\n      - articlesUpdateValidator.test.ts\n      - articlesUpdateValidator.ts\n      - index.ts\n    - auth\n      - authenticator.ts\n    - commentsValidator\n      - commentCreateValidator.ts\n      - commentsCreateValidator.test.ts\n    - errorHandling\n      - authErrorHandler.ts\n      - generalErrorHandler.ts\n      - index.ts\n      - prismaErrorHandler.ts\n    - userValidator\n      - index.ts\n      - userLoginValidator.test.ts\n      - userLoginValidator.ts\n      - userRegisterValidator.test.ts\n      - userRegisterValidator.ts\n      - userUpdateValidator.test.ts\n      - userUpdateValidator.ts\n  - routes\n    - api\n      - articles.ts\n      - profiles.ts\n      - tags.ts\n      - user.ts\n      - users.ts\n  - server.ts\n  - test\n    - postman\n      - Conduit.postman_collection.json\n      - run-api-test.sh\n  - utils\n    - auth\n      - createUserToken.ts\n      - index.ts\n    - db\n      - article\n        - articleCreatePrisma.ts\n        - articleDeletePrisma.ts\n        - articleFavoritePrisma.ts\n        - articleFeedPrisma.ts\n        - articleGetPrisma.ts\n        - articleListPrisma.ts\n        - articleUnFavoritePrisma.ts\n        - articleUpdatePrisma.ts\n      - comment\n        - commentCreatePrisma.ts\n        - commentDeletePrisma.ts\n        - commentsGetPrisma.ts\n      - prisma.ts\n      - tag\n        - tagsCreatePrisma.ts\n      - user\n        - userCreatePrisma.ts\n        - userFollowProfilePrisma.ts\n        - userGetEmailPrisma.ts\n        - userGetPrisma.ts\n        - userUnFollowProfilePrisma.ts\n        - userUpdatePrisma.ts\n    - hashPasswords.ts\n    - logger.ts\n    - slugfy.ts\n    - test\n      - prismaMock.ts\n    - types\n      - index.ts\n      - validationError.ts\n  - view\n    - articleViewer.test.ts\n    - articleViewer.ts\n    - commentViewer.test.ts\n    - commentViewer.ts\n    - profileViewer.test.ts\n    - profileViewer.ts\n    - tagViewer.test.ts\n    - tagViewer.ts\n    - userViewer.test.ts\n    - userViewer.ts\n- .eslintrc.json\n- .gitignore\n- CODE_OF_CONDUCT.md\n- favicon.ico\n- jest.config.ts\n- LICENSE\n- logo.png\n- package-lock.json\n- package.json\n- README.md\n- tsconfig.json"
+            }
+          ],
+          "metaInfo": {
+            "timestamp": "2026-02-23T12:18:34.525316564Z"
+          }
+        },
+        {
+          "type": "ai.koog.prompt.message.Message.User",
+          "parts": [
+            {
+              "type": "text",
+              "text": "Your task will follow next:"
+            }
+          ],
+          "metaInfo": {
+            "timestamp": "2026-02-23T12:18:34.525403692Z"
+          }
+        },
+        {
+          "type": "ai.koog.prompt.message.Message.User",
+          "parts": [
+            {
+              "type": "text",
+              "text": "# Task\nIdentify the files most likely to configure any TCP based clients this project uses or depends on.\n# Desired Outcomes\nReturn only newline separated list of files identified, nothing else is needed\n--ANTHROPIC-CACHE--"
+            }
+          ],
+          "metaInfo": {
+            "timestamp": "2026-02-23T12:18:34.525509452Z"
+          }
+        }
+      ],
+      "id": "",
+      "params": {
+        "temperature": 0.0,
+        "maxTokens": 64000
+      }
+    }
+  }
+}

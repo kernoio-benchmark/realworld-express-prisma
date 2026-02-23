@@ -1,0 +1,50 @@
+{
+  "response": [
+    {
+      "type": "ai.koog.prompt.message.Message.Assistant",
+      "parts": [
+        {
+          "type": "text",
+          "text": "```json\n{\n  \"endpoints\": [\n    {\n      \"method\": \"GET\",\n      \"path\": \"/\",\n      \"startLine\": 10,\n      \"endLine\": 15\n    },\n    {\n      \"method\": \"GET\",\n      \"path\": \"/feed\",\n      \"startLine\": 17,\n      \"endLine\": 22\n    },\n    {\n      \"method\": \"GET\",\n      \"path\": \"/{slug}\",\n      \"startLine\": 24,\n      \"endLine\": 24\n    },\n    {\n      \"method\": \"POST\",\n      \"path\": \"/\",\n      \"startLine\": 26,\n      \"endLine\": 31\n    },\n    {\n      \"method\": \"PUT\",\n      \"path\": \"/{slug}\",\n      \"startLine\": 33,\n      \"endLine\": 38\n    },\n    {\n      \"method\": \"DELETE\",\n      \"path\": \"/{slug}\",\n      \"startLine\": 40,\n      \"endLine\": 40\n    },\n    {\n      \"method\": \"POST\",\n      \"path\": \"/{slug}/comments\",\n      \"startLine\": 42,\n      \"endLine\": 47\n    },\n    {\n      \"method\": \"GET\",\n      \"path\": \"/{slug}/comments\",\n      \"startLine\": 49,\n      \"endLine\": 49\n    },\n    {\n      \"method\": \"DELETE\",\n      \"path\": \"/{slug}/comments/{id}\",\n      \"startLine\": 51,\n      \"endLine\": 55\n    },\n    {\n      \"method\": \"POST\",\n      \"path\": \"/{slug}/favorite\",\n      \"startLine\": 57,\n      \"endLine\": 57\n    },\n    {\n      \"method\": \"DELETE\",\n      \"path\": \"/{slug}/favorite\",\n      \"startLine\": 59,\n      \"endLine\": 63\n    }\n  ]\n}\n```"
+        }
+      ],
+      "metaInfo": {
+        "timestamp": "2026-02-23T12:09:55.631317313Z",
+        "totalTokensCount": 473,
+        "inputTokensCount": 2,
+        "outputTokensCount": 471
+      },
+      "finishReason": "end_turn"
+    }
+  ],
+  "request": {
+    "prompt": {
+      "messages": [
+        {
+          "type": "ai.koog.prompt.message.Message.System",
+          "parts": [
+            {
+              "text": "You are agent responsible for converting incorrectly generated LLM Structured Output into valid format that adheres to the given schema.\nYour sole responsibility is to fix the generated content to conform to the given schema.\n## PROCESS\n- Evaluate what parts are incorrect and fix them.\n- Drop unknown fields and come-up with values for missing fields based on semantics.\n- Carefully check the types of the fields and fix if any are incorrect.\n- Utilize the provided exception to determine the possible error, but do not forget about other possible mistakes.\n## KEY PRINCIPLES\n- You MUST stick to the original data, make as few changes as possible to convert it into valid schema.\n- Do not drop, alter or change any semantic data unless it is necessary to fit into schema.\n## RESULT\nProvide ONLY the fixed structured data, WITHOUT any comments and backticks.\n## DEFINITION### DEFINITION OF ExtractedEndpoints\nThe ExtractedEndpoints format is defined only and solely with JSON, without any additional characters, comments, backticks or anything similar.\n\nYou must adhere to the following JSON schema:\n{\n    \"$id\": \"ExtractedEndpoints\",\n    \"$defs\": {\n        \"io.kerno.agent.index.EndpointMetadata\": {\n            \"type\": \"object\",\n            \"properties\": {\n                \"method\": {\n                    \"type\": \"string\",\n                    \"enum\": [\n                        \"GET\",\n                        \"POST\",\n                        \"PUT\",\n                        \"DELETE\",\n                        \"PATCH\"\n                    ]\n                },\n                \"path\": {\n                    \"type\": \"string\",\n                    \"description\": \"A valid RFC URL path e.g. / or /api/some/end/point\"\n                },\n                \"startLine\": {\n                    \"type\": \"integer\",\n                    \"description\": \"The first line of code registering this route, ignoring comments\"\n                },\n                \"endLine\": {\n                    \"type\": \"integer\",\n                    \"description\": \"The last line of code registering this route, ignoring comments\"\n                }\n            },\n            \"required\": [\n                \"method\",\n                \"path\",\n                \"startLine\",\n                \"endLine\"\n            ],\n            \"additionalProperties\": false\n        },\n        \"io.kerno.agent.index.ExtractedEndpoints\": {\n            \"type\": \"object\",\n            \"properties\": {\n                \"endpoints\": {\n                    \"type\": \"array\",\n                    \"items\": {\n                        \"$ref\": \"#/$defs/io.kerno.agent.index.EndpointMetadata\"\n                    }\n                }\n            },\n            \"required\": [],\n            \"additionalProperties\": false\n        }\n    },\n    \"$ref\": \"#/$defs/io.kerno.agent.index.ExtractedEndpoints\"\n}\n\n## RESULT\nProvide ONLY the resulting JSON, WITHOUT ANY free text comments, backticks, or other symbols.\nOutput should start with { and end with }\n"
+            }
+          ],
+          "metaInfo": {
+            "timestamp": "2026-02-23T12:09:51.032165567Z"
+          }
+        },
+        {
+          "type": "ai.koog.prompt.message.Message.User",
+          "parts": [
+            {
+              "type": "text",
+              "text": "## EXCEPTION\n```\nUnexpected JSON token at offset 46: Expected start of the object '{', but had '\"' instead at path: $.endpoints[0]\nJSON input: ..... \"code\",\n  \"endpoints\": [\n    \"{\\\"http_method\\\":\\\"GET\\\",\\\"pa.....\n```\n## CONTENT\n```\n{\n  \"code_type\": \"code\",\n  \"endpoints\": [\n    \"{\\\"http_method\\\":\\\"GET\\\",\\\"path\\\":\\\"/\\\",\\\"start_line\\\":10,\\\"end_line\\\":15}\",\n    \"{\\\"http_method\\\":\\\"GET\\\",\\\"path\\\":\\\"/feed\\\",\\\"start_line\\\":17,\\\"end_line\\\":22}\",\n    \"{\\\"http_method\\\":\\\"GET\\\",\\\"path\\\":\\\"/{slug}\\\",\\\"start_line\\\":24,\\\"end_line\\\":24}\",\n    \"{\\\"http_method\\\":\\\"POST\\\",\\\"path\\\":\\\"/\\\",\\\"start_line\\\":26,\\\"end_line\\\":31}\",\n    \"{\\\"http_method\\\":\\\"PUT\\\",\\\"path\\\":\\\"/{slug}\\\",\\\"start_line\\\":33,\\\"end_line\\\":38}\",\n    \"{\\\"http_method\\\":\\\"DELETE\\\",\\\"path\\\":\\\"/{slug}\\\",\\\"start_line\\\":40,\\\"end_line\\\":40}\",\n    \"{\\\"http_method\\\":\\\"POST\\\",\\\"path\\\":\\\"/{slug}/comments\\\",\\\"start_line\\\":42,\\\"end_line\\\":47}\",\n    \"{\\\"http_method\\\":\\\"GET\\\",\\\"path\\\":\\\"/{slug}/comments\\\",\\\"start_line\\\":49,\\\"end_line\\\":49}\",\n    \"{\\\"http_method\\\":\\\"DELETE\\\",\\\"path\\\":\\\"/{slug}/comments/{id}\\\",\\\"start_line\\\":51,\\\"end_line\\\":55}\",\n    \"{\\\"http_method\\\":\\\"POST\\\",\\\"path\\\":\\\"/{slug}/favorite\\\",\\\"start_line\\\":57,\\\"end_line\\\":57}\",\n    \"{\\\"http_method\\\":\\\"DELETE\\\",\\\"path\\\":\\\"/{slug}/favorite\\\",\\\"start_line\\\":59,\\\"end_line\\\":63}\"\n  ]\n}\n```"
+            }
+          ],
+          "metaInfo": {
+            "timestamp": "2026-02-23T12:09:51.032275295Z"
+          }
+        }
+      ],
+      "id": "structure-fixing"
+    }
+  }
+}

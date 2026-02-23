@@ -1,0 +1,50 @@
+{
+  "response": [
+    {
+      "type": "ai.koog.prompt.message.Message.Assistant",
+      "parts": [
+        {
+          "type": "text",
+          "text": "```json\n{\n  \"externalServices\": [\n    {\n      \"name\": \"Prisma\",\n      \"lineStart\": 7,\n      \"lineEnd\": 11\n    }\n  ],\n  \"securitySchemes\": [],\n  \"envVars\": []\n}\n```"
+        }
+      ],
+      "metaInfo": {
+        "timestamp": "2026-02-23T12:13:48.276939511Z",
+        "totalTokensCount": 74,
+        "inputTokensCount": 2,
+        "outputTokensCount": 72
+      },
+      "finishReason": "end_turn"
+    }
+  ],
+  "request": {
+    "prompt": {
+      "messages": [
+        {
+          "type": "ai.koog.prompt.message.Message.System",
+          "parts": [
+            {
+              "text": "You are agent responsible for converting incorrectly generated LLM Structured Output into valid format that adheres to the given schema.\nYour sole responsibility is to fix the generated content to conform to the given schema.\n## PROCESS\n- Evaluate what parts are incorrect and fix them.\n- Drop unknown fields and come-up with values for missing fields based on semantics.\n- Carefully check the types of the fields and fix if any are incorrect.\n- Utilize the provided exception to determine the possible error, but do not forget about other possible mistakes.\n## KEY PRINCIPLES\n- You MUST stick to the original data, make as few changes as possible to convert it into valid schema.\n- Do not drop, alter or change any semantic data unless it is necessary to fit into schema.\n## RESULT\nProvide ONLY the fixed structured data, WITHOUT any comments and backticks.\n## DEFINITION### DEFINITION OF ExtractedSemanticOutput\nThe ExtractedSemanticOutput format is defined only and solely with JSON, without any additional characters, comments, backticks or anything similar.\n\nYou must adhere to the following JSON schema:\n{\n    \"$id\": \"ExtractedSemanticOutput\",\n    \"$defs\": {\n        \"io.kerno.agent.index.ExternalTcpService\": {\n            \"type\": \"object\",\n            \"properties\": {\n                \"name\": {\n                    \"type\": \"string\"\n                },\n                \"lineStart\": {\n                    \"type\": \"integer\",\n                    \"description\": \"The first line of code communicating with this external service, ignoring comments\"\n                },\n                \"lineEnd\": {\n                    \"type\": \"integer\",\n                    \"description\": \"The last line of code communicating with this external service, ignoring comments\"\n                }\n            },\n            \"required\": [\n                \"name\",\n                \"lineStart\",\n                \"lineEnd\"\n            ],\n            \"additionalProperties\": false\n        },\n        \"io.kerno.agent.index.HttpSecurityScheme\": {\n            \"type\": \"object\",\n            \"properties\": {\n                \"type\": {\n                    \"type\": \"string\",\n                    \"enum\": [\n                        \"http\",\n                        \"apiKey\",\n                        \"openIdConnect\",\n                        \"oauth2\"\n                    ],\n                    \"description\": \"The first line of code implying this security scheme, ignoring comments\"\n                },\n                \"lineStart\": {\n                    \"type\": \"integer\",\n                    \"description\": \"The first line of code implying this security scheme, ignoring comments\"\n                },\n                \"lineEnd\": {\n                    \"type\": \"integer\",\n                    \"description\": \"The last line of code implying this security scheme, ignoring comments\"\n                }\n            },\n            \"required\": [\n                \"type\",\n                \"lineStart\",\n                \"lineEnd\"\n            ],\n            \"additionalProperties\": false\n        },\n        \"io.kerno.agent.index.EnvVar\": {\n            \"type\": \"object\",\n            \"properties\": {\n                \"key\": {\n                    \"type\": \"string\"\n                },\n                \"lineStart\": {\n                    \"type\": \"integer\",\n                    \"description\": \"The first line of code reading this environment variable, ignoring comments\"\n                },\n                \"lineEnd\": {\n                    \"type\": \"integer\",\n                    \"description\": \"The last line of code reading this environment variable, ignoring comments\"\n                }\n            },\n            \"required\": [\n                \"key\",\n                \"lineStart\",\n                \"lineEnd\"\n            ],\n            \"additionalProperties\": false\n        },\n        \"io.kerno.agent.index.ExtractedSemanticOutput\": {\n            \"type\": \"object\",\n            \"properties\": {\n                \"externalServices\": {\n                    \"type\": \"array\",\n                    \"items\": {\n                        \"$ref\": \"#/$defs/io.kerno.agent.index.ExternalTcpService\"\n                    }\n                },\n                \"securitySchemes\": {\n                    \"type\": \"array\",\n                    \"items\": {\n                        \"$ref\": \"#/$defs/io.kerno.agent.index.HttpSecurityScheme\"\n                    }\n                },\n                \"envVars\": {\n                    \"type\": \"array\",\n                    \"items\": {\n                        \"$ref\": \"#/$defs/io.kerno.agent.index.EnvVar\"\n                    }\n                }\n            },\n            \"required\": [],\n            \"additionalProperties\": false\n        }\n    },\n    \"$ref\": \"#/$defs/io.kerno.agent.index.ExtractedSemanticOutput\"\n}\n\n## RESULT\nProvide ONLY the resulting JSON, WITHOUT ANY free text comments, backticks, or other symbols.\nOutput should start with { and end with }\n"
+            }
+          ],
+          "metaInfo": {
+            "timestamp": "2026-02-23T12:13:45.712990678Z"
+          }
+        },
+        {
+          "type": "ai.koog.prompt.message.Message.User",
+          "parts": [
+            {
+              "type": "text",
+              "text": "## EXCEPTION\n```\nUnexpected JSON token at offset 0: Expected start of the object '{', but had '[' instead at path: $\nJSON input: [\n  {\n    \"serviceName\": \"Prisma\",\n    \"type\": \"Database\",\n    \"operations\": [\n      \"upsert\"\n    ],\n    \"target\": \"tag\",\n    \"lineNumber\": 7,\n    \"endLineNumber\": 11,\n    \"framework\": \"prisma\"\n  }\n]\n```\n## CONTENT\n```\n[\n  {\n    \"serviceName\": \"Prisma\",\n    \"type\": \"Database\",\n    \"operations\": [\n      \"upsert\"\n    ],\n    \"target\": \"tag\",\n    \"lineNumber\": 7,\n    \"endLineNumber\": 11,\n    \"framework\": \"prisma\"\n  }\n]\n```"
+            }
+          ],
+          "metaInfo": {
+            "timestamp": "2026-02-23T12:13:45.713025376Z"
+          }
+        }
+      ],
+      "id": "structure-fixing"
+    }
+  }
+}
