@@ -1,0 +1,226 @@
+add:
+- id: update_article_success
+  description: Successfully update an article with valid authentication and valid
+    fields
+  subject:
+    type: Endpoint
+    method: PUT
+    path: /api/articles/{slug}
+  steps:
+  - id: generate_test_data
+    description: Generate random test data for article creation and update
+    action:
+      type: Unimplemented
+      intended_type: Values
+  - id: create_user
+    description: Create a test user via registration endpoint
+    action:
+      type: Unimplemented
+      intended_type: CallHttp
+  - id: create_article
+    description: Create an article to be updated
+    action:
+      type: Unimplemented
+      intended_type: CallHttp
+  - id: generate_token
+    description: Generate JWT token for the authenticated user
+    action:
+      type: Unimplemented
+      intended_type: GenerateJwt
+  - id: update_article
+    description: Update the article with new title, description, and body
+    action:
+      type: Unimplemented
+      intended_type: CallHttp
+  - id: assert_response
+    description: Assert 200 OK response with updated article data
+    action:
+      type: Unimplemented
+      intended_type: HttpAssert
+  - id: cleanup_article
+    description: Delete the article from database
+    action:
+      type: Unimplemented
+      intended_type: ExecuteSql
+  - id: cleanup_user
+    description: Delete the test user from database
+    action:
+      type: Unimplemented
+      intended_type: ExecuteSql
+- id: update_article_partial_fields
+  description: Successfully update an article with only some fields (partial update)
+  subject:
+    type: Endpoint
+    method: PUT
+    path: /api/articles/{slug}
+  steps:
+  - id: generate_test_data
+    description: Generate random test data for article
+    action:
+      type: Unimplemented
+      intended_type: Values
+  - id: create_user
+    description: Create a test user via registration endpoint
+    action:
+      type: Unimplemented
+      intended_type: CallHttp
+  - id: create_article
+    description: Create an article to be updated
+    action:
+      type: Unimplemented
+      intended_type: CallHttp
+  - id: generate_token
+    description: Generate JWT token for the authenticated user
+    action:
+      type: Unimplemented
+      intended_type: GenerateJwt
+  - id: update_article
+    description: Update only the title field, leaving description and body unchanged
+    action:
+      type: Unimplemented
+      intended_type: CallHttp
+  - id: assert_response
+    description: Assert 200 OK with updated title and unchanged description/body
+    action:
+      type: Unimplemented
+      intended_type: HttpAssert
+  - id: cleanup_article
+    description: Delete the article from database
+    action:
+      type: Unimplemented
+      intended_type: ExecuteSql
+  - id: cleanup_user
+    description: Delete the test user from database
+    action:
+      type: Unimplemented
+      intended_type: ExecuteSql
+- id: update_article_not_found
+  description: Attempt to update a non-existent article returns 404
+  subject:
+    type: Endpoint
+    method: PUT
+    path: /api/articles/{slug}
+  steps:
+  - id: generate_test_data
+    description: Generate random test data including non-existent slug
+    action:
+      type: Unimplemented
+      intended_type: Values
+  - id: create_user
+    description: Create a test user via registration endpoint
+    action:
+      type: Unimplemented
+      intended_type: CallHttp
+  - id: generate_token
+    description: Generate JWT token for the authenticated user
+    action:
+      type: Unimplemented
+      intended_type: GenerateJwt
+  - id: update_article
+    description: Attempt to update article with non-existent slug
+    action:
+      type: Unimplemented
+      intended_type: CallHttp
+  - id: assert_response
+    description: Assert 404 Not Found response
+    action:
+      type: Unimplemented
+      intended_type: HttpAssert
+  - id: cleanup_user
+    description: Delete the test user from database
+    action:
+      type: Unimplemented
+      intended_type: ExecuteSql
+- id: update_article_no_auth
+  description: Attempt to update an article without authentication returns 401
+  subject:
+    type: Endpoint
+    method: PUT
+    path: /api/articles/{slug}
+  steps:
+  - id: generate_test_data
+    description: Generate random test data for article
+    action:
+      type: Unimplemented
+      intended_type: Values
+  - id: create_user
+    description: Create a test user via registration endpoint
+    action:
+      type: Unimplemented
+      intended_type: CallHttp
+  - id: create_article
+    description: Create an article
+    action:
+      type: Unimplemented
+      intended_type: CallHttp
+  - id: update_article
+    description: Attempt to update article without Authorization header
+    action:
+      type: Unimplemented
+      intended_type: CallHttp
+  - id: assert_response
+    description: Assert 401 Unauthorized response
+    action:
+      type: Unimplemented
+      intended_type: HttpAssert
+  - id: cleanup_article
+    description: Delete the article from database
+    action:
+      type: Unimplemented
+      intended_type: ExecuteSql
+  - id: cleanup_user
+    description: Delete the test user from database
+    action:
+      type: Unimplemented
+      intended_type: ExecuteSql
+- id: update_article_invalid_body
+  description: Attempt to update article with invalid body structure returns 400
+  subject:
+    type: Endpoint
+    method: PUT
+    path: /api/articles/{slug}
+  steps:
+  - id: generate_test_data
+    description: Generate random test data for article
+    action:
+      type: Unimplemented
+      intended_type: Values
+  - id: create_user
+    description: Create a test user via registration endpoint
+    action:
+      type: Unimplemented
+      intended_type: CallHttp
+  - id: create_article
+    description: Create an article to be updated
+    action:
+      type: Unimplemented
+      intended_type: CallHttp
+  - id: generate_token
+    description: Generate JWT token for the authenticated user
+    action:
+      type: Unimplemented
+      intended_type: GenerateJwt
+  - id: update_article
+    description: Attempt to update with invalid body (e.g., title as number instead
+      of string)
+    action:
+      type: Unimplemented
+      intended_type: CallHttp
+  - id: assert_response
+    description: Assert 400 Bad Request with validation errors
+    action:
+      type: Unimplemented
+      intended_type: HttpAssert
+  - id: cleanup_article
+    description: Delete the article from database
+    action:
+      type: Unimplemented
+      intended_type: ExecuteSql
+  - id: cleanup_user
+    description: Delete the test user from database
+    action:
+      type: Unimplemented
+      intended_type: ExecuteSql
+untouched: []
+check: []
+remove: []
