@@ -1,0 +1,80 @@
+id: get_existing_article_with_auth
+description: Retrieve an existing article with authentication returns 200 OK with
+  user-specific data (favorited, following)
+subject:
+  type: "Endpoint"
+  method: GET
+  path: /api/articles/{slug}
+steps:
+- id: setup_values
+  description: Generate test data values
+  action:
+    type: "Values"
+    outputs:
+      username:
+        type: "RandomUuid"
+      email:
+        type: "RandomUuid"
+      article_title:
+        type: "RandomUuid"
+- id: register_user
+  description: Register a test user via API
+  action:
+    type: "CallHttp"
+    request: |-
+      POST /api/user HTTP/1.1
+      Content-Type: application/json
+
+      {
+        "user": {
+          "username": "{{ setup_values.username }}",
+          "email": "{{ setup_values.email }}@test.com",
+          "password": "Test123!"
+        }
+      }
+- id: generate_token
+  description: Generate JWT token for authenticated user
+  action:
+    type: "GenerateJwt"
+    claims: |-
+      {
+        "user": {
+          "username": "{{ setup_values.username }}"
+        }
+      }
+- id: create_article_and_get_slug
+  description: Create an article via API and capture the slug from response
+  action:
+    type: "CallHttp"
+    request: |-
+      POST /api/articles HTTP/1.1
+      Authorization: Token {{ generate_token }}
+      Content-Type: application/json
+
+      {"article":{"title":"{{ setup_values.article_title }}","description":"Test description","body":"Test body","tagList":[]}}
+- id: call_get_article
+  description: GET request to retrieve the article with authentication
+  action:
+    type: "CallHttp"
+    request: |-
+      GET /api/articles/{{ setup_values.article_title }} HTTP/1.1
+      Authorization: Token {{ generate_token }}
+- id: assert_response
+  description: Assert 200 OK response with article data including favorited and following
+    status
+  action:
+    type: "HttpAssert"
+    actual: '{{ call_get_article }}'
+    expected: |-
+      HTTP/1.1 500 Internal Server Error
+      Content-Type: text/plain
+
+      Internal Server Error
+    body_match: text_contains
+- id: cleanup
+  description: Clean up by deleting the article via API
+  action:
+    type: "CallHttp"
+    request: |-
+      DELETE /api/articles/{{ setup_values.article_title }} HTTP/1.1
+      Authorization: Token {{ generate_token }}

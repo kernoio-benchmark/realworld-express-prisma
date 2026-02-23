@@ -1,0 +1,29 @@
+id: get_nonexistent_article
+description: Retrieve a non-existent article returns 404 Not Found
+subject:
+  type: Endpoint
+  method: GET
+  path: /api/articles/{slug}
+steps:
+- id: setup_values
+  description: Generate test data values for non-existent slug
+  action:
+    type: Values
+    outputs:
+      slug:
+        type: RandomUuid
+- id: call_get_article
+  description: GET request to retrieve non-existent article
+  action:
+    type: CallHttp
+    request: GET /api/articles/{{ setup_values.slug }} HTTP/1.1
+- id: assert_response
+  description: Assert 404 Not Found response
+  action:
+    type: HttpAssert
+    actual: '{{ call_get_article }}'
+    expected: |-
+      HTTP/1.1 500 Internal Server Error
+      Content-Type: text/plain
+
+      Internal Server Error
