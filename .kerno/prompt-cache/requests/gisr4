@@ -1,0 +1,43 @@
+{
+  "response": [
+    {
+      "type": "ai.koog.prompt.message.Message.Assistant",
+      "parts": [
+        {
+          "type": "text",
+          "text": "GET /{slug}"
+        }
+      ],
+      "metaInfo": {
+        "timestamp": "2026-02-23T12:21:57.124421885Z",
+        "totalTokensCount": 137,
+        "inputTokensCount": 129,
+        "outputTokensCount": 8
+      },
+      "finishReason": "end_turn"
+    }
+  ],
+  "request": {
+    "prompt": {
+      "messages": [
+        {
+          "type": "ai.koog.prompt.message.Message.User",
+          "parts": [
+            {
+              "type": "text",
+              "text": "Determine which base path (if any) applies to this endpoint.\n\nEndpoint: GET /{slug}\n\nReturn the fully qualified path. If no base path applies, return the endpoint path unchanged.\nReturn ONLY the path, nothing else (no markdown, no explanation).\n\nAvailable base paths:\n# /api/user\n## src/routes/api/user.ts\n```ts\nconst router = Router();\n\nrouter.get(\"/\", authenticate, userGet);\n\nrouter.put(\"/\", authenticate, userUpdateValidator, userUpdate);\n\nexport default router;\n```"
+            }
+          ],
+          "metaInfo": {
+            "timestamp": "2026-02-23T12:21:55.556579162Z"
+          }
+        }
+      ],
+      "id": "",
+      "params": {
+        "temperature": 0.0,
+        "maxTokens": 64000
+      }
+    }
+  }
+}

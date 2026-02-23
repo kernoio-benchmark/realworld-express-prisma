@@ -1,0 +1,103 @@
+add:
+- id: get_existing_article_without_auth
+  description: Retrieve an existing article without authentication returns 200 OK
+    with article data
+  subject:
+    type: Endpoint
+    method: GET
+    path: /api/articles/{slug}
+  steps:
+  - id: setup_values
+    description: Generate test data values
+    action:
+      type: Unimplemented
+      intended_type: Values
+  - id: setup_article
+    description: Create test article in database
+    action:
+      type: Unimplemented
+      intended_type: ExecuteSql
+  - id: call_get_article
+    description: GET request to retrieve the article without authentication
+    action:
+      type: Unimplemented
+      intended_type: CallHttp
+  - id: assert_response
+    description: Assert 200 OK response with complete article data
+    action:
+      type: Unimplemented
+      intended_type: HttpAssert
+  - id: cleanup
+    description: Remove test article from database
+    action:
+      type: Unimplemented
+      intended_type: ExecuteSql
+- id: get_existing_article_with_auth
+  description: Retrieve an existing article with authentication returns 200 OK with
+    user-specific data (favorited, following)
+  subject:
+    type: Endpoint
+    method: GET
+    path: /api/articles/{slug}
+  steps:
+  - id: setup_values
+    description: Generate test data values
+    action:
+      type: Unimplemented
+      intended_type: Values
+  - id: setup_user_and_article
+    description: Create test user and article in database
+    action:
+      type: Unimplemented
+      intended_type: ExecuteSql
+  - id: generate_token
+    description: Generate JWT token for authenticated user
+    action:
+      type: Unimplemented
+      intended_type: GenerateJwt
+  - id: call_get_article
+    description: GET request to retrieve the article with authentication
+    action:
+      type: Unimplemented
+      intended_type: CallHttp
+  - id: assert_response
+    description: Assert 200 OK response with article data including favorited and
+      following status
+    action:
+      type: Unimplemented
+      intended_type: HttpAssert
+  - id: cleanup
+    description: Remove test user and article from database
+    action:
+      type: Unimplemented
+      intended_type: ExecuteSql
+- id: get_nonexistent_article
+  description: Retrieve a non-existent article returns 404 Not Found
+  subject:
+    type: Endpoint
+    method: GET
+    path: /api/articles/{slug}
+  steps:
+  - id: setup_values
+    description: Generate test data values for non-existent slug
+    action:
+      type: Unimplemented
+      intended_type: Values
+  - id: cleanup_defensive
+    description: Defensively ensure the article does not exist
+    action:
+      type: Unimplemented
+      intended_type: ExecuteSql
+  - id: call_get_article
+    description: GET request to retrieve non-existent article
+    action:
+      type: Unimplemented
+      intended_type: CallHttp
+  - id: assert_response
+    description: Assert 404 Not Found response
+    action:
+      type: Unimplemented
+      intended_type: HttpAssert
+untouched: []
+check: []
+remove: []
