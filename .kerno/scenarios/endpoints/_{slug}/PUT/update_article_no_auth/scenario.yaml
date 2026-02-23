@@ -1,0 +1,82 @@
+id: update_article_no_auth
+description: Attempt to update an article without authentication returns 401
+subject:
+  type: Endpoint
+  method: PUT
+  path: /api/articles/{slug}
+steps:
+- id: generate_test_data
+  description: Generate random test data for article
+  action:
+    type: Values
+    outputs:
+      email:
+        type: RandomUuid
+      password:
+        type: StaticString
+        value: Test123!
+      username:
+        type: RandomUuid
+      article_title:
+        type: RandomUuid
+      article_description:
+        type: StaticString
+        value: Test description
+      article_body:
+        type: StaticString
+        value: Test body content
+- id: create_user
+  action:
+    type: CallHttp
+    request: |-
+      POST /api/user HTTP/1.1
+      Content-Type: application/json
+
+      {
+        "user": {
+          "username": "{{ generate_test_data.username }}",
+          "email": "{{ generate_test_data.email }}@test.com",
+          "password": "{{ generate_test_data.password }}"
+        }
+      }
+  description: Create a test user via registration endpoint and extract token from
+    response
+- id: create_article
+  description: Create an article
+  action:
+    type: CallHttp
+    request: |-
+      POST /api/articles HTTP/1.1
+      Authorization: Token {{ create_user }}
+      Content-Type: application/json
+
+      {
+        "article": {
+          "title": "{{ generate_test_data.article_title }}",
+          "description": "{{ generate_test_data.article_description }}",
+          "body": "{{ generate_test_data.article_body }}"
+        }
+      }
+- id: update_article
+  description: Attempt to update article without Authorization header
+  action:
+    type: CallHttp
+    request: |-
+      PUT /api/articles/{{ generate_test_data.article_title }} HTTP/1.1
+      Content-Type: application/json
+
+      {
+        "article": {
+          "title": "Updated Title"
+        }
+      }
+- id: assert_response
+  description: Assert 401 Unauthorized response
+  action:
+    type: HttpAssert
+    actual: '{{ update_article }}'
+    expected: |-
+      HTTP/1.1 401 Unauthorized
+      Content-Type: text/plain; charset=utf-8
+
+      Unauthorized

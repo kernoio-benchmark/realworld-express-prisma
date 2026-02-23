@@ -1,0 +1,61 @@
+id: update_article_not_found
+subject:
+  type: Endpoint
+  method: PUT
+  path: /api/articles/{slug}
+description: 'Attempt to update a non-existent article returns 500 (bug: should be
+  404)'
+steps:
+- id: generate_test_data
+  description: Generate random test data including non-existent slug
+  action:
+    type: Values
+    outputs:
+      username:
+        type: RandomUuid
+      email:
+        type: RandomUuid
+      password:
+        type: StaticString
+        value: Test123!
+      slug:
+        type: RandomUuid
+- id: create_user
+  description: Create a test user via registration endpoint
+  action:
+    type: CallHttp
+    request: |-
+      POST /api/users HTTP/1.1
+      Content-Type: application/json
+
+      {"user": {"username": "{{ generate_test_data.username }}", "email": "{{ generate_test_data.email }}@test.com", "password": "{{ generate_test_data.password }}"}}
+- id: generate_token
+  description: Generate JWT token for the authenticated user
+  action:
+    type: GenerateJwt
+    claims: |-
+      {
+        "user": {
+          "username": "{{ generate_test_data.username }}"
+        }
+      }
+- id: update_article
+  description: Attempt to update article with non-existent slug
+  action:
+    type: CallHttp
+    request: |-
+      PUT /api/articles/{{ generate_test_data.slug }} HTTP/1.1
+      Authorization: Token {{ generate_token }}
+      Content-Type: application/json
+
+      {"article": {"title": "Updated Title", "description": "Updated description", "body": "Updated body"}}
+- id: assert_response
+  description: 'Assert 500 Internal Server Error response (bug: should be 404)'
+  action:
+    type: HttpAssert
+    actual: '{{ update_article }}'
+    expected: |-
+      HTTP/1.1 500 Internal Server Error
+      Content-Type: text/plain
+
+      Internal Server Error
