@@ -1,0 +1,40 @@
+id: create_article_without_authentication_token
+description: |
+  POST / without Authorization header should return 401 Unauthorized.
+  Tests authentication requirement.
+subject:
+  type: Endpoint
+  method: POST
+  path: /
+steps:
+- id: generate_test_data
+  description: Generate random values for article payload
+  action:
+    type: Values
+    outputs:
+      title:
+        type: RandomUuid
+      description:
+        type: RandomUuid
+      body:
+        type: RandomUuid
+- id: create_article_no_auth
+  description: POST / without Authorization header
+  action:
+    type: CallHttp
+    request: |-
+      POST /api/articles HTTP/1.1
+      Content-Type: application/json
+
+      {"article":{"title":"{{ generate_test_data.title }}","description":"{{ generate_test_data.description }}","body":"{{ generate_test_data.body }}"}}
+- id: assert_unauthorized
+  description: Assert 401 Unauthorized response
+  action:
+    type: HttpAssert
+    actual: '{{ create_article_no_auth }}'
+    expected: |-
+      HTTP/1.1 401 Unauthorized
+      Content-Type: text/plain
+
+      Unauthorized
+    body_match: text_exact

@@ -1,0 +1,82 @@
+id: create_article_missing_title_field
+description: |
+  POST / with valid auth but missing required 'title' field should return
+  400 Bad Request with validation error indicating title is required.
+subject:
+  type: Endpoint
+  method: POST
+  path: /api/articles
+steps:
+- id: generate_test_data
+  description: Generate random values for article fields except title
+  action:
+    type: Values
+    outputs:
+      username:
+        type: RandomUuid
+      email:
+        type: RandomUuid
+      password:
+        type: StaticString
+        value: Test123!
+      description:
+        type: StaticString
+        value: Test description
+      body:
+        type: StaticString
+        value: Test body content
+- id: create_user
+  description: Create a test user via registration endpoint
+  action:
+    type: CallHttp
+    request: |-
+      POST /api/users HTTP/1.1
+      Content-Type: application/json
+
+      {
+        "user": {
+          "username": "{{ generate_test_data.username }}",
+          "email": "{{ generate_test_data.email }}@test.com",
+          "password": "{{ generate_test_data.password }}"
+        }
+      }
+- id: generate_token
+  description: Generate JWT token for the created user
+  action:
+    type: GenerateJwt
+    claims: |-
+      {
+        "user": {
+          "username": "{{ generate_test_data.username }}"
+        }
+      }
+- id: create_article_no_title
+  description: POST / with description and body but no title
+  action:
+    type: CallHttp
+    request: |-
+      POST /api/articles HTTP/1.1
+      Authorization: Token {{ generate_token }}
+      Content-Type: application/json
+
+      {
+        "article": {
+          "description": "{{ generate_test_data.description }}",
+          "body": "{{ generate_test_data.body }}"
+        }
+      }
+- id: assert_bad_request
+  description: Assert 400 Bad Request with title validation error
+  action:
+    type: HttpAssert
+    actual: '{{ create_article_no_title }}'
+    expected: |-
+      HTTP/1.1 400 Bad Request
+      Content-Type: application/json; charset=utf-8
+
+      {
+        "errors": {
+          "body": ["title field must be a non-empty string"]
+        }
+      }
+    body_match: json_lenient
