@@ -1,0 +1,22 @@
+id: get_tags_empty_list
+description: Verify GET /api/tags returns 200 OK with empty array when no tags exist
+subject:
+  type: Endpoint
+  method: GET
+  path: /api/tags
+steps:
+- id: call_get_tags
+  description: Call GET /api/tags endpoint without authentication
+  action:
+    type: CallHttp
+    request: GET /api/tags HTTP/1.1
+- id: assert_empty_response
+  description: Assert 200 OK with empty tags array
+  action:
+    type: HttpAssert
+    actual: '{{ call_get_tags }}'
+    expected: |-
+      HTTP/1.1 200 OK
+      Content-Type: application/json; charset=utf-8
+
+      {"tags": []}

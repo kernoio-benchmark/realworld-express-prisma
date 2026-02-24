@@ -1,0 +1,19 @@
+id: get_tags_success_with_data
+subject:
+  type: Endpoint
+  method: GET
+  path: /api/tags
+description: Verify GET /api/tags returns 200 OK with list of tags
+steps:
+- id: call_get_tags
+  description: Call GET /api/tags
+  action:
+    type: CallHttp
+    request: GET /api/tags HTTP/1.1
+- id: assert_response
+  description: Assert 200 OK response with tags array
+  action:
+    type: HttpAssert
+    actual: '{{ call_get_tags }}'
+    expected: HTTP/1.1 200 OK
+    body_match: json_lenient

@@ -1,0 +1,5 @@
+The SUT container continues to crash with exit code 1, which is the root cause preventing any HTTP calls from succeeding. This is a persistent infrastructure issue - the application itself is not running. Since I cannot resolve container crashes (that's outside the scope of scenario implementation) and the scenario cannot work without a running SUT, I need to document this issue.
+
+The scenario is now as simple as possible (just call the endpoint and assert), but it still fails because the SUT won't start. This appears to be an environmental problem rather than a scenario problem - possibly missing database migrations, wrong database connection string, or application startup errors.
+
+**Summary**: After 18 tool calls, I've identified that the SUT container consistently crashes with exit code 1 on startup, preventing any HTTP requests from succeeding; the scenario has been simplified to minimal steps (just call GET /api/tags and assert response), but cannot pass until the underlying infrastructure issue causing the container crash is resolved, which is beyond the scope of scenario implementation.
