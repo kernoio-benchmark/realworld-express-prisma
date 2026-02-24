@@ -1,0 +1,43 @@
+{
+  "response": [
+    {
+      "type": "ai.koog.prompt.message.Message.Assistant",
+      "parts": [
+        {
+          "type": "text",
+          "text": "/api/articles/{slug}/comments"
+        }
+      ],
+      "metaInfo": {
+        "timestamp": "2026-02-24T22:38:47.531628197Z",
+        "totalTokensCount": 404,
+        "inputTokensCount": 393,
+        "outputTokensCount": 11
+      },
+      "finishReason": "end_turn"
+    }
+  ],
+  "request": {
+    "prompt": {
+      "messages": [
+        {
+          "type": "ai.koog.prompt.message.Message.User",
+          "parts": [
+            {
+              "type": "text",
+              "text": "Determine which base path (if any) applies to this endpoint.\n\nEndpoint: GET /{slug}/comments\n\nReturn the fully qualified path. If no base path applies, return the endpoint path unchanged.\nReturn ONLY the path, nothing else (no markdown, no explanation).\n\nAvailable base paths:\n# /\n## src/app.ts\n```ts\napp.get(\"/\", function (_req, res) {\n  return res.send(\"This is just the backend for RealWorld\");\n});\n```\n# /api/articles\n## src/app.ts\n```ts\napp.use(\"/api/articles\", articlesRouter);\n```\n# /api/profiles\n## src/app.ts\n```ts\napp.use(\"/api/profiles\", profilesRouter);\n```\n# /api/tags\n## src/app.ts\n```ts\napp.use(\"/api/tags\", tagsRouter);\n```\n# /api/user\n## src/app.ts\n```ts\napp.use(\"/api/user\", userRouter);\n```\n# /api/users\n## src/app.ts\n```ts\napp.use(\"/api/users\", usersRouter);\n```\n# /{username}\n## src/routes/api/profiles.ts\n```ts\nrouter.get(\"/:username\", auth.optionalAuthenticate, profile.getProfile);\n```\n# /{username}/follow\n## src/routes/api/profiles.ts\n```ts\nrouter.post(\"/:username/follow\", auth.authenticate, profile.followProfile);\n```\n## src/routes/api/profiles.ts\n```ts\nrouter.delete(\"/:username/follow\", auth.authenticate, profile.unFollowProfile);\n```"
+            }
+          ],
+          "metaInfo": {
+            "timestamp": "2026-02-24T22:38:46.207077084Z"
+          }
+        }
+      ],
+      "id": "",
+      "params": {
+        "temperature": 1.0,
+        "maxTokens": 64000
+      }
+    }
+  }
+}

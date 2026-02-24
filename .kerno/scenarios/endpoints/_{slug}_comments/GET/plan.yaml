@@ -1,0 +1,98 @@
+add:
+- id: get_comments_unauthenticated_success
+  description: Successfully retrieve comments for an article without authentication
+  subject:
+    type: Endpoint
+    method: GET
+    path: /api/articles/{slug}/comments
+  steps:
+  - id: generate_test_data
+    description: Generate random values for test data
+    action:
+      type: Unimplemented
+      intended_type: Values
+  - id: create_test_article
+    description: Create an article with comments to retrieve
+    action:
+      type: Unimplemented
+      intended_type: ExecuteSql
+  - id: call_get_comments
+    description: Get comments without authentication
+    action:
+      type: Unimplemented
+      intended_type: CallHttp
+  - id: assert_response
+    description: Assert 200 OK with comments array
+    action:
+      type: Unimplemented
+      intended_type: HttpAssert
+  - id: cleanup
+    description: Clean up test data
+    action:
+      type: Unimplemented
+      intended_type: ExecuteSql
+- id: get_comments_authenticated_success
+  description: Successfully retrieve comments for an article with authentication,
+    showing following status
+  subject:
+    type: Endpoint
+    method: GET
+    path: /api/articles/{slug}/comments
+  steps:
+  - id: generate_test_data
+    description: Generate random values for test data including user credentials
+    action:
+      type: Unimplemented
+      intended_type: Values
+  - id: create_test_users_and_article
+    description: Create test users (commenter and current user) and article with comments
+    action:
+      type: Unimplemented
+      intended_type: ExecuteSql
+  - id: generate_token
+    description: Generate JWT for authenticated user
+    action:
+      type: Unimplemented
+      intended_type: GenerateJwt
+  - id: call_get_comments
+    description: Get comments with authentication
+    action:
+      type: Unimplemented
+      intended_type: CallHttp
+  - id: assert_response
+    description: Assert 200 OK with comments including following status
+    action:
+      type: Unimplemented
+      intended_type: HttpAssert
+  - id: cleanup
+    description: Clean up test data
+    action:
+      type: Unimplemented
+      intended_type: ExecuteSql
+- id: get_comments_nonexistent_article
+  description: Attempt to get comments for non-existent article slug - expecting error
+    based on Prisma behavior
+  subject:
+    type: Endpoint
+    method: GET
+    path: /api/articles/{slug}/comments
+  steps:
+  - id: generate_test_data
+    description: Generate random slug that does not exist
+    action:
+      type: Unimplemented
+      intended_type: Values
+  - id: call_get_comments
+    description: Get comments for non-existent article
+    action:
+      type: Unimplemented
+      intended_type: CallHttp
+  - id: assert_response
+    description: Assert appropriate error response (likely 404 or 500 based on actual
+      behavior)
+    action:
+      type: Unimplemented
+      intended_type: HttpAssert
+untouched: []
+check: []
+remove: []
