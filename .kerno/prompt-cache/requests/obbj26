@@ -1,0 +1,203 @@
+{
+  "response": [
+    {
+      "type": "ai.koog.prompt.message.Message.Assistant",
+      "parts": [
+        {
+          "type": "text",
+          "text": "{\"externalServices\":[],\"securitySchemes\":[],\"envVars\":[]}"
+        }
+      ],
+      "metaInfo": {
+        "timestamp": "2026-02-24T13:41:21.178151084Z",
+        "totalTokensCount": 2889,
+        "inputTokensCount": 1260,
+        "outputTokensCount": 1629
+      },
+      "finishReason": "stop"
+    }
+  ],
+  "request": {
+    "prompt": {
+      "messages": [
+        {
+          "type": "ai.koog.prompt.message.Message.System",
+          "parts": [
+            {
+              "text": "You are a precise code analyzer. Extract only what is explicitly present in the code or derivable from the file path.\nDo not speculate, infer, or guess about what might exist - only report what you can directly observe.\nWhen uncertain, return empty results rather than guessing.\n"
+            }
+          ],
+          "metaInfo": {
+            "timestamp": "2026-02-24T13:41:06.975888329Z"
+          }
+        },
+        {
+          "type": "ai.koog.prompt.message.Message.User",
+          "parts": [
+            {
+              "type": "text",
+              "text": "# src/controllers/articlesController/articlesList.ts\nNote: the following text has been prefixed with line numbers and a | which is not part of the original content\n```ts\n1|import { NextFunction, Response } from \"express\";\n2|import { Request } from \"express-jwt\";\n3|import { ParsedQs } from \"qs\";\n4|import articlesListPrisma from \"../../utils/db/article/articleListPrisma\";\n5|import userGetPrisma from \"../../utils/db/user/userGetPrisma\";\n6|import articleViewer from \"../../view/articleViewer\";\n7|\n8|function parseArticleListQuery(query: ParsedQs) {\n9|  let { tag, author, favorited } = query;\n10|  const { limit, offset } = query;\n11|  tag = tag ? (tag as string) : undefined;\n12|  author = author ? (author as string) : undefined;\n13|  favorited = favorited ? (favorited as string) : undefined;\n14|  const limitNumber = limit ? parseInt(limit as string) : undefined;\n15|  const offsetNumber = offset ? parseInt(offset as string) : undefined;\n16|  return { tag, author, favorited, limit: limitNumber, offset: offsetNumber };\n17|}\n18|\n19|/**\n20| * Article controller that must receive a request.\n21| * @param req Request with an optional jwt token verified\n22| * @param res Response\n23| * @param next NextFunction\n24| * @returns void\n25| */\n26|export default async function articlesList(\n27|  req: Request,\n28|  res: Response,\n29|  next: NextFunction\n30|) {\n31|  const { tag, author, favorited, limit, offset } = parseArticleListQuery(\n32|    req.query\n33|  );\n34|  const username = req.auth?.user?.username;\n35|\n36|  try {\n37|    // Get current user\n38|    const currentUser = await userGetPrisma(username);\n39|\n40|    // Get the articles\n41|    const articles = await articlesListPrisma(\n42|      tag,\n43|      author,\n44|      favorited,\n45|      limit,\n46|      offset\n47|    );\n48|\n49|    // Create articles view\n50|    const articlesListView = articles.map((article) =>\n51|      currentUser ? articleViewer(article, currentUser) : articleViewer(article)\n52|    );\n53|\n54|    return res.json({\n55|      articles: articlesListView,\n56|      articlesCount: articlesListView.length,\n57|    });\n58|  } catch (error) {\n59|    return next(error);\n60|  }\n61|}\n62|\n```"
+            }
+          ],
+          "metaInfo": {
+            "timestamp": "2026-02-24T13:41:06.975968582Z"
+          }
+        },
+        {
+          "type": "ai.koog.prompt.message.Message.User",
+          "parts": [
+            {
+              "type": "text",
+              "text": "# Constraints\nIn the following tasks, do not extract meaning from comments within files\n\n# Task 1: Extract External Services\nList all ExternalTcpService that can be inferred from this code.\nIf the name of external service used cannot be determined, then do not include it.\nIf this code does not perform any registration of routes in an HTTP server, return an empty list for endpoints.\nThe start and end line must capture the entire syntactic chunk that infers the external service\n\n# Task 2: Extract Security Schemes\nList all the HttpSecurityScheme that are configured by this code.\nList all the HttpSecurityScheme that are configured by this code.\nThe start and end line must capture the entire syntactic configuring the scheme\n\n# Task 4: Extract Environment Variables\nList all EnvVars accessed by this code.\n--ANTHROPIC-CACHE--"
+            }
+          ],
+          "metaInfo": {
+            "timestamp": "2026-02-24T13:41:06.975992584Z"
+          }
+        }
+      ],
+      "id": "",
+      "params": {
+        "temperature": 1.0,
+        "schema": {
+          "type": "ai.koog.prompt.params.LLMParams.Schema.JSON.Standard",
+          "name": "ExtractedSemanticOutput",
+          "schema": {
+            "$id": "ExtractedSemanticOutput",
+            "$defs": {
+              "io.kerno.agent.index.ExternalTcpService": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "lineStart": {
+                    "type": "integer",
+                    "description": "The first line of code communicating with this external service, ignoring comments"
+                  },
+                  "lineEnd": {
+                    "type": "integer",
+                    "description": "The last line of code communicating with this external service, ignoring comments"
+                  }
+                },
+                "required": [
+                  "name",
+                  "lineStart",
+                  "lineEnd"
+                ],
+                "additionalProperties": false
+              },
+              "io.kerno.agent.index.HttpSecurityScheme": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "enum": [
+                      "http",
+                      "apiKey",
+                      "openIdConnect",
+                      "oauth2"
+                    ],
+                    "description": "The first line of code implying this security scheme, ignoring comments"
+                  },
+                  "lineStart": {
+                    "type": "integer",
+                    "description": "The first line of code implying this security scheme, ignoring comments"
+                  },
+                  "lineEnd": {
+                    "type": "integer",
+                    "description": "The last line of code implying this security scheme, ignoring comments"
+                  }
+                },
+                "required": [
+                  "type",
+                  "lineStart",
+                  "lineEnd"
+                ],
+                "additionalProperties": false
+              },
+              "io.kerno.agent.index.EnvVar": {
+                "type": "object",
+                "properties": {
+                  "key": {
+                    "type": "string"
+                  },
+                  "lineStart": {
+                    "type": "integer",
+                    "description": "The first line of code reading this environment variable, ignoring comments"
+                  },
+                  "lineEnd": {
+                    "type": "integer",
+                    "description": "The last line of code reading this environment variable, ignoring comments"
+                  }
+                },
+                "required": [
+                  "key",
+                  "lineStart",
+                  "lineEnd"
+                ],
+                "additionalProperties": false
+              },
+              "io.kerno.agent.index.ExtractedSemanticOutput": {
+                "type": "object",
+                "properties": {
+                  "externalServices": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/$defs/io.kerno.agent.index.ExternalTcpService"
+                    }
+                  },
+                  "securitySchemes": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/$defs/io.kerno.agent.index.HttpSecurityScheme"
+                    }
+                  },
+                  "envVars": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/$defs/io.kerno.agent.index.EnvVar"
+                    }
+                  }
+                },
+                "required": [
+                  "externalServices",
+                  "securitySchemes",
+                  "envVars"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "type": "object",
+            "properties": {
+              "externalServices": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/$defs/io.kerno.agent.index.ExternalTcpService"
+                }
+              },
+              "securitySchemes": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/$defs/io.kerno.agent.index.HttpSecurityScheme"
+                }
+              },
+              "envVars": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/$defs/io.kerno.agent.index.EnvVar"
+                }
+              }
+            },
+            "required": [
+              "externalServices",
+              "securitySchemes",
+              "envVars"
+            ],
+            "additionalProperties": false
+          }
+        }
+      }
+    }
+  }
+}

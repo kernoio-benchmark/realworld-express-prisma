@@ -1,0 +1,124 @@
+{
+  "response": [
+    {
+      "type": "ai.koog.prompt.message.Message.Assistant",
+      "parts": [
+        {
+          "type": "text",
+          "text": "{\"paths\":[]}"
+        }
+      ],
+      "metaInfo": {
+        "timestamp": "2026-02-24T13:41:06.34922288Z",
+        "totalTokensCount": 1392,
+        "inputTokensCount": 797,
+        "outputTokensCount": 595
+      },
+      "finishReason": "stop"
+    }
+  ],
+  "request": {
+    "prompt": {
+      "messages": [
+        {
+          "type": "ai.koog.prompt.message.Message.System",
+          "parts": [
+            {
+              "text": "You are a precise code analyzer. Extract only what is explicitly present in the code or derivable from the file path.\nDo not speculate, infer, or guess about what might exist - only report what you can directly observe.\nWhen uncertain, return empty results rather than guessing.\n"
+            }
+          ],
+          "metaInfo": {
+            "timestamp": "2026-02-24T13:41:00.505270624Z"
+          }
+        },
+        {
+          "type": "ai.koog.prompt.message.Message.User",
+          "parts": [
+            {
+              "type": "text",
+              "text": "# src/controllers/commentsController/getComments.ts\nNote: the following text has been prefixed with line numbers and a | which is not part of the original content\n```ts\n1|import { NextFunction, Response } from \"express\";\n2|import { Request } from \"express-jwt\";\n3|import commentsGetPrisma from \"../../utils/db/comment/commentsGetPrisma\";\n4|import userGetPrisma from \"../../utils/db/user/userGetPrisma\";\n5|import commentViewer from \"../../view/commentViewer\";\n6|\n7|/**\n8| * Comment controller that must receive a request with an optionally authenticated user.\n9| * The parameters of the request must have a slug to the article the comment belongs to.\n10| * @param req Request with an optionally jwt token verified\n11| * @param res Response\n12| * @param next NextFunction\n13| * @returns void\n14| */\n15|export default async function getComments(\n16|  req: Request,\n17|  res: Response,\n18|  next: NextFunction\n19|) {\n20|  const slug = req.params.slug;\n21|  const username = req.auth?.user?.username;\n22|\n23|  try {\n24|    // Get current user from database\n25|    const currentUser = await userGetPrisma(username);\n26|\n27|    // Get comments from database\n28|    const comments = currentUser\n29|      ? await commentsGetPrisma(slug, currentUser)\n30|      : await commentsGetPrisma(slug);\n31|\n32|    // Create comment view\n33|    const commentsView = comments.map((comment) =>\n34|      currentUser ? commentViewer(comment, currentUser) : commentViewer(comment)\n35|    );\n36|\n37|    return res.json({ comments: commentsView });\n38|  } catch (error) {\n39|    return next(error);\n40|  }\n41|}\n42|\n```"
+            }
+          ],
+          "metaInfo": {
+            "timestamp": "2026-02-24T13:41:00.505351962Z"
+          }
+        },
+        {
+          "type": "ai.koog.prompt.message.Message.User",
+          "parts": [
+            {
+              "type": "text",
+              "text": "# Constraints\nIn the following tasks, do not extract meaning from comments within files\n\n# Task 1: Identify Code Type\nFirst, identify if the attached file is code. If it is not code, return empty lists for all fields.\n\n# Task 2: Extract Base URL Path\nIf this is code, identify (if any at all) blocks of code that define a base url that this application uses in its own HTTP servers.\nParameterised URL path segments must be expressed in the {id} format. For example, /users/:id/config should be /users/{id}/config, and /users/<userId> should be /users/{userId}.\nThe start and end line must capture the entire syntactic chunk defining the base url\n\n--ANTHROPIC-CACHE--"
+            }
+          ],
+          "metaInfo": {
+            "timestamp": "2026-02-24T13:41:00.505376486Z"
+          }
+        }
+      ],
+      "id": "",
+      "params": {
+        "temperature": 1.0,
+        "schema": {
+          "type": "ai.koog.prompt.params.LLMParams.Schema.JSON.Standard",
+          "name": "ExtractedBasePaths",
+          "schema": {
+            "$id": "ExtractedBasePaths",
+            "$defs": {
+              "io.kerno.agent.index.BaseURLPath": {
+                "type": "object",
+                "properties": {
+                  "baseUrlPath": {
+                    "type": "string"
+                  },
+                  "lineStart": {
+                    "type": "integer",
+                    "description": "The first line of code implying this base path, ignoring comments"
+                  },
+                  "lineEnd": {
+                    "type": "integer",
+                    "description": "The last line of code implying this base path, ignoring comments"
+                  }
+                },
+                "required": [
+                  "baseUrlPath",
+                  "lineStart",
+                  "lineEnd"
+                ],
+                "additionalProperties": false
+              },
+              "io.kerno.agent.index.ExtractedBasePaths": {
+                "type": "object",
+                "properties": {
+                  "paths": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/$defs/io.kerno.agent.index.BaseURLPath"
+                    }
+                  }
+                },
+                "required": [
+                  "paths"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "type": "object",
+            "properties": {
+              "paths": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/$defs/io.kerno.agent.index.BaseURLPath"
+                }
+              }
+            },
+            "required": [
+              "paths"
+            ],
+            "additionalProperties": false
+          }
+        }
+      }
+    }
+  }
+}

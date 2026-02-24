@@ -1,0 +1,319 @@
+{
+  "response": [
+    {
+      "type": "ai.koog.prompt.message.Message.Tool.Call",
+      "id": "toolu_01BgchqJDaLqwf7NVA86iKEv",
+      "tool": "DockerComposeUpTool",
+      "parts": [
+        {
+          "text": "{\"build\":true}"
+        }
+      ],
+      "metaInfo": {
+        "timestamp": "2026-02-24T13:46:39.262356139Z",
+        "totalTokensCount": 1607,
+        "inputTokensCount": 1550,
+        "outputTokensCount": 57
+      }
+    }
+  ],
+  "request": {
+    "prompt": {
+      "messages": [
+        {
+          "type": "ai.koog.prompt.message.Message.System",
+          "parts": [
+            {
+              "text": "DEFINITION OF planAndSummary\nThe planAndSummary format is defined only and solely with Markdown, without any additional characters, backticks or anything similar.\nYou must adhere to the following Markdown schema:\n\n# Plan\nA plan intended for the assistant to follow and guide itself\n\n# Summary\nA short, single sentence, human-friendly summary to keep the user up to date\n\n\nHere are some examples of the planAndSummary format:\n\n# Plan\nTo solve this task the plan will be as follows... perform this, that and those... etc.\n\n1. this - explanations\n2. that - explanations\n3. those - explanations\n\nSome additional text here reflecting on what has been or might be difficult that is note worthy\n\n# Summary\nI intend to perform this, that and those, all in a single line/sentence!\n"
+            }
+          ],
+          "metaInfo": {
+            "timestamp": "2026-02-24T13:46:21.607795034Z"
+          }
+        },
+        {
+          "type": "ai.koog.prompt.message.Message.System",
+          "parts": [
+            {
+              "text": "## Filesystem accessYou have access to read and write from:\n- /home/ec2-user/aicore/examples/benchmarks/typescript/realworld-express-prisma/.kerno/docker-compose.yaml\n- /home/ec2-user/aicore/examples/benchmarks/typescript/realworld-express-prisma/.kerno/Dockerfile\nIf you choose to __write_file__ you MUST call the DOWN and UP tools in the SAME RESPONSE\nIf you choose to __edit_file__ you MUST call ALL __edit_file__ calls and a DOWN and UP tools in the SAME RESPONSE"
+            }
+          ],
+          "metaInfo": {
+            "timestamp": "2026-02-24T13:46:21.592836926Z"
+          }
+        },
+        {
+          "type": "ai.koog.prompt.message.Message.System",
+          "parts": [
+            {
+              "text": "You are a knowledgeable polyglot engineer and able to understand what external dependencies a software application\nrequires from reading the source files of an application."
+            }
+          ],
+          "metaInfo": {
+            "timestamp": "2026-02-24T13:46:21.592852693Z"
+          }
+        },
+        {
+          "type": "ai.koog.prompt.message.Message.System",
+          "parts": [
+            {
+              "text": "# Mandatory Instructions\nThe code context has changed since last time. You must rebuild the sut by calling the DockerComposeUpTool with build=true"
+            }
+          ],
+          "metaInfo": {
+            "timestamp": "2026-02-24T13:46:21.593109398Z"
+          }
+        },
+        {
+          "type": "ai.koog.prompt.message.Message.System",
+          "parts": [
+            {
+              "text": "# Build Context\nThe following dockerfiles and docker-compose.yaml files were found (path relative to repository root)\n### /home/ec2-user/aicore/examples/benchmarks/typescript/realworld-express-prisma/.kerno/Dockerfile\n```kerno/Dockerfile\n# Use Node.js LTS version\nFROM node:18-alpine\n\n# Install OpenSSL for Prisma\nRUN apk add --no-cache openssl libc6-compat\n\n# Set working directory\nWORKDIR /app\n\n# Copy package files\nCOPY package*.json ./\n\n# Install dependencies\nRUN npm ci\n\n# Copy prisma schema\nCOPY prisma ./prisma\n\n# Copy source code\nCOPY tsconfig.json ./\nCOPY src ./src\n\n# Generate Prisma Client\nRUN npx prisma generate\n\n# Build the application\nRUN npm run build\n\n# Set environment variables\nENV NODE_ENV=production\nENV DATABASE_URL=postgresql://postgres:postgres@localhost:5432/realworld\nENV JWT_SECRET=default-jwt-secret-change-in-production\nENV PORT=3000\n\n# Expose the application port\nEXPOSE 3000\n\n# Start the application\nCMD [\"npm\", \"start\"]\n```\n# Index information\n# Security Scheme Information\n# Analysis of Security Schemes\n\nBased on the provided context, I'll analyze the application's security mechanisms and provide an OpenAPI v3.0 formatted security schemes section.\n\nHowever, I notice that no actual code context was provided in your message. To give you a comprehensive and accurate answer, I would need to see:\n\n1. Authentication/Authorization middleware or filters\n2. Security configuration files\n3. Controller/Route definitions with security annotations\n4. JWT/OAuth configuration\n5. API gateway configurations\n6. Environment variables or configuration files\n\n## Generic OpenAPI v3.0 Security Schemes Template\n\nSince no code was provided, here's a template showing common security patterns:\n\n```yaml\ncomponents:\n  securitySchemes:\n    BearerAuth:\n      type: http\n      scheme: bearer\n      bearerFormat: JWT\n      description: |\n        JWT Bearer token authentication.\n        Expected claims:\n        - sub: User identifier\n        - roles: Array of user roles (e.g., [\"admin\", \"user\"])\n        - exp: Token expiration timestamp\n        - iat: Issued at timestamp\n        \n    ApiKeyAuth:\n      type: apiKey\n      in: header\n      name: X-API-Key\n      description: |\n        API Key authentication for service-to-service communication.\n        The API key should be included in the X-API-Key header.\n        \n    OAuth2:\n      type: oauth2\n      flows:\n        authorizationCode:\n          authorizationUrl: https://example.com/oauth/authorize\n          tokenUrl: https://example.com/oauth/token\n          scopes:\n            read: Read access to resources\n            write: Write access to resources\n            admin: Administrative access\n      description: |\n        OAuth 2.0 authorization code flow.\n        Expected token claims:\n        - scope: Space-separated list of granted scopes\n        - client_id: OAuth client identifier\n        - user_id: Authenticated user identifier\n\nsecurity:\n  - BearerAuth: []\n```\n\n**Please provide the relevant code files** (security configurations, controllers, middleware, etc.) so I can give you an accurate, application-specific security scheme definition.\n# External Service Versions to use\n\n\n\n- Configuration files (docker-compose.yml, application.yml, etc.)\n- Documentation or README files\n- Package manager files (package.json, requirements.txt, pom.xml, go.mod, Gemfile, etc.)\n- Source code files that reference external services\nCould you please provide the relevant code files so I can analyze the external service dependencies and specify their compatible versions?\nI need to analyze the codebase to identify external service dependencies, but I don't see any code context provided in your message. The section marked \"# Relevant Code Context\" appears to be empty except for the token budget notation.\nTo properly identify external service dependencies and their compatible versions, I would need to see:\n# SUT Environment Variables to use\nDATABASE_URL\nJWT_SECRET\nNODE_ENV\nPORT\n```\n```"
+            }
+          ],
+          "metaInfo": {
+            "timestamp": "2026-02-24T13:46:21.593985457Z"
+          }
+        },
+        {
+          "type": "ai.koog.prompt.message.Message.User",
+          "parts": [
+            {
+              "type": "text",
+              "text": "Please define the docker compose yaml required to build and run my application (which should from\nnow on be referred to as the System Under Test, or SUT for short) alongside its dependencies.\n\n**Important**: Do not use the top-level compose version property since it's obsolete.\n\nYour task is to ensure the docker compose configuration you have defined runs successfully, is applied and\nwritten to disk. You do not need to apply your configuration or write it to disk if they already match,\nbut you must be absolutely certain they are effectively the same.\n        \nI will be using the environment after you have got it working, so leave it up please.\n\nIt is absolutely critical that the ports of every service are published to a random port, without this\nI will not be able to connect to it, rendering the result useless\n\nEvery service MUST have an \"external-url\" label which clients can use to communicate from outside of the\ndocker compose network. Databases must be connection string adhering to the format shown in the compose\nopinions tool. Use {{PORT}} in these urls since clients will find out the randomly bound port themselves        \n\nPlease don't mount any volumes. It causes I do not want anything persisted after shutting down the environment\n\nEnsure what is running is exactly the configuration you decide on, i.e. remove superfluous configuration\n\nIf you changed anything, then please provide a summary, otherwise a simple single sentence on the outcome will do\n--ANTHROPIC-CACHE--"
+            }
+          ],
+          "metaInfo": {
+            "timestamp": "2026-02-24T13:46:21.594504183Z"
+          }
+        },
+        {
+          "type": "ai.koog.prompt.message.Message.User",
+          "parts": [
+            {
+              "type": "text",
+              "text": "# NOTE\nYou must respond to this message using the planAndSummary format\n\n# MESSAGE\nThe previous message is your task. Before you begin write up a high level plan for yourself to follow, it must NOT go into any detail beyond high level steps unless there is something critical to point out\n\nSummarise, for a human reader what you are about to do in a SINGLE SENTENCE, do not include anything in your response after this sentence as it will be ignored"
+            }
+          ],
+          "metaInfo": {
+            "timestamp": "2026-02-24T13:46:21.607859596Z"
+          }
+        },
+        {
+          "type": "ai.koog.prompt.message.Message.Assistant",
+          "parts": [
+            {
+              "type": "text",
+              "text": "# Plan\n\n1. Read the existing docker-compose.yaml file to check current configuration\n2. Read the Dockerfile to understand the SUT build setup\n3. Get compose service opinions for external dependencies (likely PostgreSQL based on DATABASE_URL)\n4. Design the docker-compose.yaml with:\n   - SUT service built from the Dockerfile\n   - PostgreSQL database service\n   - Random port mappings for all services (using \"0\" in host port)\n   - External-url labels with {{PORT}} placeholder\n   - No volumes mounted\n   - Environment variables for SUT\n5. Compare with existing configuration and update if needed\n6. Bring up the environment with build=true flag (as mandated)\n7. Verify all services are running successfully\n\n# Summary\nI will create a docker-compose.yaml configuration for the RealWorld Express application with PostgreSQL, using random port mappings and external-url labels, then build and start the environment."
+            }
+          ],
+          "metaInfo": {
+            "timestamp": "2026-02-24T13:46:28.567369282Z",
+            "totalTokensCount": 220,
+            "inputTokensCount": 2,
+            "outputTokensCount": 218
+          },
+          "finishReason": "end_turn"
+        },
+        {
+          "type": "ai.koog.prompt.message.Message.User",
+          "parts": [
+            {
+              "type": "text",
+              "text": "Now, begin solving the task"
+            }
+          ],
+          "metaInfo": {
+            "timestamp": "2026-02-24T13:46:28.571343434Z"
+          }
+        },
+        {
+          "type": "ai.koog.prompt.message.Message.Tool.Call",
+          "id": "toolu_01SN3iZjX9s3egAYn499y25b",
+          "tool": "__read_file__",
+          "parts": [
+            {
+              "text": "{\"path\":\"/home/ec2-user/aicore/examples/benchmarks/typescript/realworld-express-prisma/.kerno/docker-compose.yaml\"}"
+            }
+          ],
+          "metaInfo": {
+            "timestamp": "2026-02-24T13:46:31.535428803Z",
+            "totalTokensCount": 188,
+            "inputTokensCount": 2,
+            "outputTokensCount": 186
+          }
+        },
+        {
+          "type": "ai.koog.prompt.message.Message.Tool.Result",
+          "id": "toolu_01SN3iZjX9s3egAYn499y25b",
+          "tool": "__read_file__",
+          "parts": [
+            {
+              "text": "File not found: /home/ec2-user/aicore/examples/benchmarks/typescript/realworld-express-prisma/.kerno/docker-compose.yaml (ensure the path is absolute)"
+            }
+          ],
+          "metaInfo": {
+            "timestamp": "2026-02-24T13:46:31.611289695Z"
+          }
+        },
+        {
+          "type": "ai.koog.prompt.message.Message.Tool.Call",
+          "id": "toolu_01QPGm1QjeZkbEUeQcBpPxfh",
+          "tool": "ComposeServiceOpinions",
+          "parts": [
+            {
+              "text": "{\"requestedOpinions\":[\"postgres\"]}"
+            }
+          ],
+          "metaInfo": {
+            "timestamp": "2026-02-24T13:46:31.535428803Z",
+            "totalTokensCount": 188,
+            "inputTokensCount": 2,
+            "outputTokensCount": 186
+          }
+        },
+        {
+          "type": "ai.koog.prompt.message.Message.Tool.Result",
+          "id": "toolu_01QPGm1QjeZkbEUeQcBpPxfh",
+          "tool": "ComposeServiceOpinions",
+          "parts": [
+            {
+              "text": "[{\"type\":\"Postgres\",\"opinion\":\"# Postgres Guidance\\n\\nTake care to change to a different major version depending on client libraries' needs\\nUnless it causes a problem, stick to the postgres:{major_version}-alpine images (you don't need to specify minor/patch version)\\n```yaml\\npostgres:\\n  image: \\\"postgres:16-alpine\\\"\\n  pull_policy: missing\\n  deploy:\\n    resources:\\n      limits:\\n        memory: 256M\\n      reservations:\\n        memory: 128M\\n  environment:\\n    - \\\"POSTGRES_USER=test_user\\\"\\n    - \\\"POSTGRES_PASSWORD=test_password\\\"\\n    - \\\"POSTGRES_DB=test_db\\\"\\n  ports:\\n    - \\\"5432\\\"\\n  healthcheck:\\n    test:\\n      - \\\"CMD-SHELL\\\"\\n      - \\\"pg_isready -U test_user -d test_db\\\"\\n    interval: \\\"3s\\\"\\n    timeout: \\\"5s\\\"\\n    retries: \\\"10\\\"\\n  tmpfs:\\n    - /var/lib/postgresql/data\\n  labels:\\n    - external-url=postgresql://localhost:{{PORT}}/test_db?user=test_user&password=test_password\\n```\"}]"
+            }
+          ],
+          "metaInfo": {
+            "timestamp": "2026-02-24T13:46:31.611304199Z"
+          }
+        },
+        {
+          "type": "ai.koog.prompt.message.Message.Tool.Call",
+          "id": "toolu_016pD5aDJ97BYZWLp4AzEr56",
+          "tool": "GenerateSecretForSecuritySchemeTool",
+          "parts": [
+            {
+              "text": "{\"requestedAlgorithms\":[\"hs256\"]}"
+            }
+          ],
+          "metaInfo": {
+            "timestamp": "2026-02-24T13:46:31.535428803Z",
+            "totalTokensCount": 188,
+            "inputTokensCount": 2,
+            "outputTokensCount": 186
+          }
+        },
+        {
+          "type": "ai.koog.prompt.message.Message.Tool.Result",
+          "id": "toolu_016pD5aDJ97BYZWLp4AzEr56",
+          "tool": "GenerateSecretForSecuritySchemeTool",
+          "parts": [
+            {
+              "text": "[{\"requestedType\":\"HS256\",\"secret\":\"this_is_a_secret_meeting_all_requirements_of_any_hs_algorithms\"}]"
+            }
+          ],
+          "metaInfo": {
+            "timestamp": "2026-02-24T13:46:31.611306469Z"
+          }
+        },
+        {
+          "type": "ai.koog.prompt.message.Message.Tool.Call",
+          "id": "toolu_01R4qn51BejvwzUVNSF9JS9F",
+          "tool": "__write_file__",
+          "parts": [
+            {
+              "text": "{\"content\":\"services:\\n  postgres:\\n    image: \\\"postgres:16-alpine\\\"\\n    pull_policy: missing\\n    deploy:\\n      resources:\\n        limits:\\n          memory: 256M\\n        reservations:\\n          memory: 128M\\n    environment:\\n      - \\\"POSTGRES_USER=postgres\\\"\\n      - \\\"POSTGRES_PASSWORD=postgres\\\"\\n      - \\\"POSTGRES_DB=realworld\\\"\\n    ports:\\n      - \\\"0:5432\\\"\\n    healthcheck:\\n      test:\\n        - \\\"CMD-SHELL\\\"\\n        - \\\"pg_isready -U postgres -d realworld\\\"\\n      interval: \\\"3s\\\"\\n      timeout: \\\"5s\\\"\\n      retries: \\\"10\\\"\\n    tmpfs:\\n      - /var/lib/postgresql/data\\n    labels:\\n      - external-url=postgresql://localhost:{{PORT}}/realworld?user=postgres&password=postgres\\n\\n  sut:\\n    build:\\n      context: /home/ec2-user/aicore/examples/benchmarks/typescript/realworld-express-prisma\\n      dockerfile: .kerno/Dockerfile\\n    pull_policy: never\\n    deploy:\\n      resources:\\n        limits:\\n          memory: 512M\\n        reservations:\\n          memory: 256M\\n    environment:\\n      - \\\"DATABASE_URL=postgresql://postgres:postgres@postgres:5432/realworld\\\"\\n      - \\\"JWT_SECRET=this_is_a_secret_meeting_all_requirements_of_any_hs_algorithms\\\"\\n      - \\\"NODE_ENV=production\\\"\\n      - \\\"PORT=3000\\\"\\n    ports:\\n      - \\\"0:3000\\\"\\n    depends_on:\\n      postgres:\\n        condition: service_healthy\\n    labels:\\n      - external-url=http://localhost:{{PORT}}\\n\",\"path\":\"/home/ec2-user/aicore/examples/benchmarks/typescript/realworld-express-prisma/.kerno/docker-compose.yaml\"}"
+            }
+          ],
+          "metaInfo": {
+            "timestamp": "2026-02-24T13:46:37.486723701Z",
+            "totalTokensCount": 1489,
+            "inputTokensCount": 965,
+            "outputTokensCount": 524
+          }
+        },
+        {
+          "type": "ai.koog.prompt.message.Message.Tool.Result",
+          "id": "toolu_01R4qn51BejvwzUVNSF9JS9F",
+          "tool": "__write_file__",
+          "parts": [
+            {
+              "text": "Written\n/home/ec2-user/aicore/examples/benchmarks/typescript/realworld-express-prisma/.kerno/docker-compose.yaml (1.3 KiB, 52 lines)"
+            }
+          ],
+          "metaInfo": {
+            "timestamp": "2026-02-24T13:46:37.532309815Z"
+          }
+        }
+      ],
+      "id": "",
+      "params": {
+        "temperature": 1.0,
+        "maxTokens": 64000,
+        "toolChoice": {
+          "type": "ai.koog.prompt.params.LLMParams.ToolChoice.Auto"
+        }
+      }
+    },
+    "toolJsons": [
+      {
+        "name": "DockerComposeUpTool",
+        "description": "Calls docker compose up --wait --force-recreate\n\nSince this uses --force-recreate you do not need to call the DockerComposeDownTool before this tool if\nyou wanted to recreate containers, they will always be recreated.\n\nAs an optimisation, only use the build flag if you've been informed there have been code changes\n\nAlways returns container status summary, if there was a failure it will include the failure information too"
+      },
+      {
+        "name": "DockerComposeDownTool",
+        "description": "Calls docker compose down on the project\n\nIf you only need to build out of date containers, just call the up tool with build=true in the args.\nThere's no need to bring everything down first since up with build will restart any built services\n\nAlways returns container status summary, if there was a failure it will include the failure information too"
+      },
+      {
+        "name": "DockerComposeProjectStatusTool",
+        "description": "Calls ls on the compose project, returning the project status in a structured format"
+      },
+      {
+        "name": "DockerComposeContainerStatusTool",
+        "description": "Calls ps on the compose project, returning the complete container statuses in json format\n\nCaution - these statuses contain non-deterministic values such how long ago something was created\nand is therefore incompatible with any prompt caching optimisations"
+      },
+      {
+        "name": "DockerComposeContainerStatusSimpleTool",
+        "description": "Calls ps on the compose project, returning a stable simple view of the container statuses\n\nThe tool is stable for prompt caching, prefer to use it when checking on for salient changes\nin the docker compose container statuses.\n\nIf greater detail is required then call DockerComposeContainerStatusTool if it available, which includes non-deterministic fields\n\nThe returned table has headers:\n\nstate, exit code, health, service, image, mounts, local volumes"
+      },
+      {
+        "name": "yaml_read",
+        "description": "Reads specific paths from a YAML file.\nMore efficient than reading entire files when you only need certain values.\n\nPath is specified as an array of strings, e.g., [\"spec\", \"containers\", \"0\", \"image\"]\n- Keys are strings: [\"metadata\", \"name\"]\n- Array indices are strings: [\"items\", \"0\"]\n- Root (entire file): empty array []\n\nReturns the YAML subtree at each path. Useful for:\n- Checking current values before editing\n- Reading specific configuration values\n- Extracting parts of large YAML files\n\nThe order of the returned values matches the order of paths requested"
+      },
+      {
+        "name": "yaml_edit",
+        "description": "Edits a YAML file using path-based operations. More efficient than text-based editing\nbecause you specify YAML paths instead of large find/replace strings.\n\nSupports three operations:\n- set: Sets a value at a path (creates intermediate nodes if needed)\n- delete: Removes a value at a path (WARNING: deleting array items will shift index values)\n- insert: Inserts a value into an array at an index, shifting existing elements\n\nPath is specified as an array of strings, e.g., [\"spec\", \"containers\", \"0\", \"image\"]\n- Keys are strings: [\"metadata\", \"name\"]\n- Array indices are strings: [\"items\", \"0\"]\n- Root (entire file): empty array []\n\nFor 'set' and 'insert' operations, you must specify:\n- valueType: \"object\", \"array\", \"scalar\", or \"null\"\n- value: The raw YAML content (not required for \"null\" type)\n\nFor 'insert' operations, the path must end with an array index.\n\nExamples:\n- Set scalar: path=[\"metadata\", \"name\"], valueType=\"scalar\", value=\"my-app\"\n- Set object: path=[\"spec\"], valueType=\"object\", value=\"{replicas: 3}\"\n- Set array: path=[\"items\"], valueType=\"array\", value=\"[a, b, c]\"\n- Set null: path=[\"metadata\", \"annotations\"], valueType=\"null\"\n- Insert at index 0: path=[\"items\", \"0\"], valueType=\"scalar\", value=\"new-first\"\n- Insert in middle: path=[\"steps\", \"2\"], valueType=\"object\", value=\"{name: new-step}\"\n\nThis tool supports multiple edits (one per operation entry in the operations list). It is recommended to\nALWAYS perform multiple edits in one tool call instead of calling one edit at a time, as this is slow\nand extremely wasteful on tokens passing context back and forth"
+      },
+      {
+        "name": "__write_file__",
+        "description": "Writes text content to a file at an absolute path. Creates parent directories if needed and overwrites existing content.\n\nUse this to:\n- Create new text files with content\n- Replace entire content of existing files\n\nReturns file metadata (name, extension, path, hidden, size, contentType)."
+      },
+      {
+        "name": "__read_file__",
+        "description": "Reads a text file (throws if non-text) with optional line range selection. TEXT-ONLY - never reads binary files.\n\nUse this to:\n- Read entire text files or specific line ranges\n- Get file content along with metadata\n- Extract portions of files using 0-based line indexing\n\nReturns file content and metadata (name, extension, path, hidden, size, contentType)."
+      },
+      {
+        "name": "edit_file",
+        "description": "Makes an edit to a target file by applying a single text replacement patch.\nThis tool performs targeted file modifications by replacing specific text segments with new content. \nIt can handle partial edits, complete file rewrites, or new file creation. \nThe tool uses string matching to locate the original text and replaces it with the provided replacement text.\nThe tool should be used when you need to modify existing files, create new files, or make precise text replacements. \nIt handles file operations safely by creating parent directories automatically if they don't exist.\n### Key Requirements\n- The 'original' text must match text in the file, whitespaces and line endings will be fuzzy matched\n- Only ONE replacement per tool call - for multiple changes, call the tool multiple times\n- Use empty string (\"\") for 'original' when creating new files or performing complete rewrites\n- The 'original' text must be kept to absolute minimum to ensure effective editing\n### This tool does NOT\n- Perform fuzzy or approximate text matching other than whitespaces\n- Handle multiple replacements in a single call\n- Automatically fix formatting or indentation mismatches\n- Provide file content reading capabilities (use read_file for that)\n### Common use cases\n- Modifying specific functions or code blocks in existing files\n- Adding new imports, methods, or classes to source files\n- Creating new configuration files with complete content\n- Updating documentation or README files\n- Fixing bugs by replacing problematic code segments"
+      },
+      {
+        "name": "DockerComposeReadAppliedConfigTool",
+        "description": "Returns the currently applied yaml configuration of the docker compose runtime"
+      },
+      {
+        "name": "DockerComposeLogsTool",
+        "description": "Retrieves logs from a container. Useful for debugging issues when containers fail to start or behave unexpectedly.\n\nUse this tool to investigate errors, check startup messages, or verify service behavior.\n\nThe tail parameter limits the number of lines returned from the end of the logs, which is useful when logs are very long."
+      },
+      {
+        "name": "DockerComposeReadinessCheckTool",
+        "description": "A container can show as \"running\" but the application inside may have crashed or failed to start.\nThis tool performs a TCP connection check to confirm the app is listening on the expected port.\n\nUse this AFTER the container status shows \"running\" to verify the is ready.\n\nReturns: HEALTHY (port accepting connections) or UNHEALTHY (connection refused, app not ready)."
+      },
+      {
+        "name": "GenerateSecretForSecuritySchemeTool",
+        "description": "Generates a valid secret for the requested algorithms, returns all requested types with their secret\nUse this tool instead of trying to generate your own secrets as these are guaranteed to be valid"
+      },
+      {
+        "name": "ComposeServiceOpinions",
+        "description": "Provides opinions on the structure of a service within docker compose for every requested opinion. These opinions should take priority unless you observe problems after using them"
+      }
+    ]
+  }
+}

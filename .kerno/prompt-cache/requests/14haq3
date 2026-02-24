@@ -1,0 +1,203 @@
+{
+  "response": [
+    {
+      "type": "ai.koog.prompt.message.Message.Assistant",
+      "parts": [
+        {
+          "type": "text",
+          "text": "{\"externalServices\":[],\"securitySchemes\":[],\"envVars\":[]}"
+        }
+      ],
+      "metaInfo": {
+        "timestamp": "2026-02-24T13:41:44.073027045Z",
+        "totalTokensCount": 6109,
+        "inputTokensCount": 3072,
+        "outputTokensCount": 3037
+      },
+      "finishReason": "stop"
+    }
+  ],
+  "request": {
+    "prompt": {
+      "messages": [
+        {
+          "type": "ai.koog.prompt.message.Message.System",
+          "parts": [
+            {
+              "text": "You are a precise code analyzer. Extract only what is explicitly present in the code or derivable from the file path.\nDo not speculate, infer, or guess about what might exist - only report what you can directly observe.\nWhen uncertain, return empty results rather than guessing.\n"
+            }
+          ],
+          "metaInfo": {
+            "timestamp": "2026-02-24T13:41:15.486069741Z"
+          }
+        },
+        {
+          "type": "ai.koog.prompt.message.Message.User",
+          "parts": [
+            {
+              "type": "text",
+              "text": "# tsconfig.json\nNote: the following text has been prefixed with line numbers and a | which is not part of the original content\n```json\n1|{\n2|  \"compilerOptions\": {\n3|    /* Visit https://aka.ms/tsconfig to read more about this file */\n4|\n5|    /* Projects */\n6|    // \"incremental\": true,                              /* Save .tsbuildinfo files to allow for incremental compilation of projects. */\n7|    // \"composite\": true,                                /* Enable constraints that allow a TypeScript project to be used with project references. */\n8|    // \"tsBuildInfoFile\": \"./.tsbuildinfo\",              /* Specify the path to .tsbuildinfo incremental compilation file. */\n9|    // \"disableSourceOfProjectReferenceRedirect\": true,  /* Disable preferring source files instead of declaration files when referencing composite projects. */\n10|    // \"disableSolutionSearching\": true,                 /* Opt a project out of multi-project reference checking when editing. */\n11|    // \"disableReferencedProjectLoad\": true,             /* Reduce the number of projects loaded automatically by TypeScript. */\n12|\n13|    /* Language and Environment */\n14|    \"target\": \"es2016\" /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */,\n15|    // \"lib\": [],                                        /* Specify a set of bundled library declaration files that describe the target runtime environment. */\n16|    // \"jsx\": \"preserve\",                                /* Specify what JSX code is generated. */\n17|    // \"experimentalDecorators\": true,                   /* Enable experimental support for TC39 stage 2 draft decorators. */\n18|    // \"emitDecoratorMetadata\": true,                    /* Emit design-type metadata for decorated declarations in source files. */\n19|    // \"jsxFactory\": \"\",                                 /* Specify the JSX factory function used when targeting React JSX emit, e.g. 'React.createElement' or 'h'. */\n20|    // \"jsxFragmentFactory\": \"\",                         /* Specify the JSX Fragment reference used for fragments when targeting React JSX emit e.g. 'React.Fragment' or 'Fragment'. */\n21|    // \"jsxImportSource\": \"\",                            /* Specify module specifier used to import the JSX factory functions when using 'jsx: react-jsx*'. */\n22|    // \"reactNamespace\": \"\",                             /* Specify the object invoked for 'createElement'. This only applies when targeting 'react' JSX emit. */\n23|    // \"noLib\": true,                                    /* Disable including any library files, including the default lib.d.ts. */\n24|    // \"useDefineForClassFields\": true,                  /* Emit ECMAScript-standard-compliant class fields. */\n25|    // \"moduleDetection\": \"auto\",                        /* Control what method is used to detect module-format JS files. */\n26|\n27|    /* Modules */\n28|    \"module\": \"commonjs\" /* Specify what module code is generated. */,\n29|    // \"rootDir\": \"./\",                                  /* Specify the root folder within your source files. */\n30|    // \"moduleResolution\": \"node\",                       /* Specify how TypeScript looks up a file from a given module specifier. */\n31|    // \"baseUrl\": \"./\",                                  /* Specify the base directory to resolve non-relative module names. */\n32|    // \"paths\": {},                                      /* Specify a set of entries that re-map imports to additional lookup locations. */\n33|    // \"rootDirs\": [],                                   /* Allow multiple folders to be treated as one when resolving modules. */\n34|    // \"typeRoots\": [],                                  /* Specify multiple folders that act like './node_modules/@types'. */\n35|    // \"types\": [],                                      /* Specify type package names to be included without being referenced in a source file. */\n36|    // \"allowUmdGlobalAccess\": true,                     /* Allow accessing UMD globals from modules. */\n37|    // \"moduleSuffixes\": [],                             /* List of file name suffixes to search when resolving a module. */\n38|    // \"resolveJsonModule\": true,                        /* Enable importing .json files. */\n39|    // \"noResolve\": true,                                /* Disallow 'import's, 'require's or '<reference>'s from expanding the number of files TypeScript should add to a project. */\n40|\n41|    /* JavaScript Support */\n42|    // \"allowJs\": true,                                  /* Allow JavaScript files to be a part of your program. Use the 'checkJS' option to get errors from these files. */\n43|    // \"checkJs\": true,                                  /* Enable error reporting in type-checked JavaScript files. */\n44|    // \"maxNodeModuleJsDepth\": 1,                        /* Specify the maximum folder depth used for checking JavaScript files from 'node_modules'. Only applicable with 'allowJs'. */\n45|\n46|    /* Emit */\n47|    // \"declaration\": true,                              /* Generate .d.ts files from TypeScript and JavaScript files in your project. */\n48|    // \"declarationMap\": true,                           /* Create sourcemaps for d.ts files. */\n49|    // \"emitDeclarationOnly\": true,                      /* Only output d.ts files and not JavaScript files. */\n50|    // \"sourceMap\": true,                                /* Create source map files for emitted JavaScript files. */\n51|    // \"outFile\": \"./\",                                  /* Specify a file that bundles all outputs into one JavaScript file. If 'declaration' is true, also designates a file that bundles all .d.ts output. */\n52|    \"outDir\": \"./dist\" /* Specify an output folder for all emitted files. */,\n53|    // \"removeComments\": true,                           /* Disable emitting comments. */\n54|    // \"noEmit\": true,                                   /* Disable emitting files from a compilation. */\n55|    // \"importHelpers\": true,                            /* Allow importing helper functions from tslib once per project, instead of including them per-file. */\n56|    // \"importsNotUsedAsValues\": \"remove\",               /* Specify emit/checking behavior for imports that are only used for types. */\n57|    // \"downlevelIteration\": true,                       /* Emit more compliant, but verbose and less performant JavaScript for iteration. */\n58|    // \"sourceRoot\": \"\",                                 /* Specify the root path for debuggers to find the reference source code. */\n59|    // \"mapRoot\": \"\",                                    /* Specify the location where debugger should locate map files instead of generated locations. */\n60|    // \"inlineSourceMap\": true,                          /* Include sourcemap files inside the emitted JavaScript. */\n61|    // \"inlineSources\": true,                            /* Include source code in the sourcemaps inside the emitted JavaScript. */\n62|    // \"emitBOM\": true,                                  /* Emit a UTF-8 Byte Order Mark (BOM) in the beginning of output files. */\n63|    // \"newLine\": \"crlf\",                                /* Set the newline character for emitting files. */\n64|    // \"stripInternal\": true,                            /* Disable emitting declarations that have '@internal' in their JSDoc comments. */\n65|    // \"noEmitHelpers\": true,                            /* Disable generating custom helper functions like '__extends' in compiled output. */\n66|    // \"noEmitOnError\": true,                            /* Disable emitting files if any type checking errors are reported. */\n67|    // \"preserveConstEnums\": true,                       /* Disable erasing 'const enum' declarations in generated code. */\n68|    // \"declarationDir\": \"./\",                           /* Specify the output directory for generated declaration files. */\n69|    // \"preserveValueImports\": true,                     /* Preserve unused imported values in the JavaScript output that would otherwise be removed. */\n70|\n71|    /* Interop Constraints */\n72|    // \"isolatedModules\": true,                          /* Ensure that each file can be safely transpiled without relying on other imports. */\n73|    // \"allowSyntheticDefaultImports\": true,             /* Allow 'import x from y' when a module doesn't have a default export. */\n74|    \"esModuleInterop\": true /* Emit additional JavaScript to ease support for importing CommonJS modules. This enables 'allowSyntheticDefaultImports' for type compatibility. */,\n75|    // \"preserveSymlinks\": true,                         /* Disable resolving symlinks to their realpath. This correlates to the same flag in node. */\n76|    \"forceConsistentCasingInFileNames\": true /* Ensure that casing is correct in imports. */,\n77|\n78|    /* Type Checking */\n79|    \"strict\": true /* Enable all strict type-checking options. */,\n80|    // \"noImplicitAny\": true,                            /* Enable error reporting for expressions and declarations with an implied 'any' type. */\n81|    // \"strictNullChecks\": true,                         /* When type checking, take into account 'null' and 'undefined'. */\n82|    // \"strictFunctionTypes\": true,                      /* When assigning functions, check to ensure parameters and the return values are subtype-compatible. */\n83|    // \"strictBindCallApply\": true,                      /* Check that the arguments for 'bind', 'call', and 'apply' methods match the original function. */\n84|    // \"strictPropertyInitialization\": true,             /* Check for class properties that are declared but not set in the constructor. */\n85|    // \"noImplicitThis\": true,                           /* Enable error reporting when 'this' is given the type 'any'. */\n86|    // \"useUnknownInCatchVariables\": true,               /* Default catch clause variables as 'unknown' instead of 'any'. */\n87|    // \"alwaysStrict\": true,                             /* Ensure 'use strict' is always emitted. */\n88|    // \"noUnusedLocals\": true,                           /* Enable error reporting when local variables aren't read. */\n89|    // \"noUnusedParameters\": true,                       /* Raise an error when a function parameter isn't read. */\n90|    // \"exactOptionalPropertyTypes\": true,               /* Interpret optional property types as written, rather than adding 'undefined'. */\n91|    // \"noImplicitReturns\": true,                        /* Enable error reporting for codepaths that do not explicitly return in a function. */\n92|    // \"noFallthroughCasesInSwitch\": true,               /* Enable error reporting for fallthrough cases in switch statements. */\n93|    // \"noUncheckedIndexedAccess\": true,                 /* Add 'undefined' to a type when accessed using an index. */\n94|    // \"noImplicitOverride\": true,                       /* Ensure overriding members in derived classes are marked with an override modifier. */\n95|    // \"noPropertyAccessFromIndexSignature\": true,       /* Enforces using indexed accessors for keys declared using an indexed type. */\n96|    // \"allowUnusedLabels\": true,                        /* Disable error reporting for unused labels. */\n97|    // \"allowUnreachableCode\": true,                     /* Disable error reporting for unreachable code. */\n98|\n99|    /* Completeness */\n100|    // \"skipDefaultLibCheck\": true,                      /* Skip type checking .d.ts files that are included with TypeScript. */\n101|    \"skipLibCheck\": true /* Skip type checking all .d.ts files. */\n102|  },\n103|  \"include\": [\"src/\"]\n104|}\n105|\n```"
+            }
+          ],
+          "metaInfo": {
+            "timestamp": "2026-02-24T13:41:15.486281042Z"
+          }
+        },
+        {
+          "type": "ai.koog.prompt.message.Message.User",
+          "parts": [
+            {
+              "type": "text",
+              "text": "# Constraints\nIn the following tasks, do not extract meaning from comments within files\n\n# Task 1: Extract External Services\nList all ExternalTcpService that can be inferred from this code.\nIf the name of external service used cannot be determined, then do not include it.\nIf this code does not perform any registration of routes in an HTTP server, return an empty list for endpoints.\nThe start and end line must capture the entire syntactic chunk that infers the external service\n\n# Task 2: Extract Security Schemes\nList all the HttpSecurityScheme that are configured by this code.\nList all the HttpSecurityScheme that are configured by this code.\nThe start and end line must capture the entire syntactic configuring the scheme\n\n# Task 4: Extract Environment Variables\nList all EnvVars accessed by this code.\n--ANTHROPIC-CACHE--"
+            }
+          ],
+          "metaInfo": {
+            "timestamp": "2026-02-24T13:41:15.486308493Z"
+          }
+        }
+      ],
+      "id": "",
+      "params": {
+        "temperature": 1.0,
+        "schema": {
+          "type": "ai.koog.prompt.params.LLMParams.Schema.JSON.Standard",
+          "name": "ExtractedSemanticOutput",
+          "schema": {
+            "$id": "ExtractedSemanticOutput",
+            "$defs": {
+              "io.kerno.agent.index.ExternalTcpService": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "lineStart": {
+                    "type": "integer",
+                    "description": "The first line of code communicating with this external service, ignoring comments"
+                  },
+                  "lineEnd": {
+                    "type": "integer",
+                    "description": "The last line of code communicating with this external service, ignoring comments"
+                  }
+                },
+                "required": [
+                  "name",
+                  "lineStart",
+                  "lineEnd"
+                ],
+                "additionalProperties": false
+              },
+              "io.kerno.agent.index.HttpSecurityScheme": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "enum": [
+                      "http",
+                      "apiKey",
+                      "openIdConnect",
+                      "oauth2"
+                    ],
+                    "description": "The first line of code implying this security scheme, ignoring comments"
+                  },
+                  "lineStart": {
+                    "type": "integer",
+                    "description": "The first line of code implying this security scheme, ignoring comments"
+                  },
+                  "lineEnd": {
+                    "type": "integer",
+                    "description": "The last line of code implying this security scheme, ignoring comments"
+                  }
+                },
+                "required": [
+                  "type",
+                  "lineStart",
+                  "lineEnd"
+                ],
+                "additionalProperties": false
+              },
+              "io.kerno.agent.index.EnvVar": {
+                "type": "object",
+                "properties": {
+                  "key": {
+                    "type": "string"
+                  },
+                  "lineStart": {
+                    "type": "integer",
+                    "description": "The first line of code reading this environment variable, ignoring comments"
+                  },
+                  "lineEnd": {
+                    "type": "integer",
+                    "description": "The last line of code reading this environment variable, ignoring comments"
+                  }
+                },
+                "required": [
+                  "key",
+                  "lineStart",
+                  "lineEnd"
+                ],
+                "additionalProperties": false
+              },
+              "io.kerno.agent.index.ExtractedSemanticOutput": {
+                "type": "object",
+                "properties": {
+                  "externalServices": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/$defs/io.kerno.agent.index.ExternalTcpService"
+                    }
+                  },
+                  "securitySchemes": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/$defs/io.kerno.agent.index.HttpSecurityScheme"
+                    }
+                  },
+                  "envVars": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/$defs/io.kerno.agent.index.EnvVar"
+                    }
+                  }
+                },
+                "required": [
+                  "externalServices",
+                  "securitySchemes",
+                  "envVars"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "type": "object",
+            "properties": {
+              "externalServices": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/$defs/io.kerno.agent.index.ExternalTcpService"
+                }
+              },
+              "securitySchemes": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/$defs/io.kerno.agent.index.HttpSecurityScheme"
+                }
+              },
+              "envVars": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/$defs/io.kerno.agent.index.EnvVar"
+                }
+              }
+            },
+            "required": [
+              "externalServices",
+              "securitySchemes",
+              "envVars"
+            ],
+            "additionalProperties": false
+          }
+        }
+      }
+    }
+  }
+}

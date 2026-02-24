@@ -1,0 +1,334 @@
+{
+    "endpoints": [
+        {
+            "location": {
+                "filePath": "src/routes/api/tags.ts",
+                "startLine": 6,
+                "endLine": 6
+            },
+            "method": "GET",
+            "path": "/"
+        },
+        {
+            "location": {
+                "filePath": "src/routes/api/users.ts",
+                "startLine": 7,
+                "endLine": 7
+            },
+            "method": "POST",
+            "path": "/login"
+        },
+        {
+            "location": {
+                "filePath": "src/routes/api/users.ts",
+                "startLine": 9,
+                "endLine": 9
+            },
+            "method": "POST",
+            "path": "/"
+        },
+        {
+            "location": {
+                "filePath": "src/app.ts",
+                "startLine": 28,
+                "endLine": 30
+            },
+            "method": "GET",
+            "path": "/"
+        },
+        {
+            "location": {
+                "filePath": "src/routes/api/articles.ts",
+                "startLine": 10,
+                "endLine": 15
+            },
+            "method": "GET",
+            "path": "/"
+        },
+        {
+            "location": {
+                "filePath": "src/routes/api/articles.ts",
+                "startLine": 17,
+                "endLine": 22
+            },
+            "method": "GET",
+            "path": "/feed"
+        },
+        {
+            "location": {
+                "filePath": "src/routes/api/articles.ts",
+                "startLine": 24,
+                "endLine": 25
+            },
+            "method": "GET",
+            "path": "/{slug}"
+        },
+        {
+            "location": {
+                "filePath": "src/routes/api/articles.ts",
+                "startLine": 26,
+                "endLine": 31
+            },
+            "method": "POST",
+            "path": "/"
+        },
+        {
+            "location": {
+                "filePath": "src/routes/api/articles.ts",
+                "startLine": 33,
+                "endLine": 38
+            },
+            "method": "PUT",
+            "path": "/{slug}"
+        },
+        {
+            "location": {
+                "filePath": "src/routes/api/articles.ts",
+                "startLine": 40,
+                "endLine": 40
+            },
+            "method": "DELETE",
+            "path": "/{slug}"
+        },
+        {
+            "location": {
+                "filePath": "src/routes/api/articles.ts",
+                "startLine": 42,
+                "endLine": 47
+            },
+            "method": "POST",
+            "path": "/{slug}/comments"
+        },
+        {
+            "location": {
+                "filePath": "src/routes/api/articles.ts",
+                "startLine": 49,
+                "endLine": 49
+            },
+            "method": "GET",
+            "path": "/{slug}/comments"
+        },
+        {
+            "location": {
+                "filePath": "src/routes/api/articles.ts",
+                "startLine": 51,
+                "endLine": 55
+            },
+            "method": "DELETE",
+            "path": "/{slug}/comments/{id}"
+        },
+        {
+            "location": {
+                "filePath": "src/routes/api/articles.ts",
+                "startLine": 57,
+                "endLine": 57
+            },
+            "method": "POST",
+            "path": "/{slug}/favorite"
+        },
+        {
+            "location": {
+                "filePath": "src/routes/api/articles.ts",
+                "startLine": 59,
+                "endLine": 63
+            },
+            "method": "DELETE",
+            "path": "/{slug}/favorite"
+        },
+        {
+            "location": {
+                "filePath": "src/routes/api/user.ts",
+                "startLine": 8,
+                "endLine": 8
+            },
+            "method": "GET",
+            "path": "/"
+        },
+        {
+            "location": {
+                "filePath": "src/routes/api/user.ts",
+                "startLine": 10,
+                "endLine": 10
+            },
+            "method": "PUT",
+            "path": "/"
+        },
+        {
+            "location": {
+                "filePath": "src/routes/api/profiles.ts",
+                "startLine": 7,
+                "endLine": 7
+            },
+            "method": "GET",
+            "path": "/{username}"
+        },
+        {
+            "location": {
+                "filePath": "src/routes/api/profiles.ts",
+                "startLine": 9,
+                "endLine": 9
+            },
+            "method": "POST",
+            "path": "/{username}/follow"
+        },
+        {
+            "location": {
+                "filePath": "src/routes/api/profiles.ts",
+                "startLine": 11,
+                "endLine": 11
+            },
+            "method": "DELETE",
+            "path": "/{username}/follow"
+        }
+    ],
+    "envVars": [
+        {
+            "location": {
+                "filePath": "src/utils/auth/createUserToken.ts",
+                "startLine": 13,
+                "endLine": 17
+            },
+            "key": "JWT_SECRET"
+        },
+        {
+            "location": {
+                "filePath": "prisma/schema.prisma",
+                "startLine": 10,
+                "endLine": 10
+            },
+            "key": "DATABASE_URL"
+        },
+        {
+            "location": {
+                "filePath": "src/server.ts",
+                "startLine": 3,
+                "endLine": 3
+            },
+            "key": "PORT"
+        },
+        {
+            "location": {
+                "filePath": "src/utils/logger.ts",
+                "startLine": 24,
+                "endLine": 24
+            },
+            "key": "NODE_ENV"
+        },
+        {
+            "location": {
+                "filePath": "src/middleware/auth/authenticator.ts",
+                "startLine": 7,
+                "endLine": 28
+            },
+            "key": "JWT_SECRET"
+        }
+    ],
+    "externalServices": [
+        {
+            "location": {
+                "filePath": "src/routes/api/tags.ts",
+                "startLine": 1,
+                "endLine": 6
+            },
+            "serviceName": "express"
+        },
+        {
+            "location": {
+                "filePath": "src/utils/db/comment/commentsGetPrisma.ts",
+                "startLine": 5,
+                "endLine": 12
+            },
+            "serviceName": "prisma"
+        },
+        {
+            "location": {
+                "filePath": "src/controllers/commentsController/createComment.ts",
+                "startLine": 27,
+                "endLine": 35
+            },
+            "serviceName": "Prisma"
+        },
+        {
+            "location": {
+                "filePath": "src/routes/api/profiles.ts",
+                "startLine": 1,
+                "endLine": 1
+            },
+            "serviceName": "express"
+        }
+    ],
+    "basePaths": [
+        {
+            "location": {
+                "filePath": "src/app.ts",
+                "startLine": 18,
+                "endLine": 18
+            },
+            "path": "/api/users"
+        },
+        {
+            "location": {
+                "filePath": "src/app.ts",
+                "startLine": 20,
+                "endLine": 20
+            },
+            "path": "/api/user"
+        },
+        {
+            "location": {
+                "filePath": "src/app.ts",
+                "startLine": 22,
+                "endLine": 22
+            },
+            "path": "/api/profiles"
+        },
+        {
+            "location": {
+                "filePath": "src/app.ts",
+                "startLine": 24,
+                "endLine": 24
+            },
+            "path": "/api/articles"
+        },
+        {
+            "location": {
+                "filePath": "src/app.ts",
+                "startLine": 26,
+                "endLine": 26
+            },
+            "path": "/api/tags"
+        },
+        {
+            "location": {
+                "filePath": "src/app.ts",
+                "startLine": 28,
+                "endLine": 30
+            },
+            "path": "/"
+        },
+        {
+            "location": {
+                "filePath": "src/routes/api/profiles.ts",
+                "startLine": 7,
+                "endLine": 7
+            },
+            "path": "/{username}"
+        },
+        {
+            "location": {
+                "filePath": "src/routes/api/profiles.ts",
+                "startLine": 9,
+                "endLine": 9
+            },
+            "path": "/{username}/follow"
+        },
+        {
+            "location": {
+                "filePath": "src/routes/api/profiles.ts",
+                "startLine": 11,
+                "endLine": 11
+            },
+            "path": "/{username}/follow"
+        }
+    ]
+}

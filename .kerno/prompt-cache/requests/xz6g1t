@@ -1,0 +1,77 @@
+{
+  "response": [
+    {
+      "type": "ai.koog.prompt.message.Message.Assistant",
+      "parts": [
+        {
+          "type": "text",
+          "text": "# Analysis of Security Schemes\n\nBased on the provided context, I'll analyze the application's security mechanisms and provide an OpenAPI v3.0 formatted security schemes section.\n\nHowever, I notice that no actual code context was provided in your message. To give you a comprehensive and accurate answer, I would need to see:\n\n1. Authentication/Authorization middleware or filters\n2. Security configuration files\n3. Controller/Route definitions with security annotations\n4. JWT/OAuth configuration\n5. API gateway configurations\n6. Environment variables or configuration files\n\n## Generic OpenAPI v3.0 Security Schemes Template\n\nSince no code was provided, here's a template showing common security patterns:\n\n```yaml\ncomponents:\n  securitySchemes:\n    BearerAuth:\n      type: http\n      scheme: bearer\n      bearerFormat: JWT\n      description: |\n        JWT Bearer token authentication.\n        Expected claims:\n        - sub: User identifier\n        - roles: Array of user roles (e.g., [\"admin\", \"user\"])\n        - exp: Token expiration timestamp\n        - iat: Issued at timestamp\n        \n    ApiKeyAuth:\n      type: apiKey\n      in: header\n      name: X-API-Key\n      description: |\n        API Key authentication for service-to-service communication.\n        The API key should be included in the X-API-Key header.\n        \n    OAuth2:\n      type: oauth2\n      flows:\n        authorizationCode:\n          authorizationUrl: https://example.com/oauth/authorize\n          tokenUrl: https://example.com/oauth/token\n          scopes:\n            read: Read access to resources\n            write: Write access to resources\n            admin: Administrative access\n      description: |\n        OAuth 2.0 authorization code flow.\n        Expected token claims:\n        - scope: Space-separated list of granted scopes\n        - client_id: OAuth client identifier\n        - user_id: Authenticated user identifier\n\nsecurity:\n  - BearerAuth: []\n```\n\n**Please provide the relevant code files** (security configurations, controllers, middleware, etc.) so I can give you an accurate, application-specific security scheme definition."
+        }
+      ],
+      "metaInfo": {
+        "timestamp": "2026-02-24T13:42:30.293612948Z",
+        "totalTokensCount": 603,
+        "inputTokensCount": 108,
+        "outputTokensCount": 495
+      },
+      "finishReason": "end_turn"
+    }
+  ],
+  "request": {
+    "prompt": {
+      "messages": [
+        {
+          "type": "ai.koog.prompt.message.Message.System",
+          "parts": [
+            {
+              "text": "You are a knowledgeable polyglot engineer and able to understand what external dependencies a software application\nrequires from reading the source files of an application."
+            }
+          ],
+          "metaInfo": {
+            "timestamp": "2026-02-24T13:42:21.229051963Z"
+          }
+        },
+        {
+          "type": "ai.koog.prompt.message.Message.System",
+          "parts": [
+            {
+              "text": "# Relevant Code Context"
+            }
+          ],
+          "metaInfo": {
+            "timestamp": "2026-02-24T13:42:21.23059924Z"
+          }
+        },
+        {
+          "type": "ai.koog.prompt.message.Message.User",
+          "parts": [
+            {
+              "type": "text",
+              "text": "Your task will follow next:"
+            }
+          ],
+          "metaInfo": {
+            "timestamp": "2026-02-24T13:42:21.230850013Z"
+          }
+        },
+        {
+          "type": "ai.koog.prompt.message.Message.User",
+          "parts": [
+            {
+              "type": "text",
+              "text": "# Task\nSpecify the security schemes used by the SUT for securing its end points\n\nRespond with an OpenAPI v3.0 formatted yaml section\nInclude a brief summary on how the application uses the scheme, for example the expected claims on a token for Bearer Auth\n--ANTHROPIC-CACHE--"
+            }
+          ],
+          "metaInfo": {
+            "timestamp": "2026-02-24T13:42:21.23110651Z"
+          }
+        }
+      ],
+      "id": "",
+      "params": {
+        "temperature": 1.0,
+        "maxTokens": 64000
+      }
+    }
+  }
+}

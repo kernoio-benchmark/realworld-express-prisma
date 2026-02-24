@@ -1,0 +1,77 @@
+{
+  "response": [
+    {
+      "type": "ai.koog.prompt.message.Message.Assistant",
+      "parts": [
+        {
+          "type": "text",
+          "text": "```\nDATABASE_URL\nJWT_SECRET\nPORT\nNODE_ENV\n```"
+        }
+      ],
+      "metaInfo": {
+        "timestamp": "2026-02-24T13:42:23.094788891Z",
+        "totalTokensCount": 574,
+        "inputTokensCount": 554,
+        "outputTokensCount": 20
+      },
+      "finishReason": "end_turn"
+    }
+  ],
+  "request": {
+    "prompt": {
+      "messages": [
+        {
+          "type": "ai.koog.prompt.message.Message.System",
+          "parts": [
+            {
+              "text": "You are a knowledgeable polyglot engineer and able to understand what external dependencies a software application\nrequires from reading the source files of an application."
+            }
+          ],
+          "metaInfo": {
+            "timestamp": "2026-02-24T13:42:21.322262558Z"
+          }
+        },
+        {
+          "type": "ai.koog.prompt.message.Message.System",
+          "parts": [
+            {
+              "text": "# Relevant Code Context\n### prisma/schema.prisma\n#### Lines:10-10\n```prisma\n  url      = env(\"DATABASE_URL\") /// Format in env file: postgresql://USER:PASSWORD@HOST:PORT/DATABASE\n```\n### src/middleware/auth/authenticator.ts\n#### Lines:7-28\n```ts\nif (!process.env.JWT_SECRET) {\n  throw new Error(\"JWT_SECRET missing in environment.\");\n}\n\n/**\n * Function that receives a request with possibly an authorization token in the headers and returns this token.\n * @param req Request\n * @returns the token or undefined\n */\nfunction getTokenInHeader(req: Request) {\n  const authorization = req.headers.authorization;\n  if (!authorization) return;\n  if (authorization.split(\" \").length != 2) return;\n  const [tag, token] = authorization.split(\" \");\n  if (tag === \"Token\" || tag === \"Bearer\") return token;\n  return;\n}\n\n// Authenticate is a middleware that will not throw errors, only if user is able to authenticate.\nexport const authenticate = jwt({\n  algorithms: [\"HS256\"],\n  secret: process.env.JWT_SECRET,\n```\n### src/server.ts\n#### Lines:3-3\n```ts\nconst port = process.env.PORT ? parseInt(process.env.PORT) : 3000;\n```\n### src/utils/auth/createUserToken.ts\n#### Lines:13-17\n```ts\n  if (!process.env.JWT_SECRET)\n    throw new Error(\"JWT_SECRET missing in environment.\");\n  const tokenObject = { user: { username: user.username, email: user.email } };\n  const userJSON = JSON.stringify(tokenObject);\n  const token = jwt.sign(userJSON, process.env.JWT_SECRET);\n```\n### src/utils/logger.ts\n#### Lines:24-24\n```ts\nif (process.env.NODE_ENV !== \"production\") {\n```"
+            }
+          ],
+          "metaInfo": {
+            "timestamp": "2026-02-24T13:42:21.324672797Z"
+          }
+        },
+        {
+          "type": "ai.koog.prompt.message.Message.User",
+          "parts": [
+            {
+              "type": "text",
+              "text": "Your task will follow next:"
+            }
+          ],
+          "metaInfo": {
+            "timestamp": "2026-02-24T13:42:21.324687884Z"
+          }
+        },
+        {
+          "type": "ai.koog.prompt.message.Message.User",
+          "parts": [
+            {
+              "type": "text",
+              "text": "# Task\nDetermine which environment variables are for configuring the SUT\n# Desired Outcomes\nReturn in the format <KEY> with one per line with NOTHING ELSE in your output\n--ANTHROPIC-CACHE--"
+            }
+          ],
+          "metaInfo": {
+            "timestamp": "2026-02-24T13:42:21.32470619Z"
+          }
+        }
+      ],
+      "id": "",
+      "params": {
+        "temperature": 1.0,
+        "maxTokens": 64000
+      }
+    }
+  }
+}

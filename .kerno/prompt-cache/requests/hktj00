@@ -1,0 +1,136 @@
+{
+  "response": [
+    {
+      "type": "ai.koog.prompt.message.Message.Assistant",
+      "parts": [
+        {
+          "type": "text",
+          "text": "{\"endpoints\": []}"
+        }
+      ],
+      "metaInfo": {
+        "timestamp": "2026-02-24T13:41:03.939737873Z",
+        "totalTokensCount": 2256,
+        "inputTokensCount": 1276,
+        "outputTokensCount": 980
+      },
+      "finishReason": "stop"
+    }
+  ],
+  "request": {
+    "prompt": {
+      "messages": [
+        {
+          "type": "ai.koog.prompt.message.Message.System",
+          "parts": [
+            {
+              "text": "You are a precise code analyzer. Extract only what is explicitly present in the code or derivable from the file path.\nDo not speculate, infer, or guess about what might exist - only report what you can directly observe.\nWhen uncertain, return empty results rather than guessing.\n"
+            }
+          ],
+          "metaInfo": {
+            "timestamp": "2026-02-24T13:40:48.681723377Z"
+          }
+        },
+        {
+          "type": "ai.koog.prompt.message.Message.User",
+          "parts": [
+            {
+              "type": "text",
+              "text": "# prisma/schema.prisma\nNote: the following text has been prefixed with line numbers and a | which is not part of the original content\n```prisma\n1|// This is your Prisma schema file,\n2|// learn more about it in the docs: https://pris.ly/d/prisma-schema\n3|\n4|generator client {\n5|  provider = \"prisma-client-js\"\n6|}\n7|\n8|datasource db {\n9|  provider = \"postgresql\"\n10|  url      = env(\"DATABASE_URL\") /// Format in env file: postgresql://USER:PASSWORD@HOST:PORT/DATABASE\n11|}\n12|\n13|model User {\n14|  email      String    @unique /// User email for registering and login use.\n15|  username   String    @id /// User internal id.\n16|  password   String /// User password stored in the database.\n17|  bio        String? /// User biographical information.\n18|  image      String? /// Link to the user avatar.\n19|  follows    User[]    @relation(\"UserFollows\") /// List of other users that this one follows.\n20|  followedBy User[]    @relation(\"UserFollows\") /// List of other users that follows this one.\n21|  authored   Article[] @relation(\"Author\") /// List of articles this user has written.\n22|  favorites  Article[] @relation(\"Favorites\") /// List of articles this user has favorited.\n23|  comment    Comment[] @relation(\"Author\") /// List of comments this user has written.\n24|}\n25|\n26|model Article {\n27|  title          String    @unique\n28|  slug           String    @id /// Slug is an uri safe string derived from the title.\n29|  description    String /// Description for SEO of this article.\n30|  body           String /// The main content of the article.\n31|  tagList        Tag[] /// List of tags associated with this article.\n32|  author         User      @relation(\"Author\", fields: [authorUsername], references: [username], onDelete: Cascade) /// User that is the author of this article.\n33|  authorUsername String /// Username of the author of this article.\n34|  favoritedBy    User[]    @relation(\"Favorites\") /// List of users that have favorited this article.\n35|  comments       Comment[] @relation(\"Comments\") /// List of comments of this article.\n36|  createdAt      DateTime  @default(now())\n37|  updatedAt      DateTime  @default(now())\n38|}\n39|\n40|model Comment {\n41|  id             Int      @id @default(autoincrement())\n42|  createdAt      DateTime @default(now())\n43|  updatedAt      DateTime @default(now())\n44|  body           String /// The main content of the comment.\n45|  author         User     @relation(\"Author\", fields: [authorUsername], references: [username], onDelete: Cascade) /// User that is the author of this comment.\n46|  authorUsername String /// Username of the author of this comment.\n47|  Article        Article  @relation(\"Comments\", fields: [articleSlug], references: [slug], onDelete: Cascade) /// Article that this comment belongs to.\n48|  articleSlug    String /// Article slug that this comment belongs to.\n49|}\n50|\n51|model Tag {\n52|  tagName String    @id\n53|  article Article[] /// List of articles that have this tag.\n54|}\n55|\n```"
+            }
+          ],
+          "metaInfo": {
+            "timestamp": "2026-02-24T13:40:48.681956671Z"
+          }
+        },
+        {
+          "type": "ai.koog.prompt.message.Message.User",
+          "parts": [
+            {
+              "type": "text",
+              "text": "# Constraints\nIn the following tasks, do not extract meaning from comments within files\n\n# Task 1: Identify Code Type\nFirst, identify if the attached file is code. If it is not code, return empty lists for all fields.\n\n# Task 2: Extract Endpoints\nIf this is code, identify (if any at all) blocks of code that directly register routes in this application's HTTP server.\nOnly extract endpoints where you can determine the concrete HTTP method and path - do not guess or speculate about what paths might exist.\nDo not extract code that merely creates a server or groups routes without binding a specific path to a handler.\nThese routes must be valid RFC HTTP verbs (GET, POST, PUT, DELETE, PATCH).\nParameterised URL path segments must be expressed in the {id} format. For example, /users/:id/config should be /users/{id}/config, and /users/<userId> should be /users/{userId}.\nIf you cannot confidently determine the path, return an empty list for endpoints.\nThe start and end line must capture the entire syntactic chunk registering the endpoint.\nThis includes the handler code for the endpoint if the line that registers it is immediately followed\nby a function/method/lambda that is the entrypoint for that endpoint when it's called\n\n--ANTHROPIC-CACHE--"
+            }
+          ],
+          "metaInfo": {
+            "timestamp": "2026-02-24T13:40:48.682016754Z"
+          }
+        }
+      ],
+      "id": "",
+      "params": {
+        "temperature": 1.0,
+        "schema": {
+          "type": "ai.koog.prompt.params.LLMParams.Schema.JSON.Standard",
+          "name": "ExtractedEndpoints",
+          "schema": {
+            "$id": "ExtractedEndpoints",
+            "$defs": {
+              "io.kerno.agent.index.EndpointMetadata": {
+                "type": "object",
+                "properties": {
+                  "method": {
+                    "type": "string",
+                    "enum": [
+                      "GET",
+                      "POST",
+                      "PUT",
+                      "DELETE",
+                      "PATCH"
+                    ]
+                  },
+                  "path": {
+                    "type": "string",
+                    "description": "A valid RFC URL path e.g. / or /api/some/end/point"
+                  },
+                  "startLine": {
+                    "type": "integer",
+                    "description": "The first line of code registering this route, ignoring comments"
+                  },
+                  "endLine": {
+                    "type": "integer",
+                    "description": "The last line of code registering this route, ignoring comments"
+                  }
+                },
+                "required": [
+                  "method",
+                  "path",
+                  "startLine",
+                  "endLine"
+                ],
+                "additionalProperties": false
+              },
+              "io.kerno.agent.index.ExtractedEndpoints": {
+                "type": "object",
+                "properties": {
+                  "endpoints": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/$defs/io.kerno.agent.index.EndpointMetadata"
+                    }
+                  }
+                },
+                "required": [
+                  "endpoints"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "type": "object",
+            "properties": {
+              "endpoints": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/$defs/io.kerno.agent.index.EndpointMetadata"
+                }
+              }
+            },
+            "required": [
+              "endpoints"
+            ],
+            "additionalProperties": false
+          }
+        }
+      }
+    }
+  }
+}

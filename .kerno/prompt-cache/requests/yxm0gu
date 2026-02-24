@@ -1,0 +1,77 @@
+{
+  "response": [
+    {
+      "type": "ai.koog.prompt.message.Message.Assistant",
+      "parts": [
+        {
+          "type": "text",
+          "text": "I need to analyze the codebase to identify external service dependencies, but I don't see any code context provided in your message. The section marked \"# Relevant Code Context\" appears to be empty except for the token budget notation.\n\nTo properly identify external service dependencies and their compatible versions, I would need to see:\n\n- Package manager files (package.json, requirements.txt, pom.xml, go.mod, Gemfile, etc.)\n- Configuration files (docker-compose.yml, application.yml, etc.)\n- Source code files that reference external services\n- Documentation or README files\n\nCould you please provide the relevant code files so I can analyze the external service dependencies and specify their compatible versions?"
+        }
+      ],
+      "metaInfo": {
+        "timestamp": "2026-02-24T13:42:27.296129791Z",
+        "totalTokensCount": 334,
+        "inputTokensCount": 181,
+        "outputTokensCount": 153
+      },
+      "finishReason": "end_turn"
+    }
+  ],
+  "request": {
+    "prompt": {
+      "messages": [
+        {
+          "type": "ai.koog.prompt.message.Message.System",
+          "parts": [
+            {
+              "text": "You are a knowledgeable polyglot engineer and able to understand what external dependencies a software application\nrequires from reading the source files of an application."
+            }
+          ],
+          "metaInfo": {
+            "timestamp": "2026-02-24T13:42:23.276071441Z"
+          }
+        },
+        {
+          "type": "ai.koog.prompt.message.Message.System",
+          "parts": [
+            {
+              "text": "# Relevant Code Context"
+            }
+          ],
+          "metaInfo": {
+            "timestamp": "2026-02-24T13:42:23.276141064Z"
+          }
+        },
+        {
+          "type": "ai.koog.prompt.message.Message.User",
+          "parts": [
+            {
+              "type": "text",
+              "text": "Your task will follow next:"
+            }
+          ],
+          "metaInfo": {
+            "timestamp": "2026-02-24T13:42:23.276146789Z"
+          }
+        },
+        {
+          "type": "ai.koog.prompt.message.Message.User",
+          "parts": [
+            {
+              "type": "text",
+              "text": "# Task\nSpecify the most recent server version for every external service that is compatible with this project\nIf there is a more modern version you can pick that would still work with this application at runtime then you MUST pick that\nNormalize external services names that effectively the same\nExclude external services that do not have a free version that could in local environments\n# Desired Outcomes\nReturn in the format <external_service>:<semver_version> with one per line with NOTHING ELSE in your output. Use full versions where available (i.e. X.Y.Z instead of just X.Y)\n--ANTHROPIC-CACHE--"
+            }
+          ],
+          "metaInfo": {
+            "timestamp": "2026-02-24T13:42:23.276169973Z"
+          }
+        }
+      ],
+      "id": "",
+      "params": {
+        "temperature": 1.0,
+        "maxTokens": 64000
+      }
+    }
+  }
+}
