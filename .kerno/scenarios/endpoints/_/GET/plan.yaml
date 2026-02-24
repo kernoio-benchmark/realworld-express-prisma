@@ -1,64 +1,26 @@
-add:
+remove:
 - id: get_tags_success_with_data
-  description: Verify GET /api/tags returns 200 OK with list of tags when tags exist
-    in database
+  path: /home/ec2-user/aicore/examples/benchmarks/typescript/realworld-express-prisma/.kerno/scenarios/endpoints/_/GET/get_tags_success_with_data
+- id: get_tags_empty_list
+  path: /home/ec2-user/aicore/examples/benchmarks/typescript/realworld-express-prisma/.kerno/scenarios/endpoints/_/GET/get_tags_empty_list
+add:
+- id: get_root_endpoint
+  description: Verify GET / endpoint response (discovering actual behavior as no implementation
+    found in code context)
   subject:
     type: Endpoint
     method: GET
-    path: /api/tags
+    path: /
   steps:
-  - id: setup_values
-    description: Generate random tag names for test repeatability
-    action:
-      type: Unimplemented
-      intended_type: Values
-  - id: setup_tags
-    description: Clean up any existing test tags and insert test tags into database
-    action:
-      type: Unimplemented
-      intended_type: ExecuteSql
-  - id: call_get_tags
-    description: Call GET /api/tags endpoint without authentication
+  - id: call_root
+    description: Call GET / endpoint to discover what it returns
     action:
       type: Unimplemented
       intended_type: CallHttp
   - id: assert_response
-    description: Assert 200 OK with JSON array containing the test tags
+    description: Assert the response from GET / endpoint
     action:
       type: Unimplemented
       intended_type: HttpAssert
-  - id: cleanup
-    description: Remove test tags from database
-    action:
-      type: Unimplemented
-      intended_type: ExecuteSql
-- id: get_tags_empty_list
-  description: Verify GET /api/tags returns 200 OK with empty array when no tags exist
-  subject:
-    type: Endpoint
-    method: GET
-    path: /api/tags
-  steps:
-  - id: cleanup_all_tags
-    description: Remove all tags from database to ensure empty state
-    action:
-      type: Unimplemented
-      intended_type: ExecuteSql
-  - id: call_get_tags
-    description: Call GET /api/tags endpoint without authentication
-    action:
-      type: Unimplemented
-      intended_type: CallHttp
-  - id: assert_empty_response
-    description: Assert 200 OK with empty tags array
-    action:
-      type: Unimplemented
-      intended_type: HttpAssert
-  - id: restore_tags
-    description: Restore any tags that may have existed before test (optional cleanup)
-    action:
-      type: Unimplemented
-      intended_type: ExecuteSql
 untouched: []
 check: []
-remove: []
