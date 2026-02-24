@@ -1,0 +1,168 @@
+add:
+- id: delete_article_success
+  description: Authenticated user successfully deletes their own article
+  subject:
+    type: Endpoint
+    method: DELETE
+    path: /api/articles/{slug}
+  steps:
+  - id: generate_values
+    description: Generate random values for test data
+    action:
+      type: Unimplemented
+      intended_type: Values
+  - id: create_user
+    description: Create a user via registration endpoint
+    action:
+      type: Unimplemented
+      intended_type: CallHttp
+  - id: create_article
+    description: Create an article for the user to delete
+    action:
+      type: Unimplemented
+      intended_type: CallHttp
+  - id: generate_token
+    description: Generate JWT token for the user
+    action:
+      type: Unimplemented
+      intended_type: GenerateJwt
+  - id: delete_article
+    description: Delete the article using authenticated request
+    action:
+      type: Unimplemented
+      intended_type: CallHttp
+  - id: assert_response
+    description: Assert successful deletion with 200 status and article data returned
+    action:
+      type: Unimplemented
+      intended_type: HttpAssert
+  - id: cleanup
+    description: Clean up test user data
+    action:
+      type: Unimplemented
+      intended_type: ExecuteSql
+- id: delete_article_unauthenticated
+  description: Request without authentication returns 401 Unauthorized
+  subject:
+    type: Endpoint
+    method: DELETE
+    path: /api/articles/{slug}
+  steps:
+  - id: generate_values
+    description: Generate random values for test data
+    action:
+      type: Unimplemented
+      intended_type: Values
+  - id: create_user
+    description: Create a user to create an article
+    action:
+      type: Unimplemented
+      intended_type: CallHttp
+  - id: create_article
+    description: Create an article
+    action:
+      type: Unimplemented
+      intended_type: CallHttp
+  - id: delete_article_no_auth
+    description: Attempt to delete article without authentication token
+    action:
+      type: Unimplemented
+      intended_type: CallHttp
+  - id: assert_unauthorized
+    description: Assert 401 Unauthorized response
+    action:
+      type: Unimplemented
+      intended_type: HttpAssert
+  - id: cleanup
+    description: Clean up test data
+    action:
+      type: Unimplemented
+      intended_type: ExecuteSql
+- id: delete_nonexistent_article
+  description: Request to delete non-existent article returns error
+  subject:
+    type: Endpoint
+    method: DELETE
+    path: /api/articles/{slug}
+  steps:
+  - id: generate_values
+    description: Generate random values including non-existent slug
+    action:
+      type: Unimplemented
+      intended_type: Values
+  - id: create_user
+    description: Create a user for authentication
+    action:
+      type: Unimplemented
+      intended_type: CallHttp
+  - id: generate_token
+    description: Generate JWT token for the user
+    action:
+      type: Unimplemented
+      intended_type: GenerateJwt
+  - id: delete_nonexistent
+    description: Attempt to delete article with non-existent slug
+    action:
+      type: Unimplemented
+      intended_type: CallHttp
+  - id: assert_not_found
+    description: Assert appropriate error response (likely 404 or 500)
+    action:
+      type: Unimplemented
+      intended_type: HttpAssert
+  - id: cleanup
+    description: Clean up test user
+    action:
+      type: Unimplemented
+      intended_type: ExecuteSql
+- id: delete_other_user_article
+  description: User attempts to delete another user's article to test authorization
+  subject:
+    type: Endpoint
+    method: DELETE
+    path: /api/articles/{slug}
+  steps:
+  - id: generate_values
+    description: Generate random values for two users
+    action:
+      type: Unimplemented
+      intended_type: Values
+  - id: create_author
+    description: Create the article author user
+    action:
+      type: Unimplemented
+      intended_type: CallHttp
+  - id: create_article
+    description: Create an article owned by the author
+    action:
+      type: Unimplemented
+      intended_type: CallHttp
+  - id: create_other_user
+    description: Create a different user who will attempt deletion
+    action:
+      type: Unimplemented
+      intended_type: CallHttp
+  - id: generate_token
+    description: Generate JWT token for the other user (not the author)
+    action:
+      type: Unimplemented
+      intended_type: GenerateJwt
+  - id: delete_attempt
+    description: Attempt to delete article with different user's token
+    action:
+      type: Unimplemented
+      intended_type: CallHttp
+  - id: assert_response
+    description: Assert response (may be 403 if auth check exists, or 200 if bug allows
+      deletion)
+    action:
+      type: Unimplemented
+      intended_type: HttpAssert
+  - id: cleanup
+    description: Clean up test users and article data
+    action:
+      type: Unimplemented
+      intended_type: ExecuteSql
+untouched: []
+check: []
+remove: []
