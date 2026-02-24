@@ -1,0 +1,141 @@
+untouched: []
+check: []
+remove: []
+add:
+- id: get_profile_existing_authenticated
+  description: Authenticated user requests an existing profile - should return 200
+    with profile data including following status
+  subject:
+    type: Endpoint
+    method: GET
+    path: /api/profiles/{username}
+  steps:
+  - id: generate_test_data
+    description: Generate test values for profile user and requesting user
+    action:
+      type: Unimplemented
+      intended_type: Values
+  - id: setup_users
+    description: Create profile user and requesting user in database
+    action:
+      type: Unimplemented
+      intended_type: ExecuteSql
+  - id: generate_token
+    description: Generate JWT token for the requesting user
+    action:
+      type: Unimplemented
+      intended_type: GenerateJwt
+  - id: call_get_profile
+    description: Call GET /api/profiles/{username} with authentication
+    action:
+      type: Unimplemented
+      intended_type: CallHttp
+  - id: assert_response
+    description: Assert 200 response with profile data including username, bio, image,
+      and following status
+    action:
+      type: Unimplemented
+      intended_type: HttpAssert
+  - id: cleanup
+    description: Remove test users from database
+    action:
+      type: Unimplemented
+      intended_type: ExecuteSql
+- id: get_profile_existing_unauthenticated
+  description: Unauthenticated request for an existing profile - should return 200
+    with profile data and following false
+  subject:
+    type: Endpoint
+    method: GET
+    path: /api/profiles/{username}
+  steps:
+  - id: generate_test_data
+    description: Generate test values for profile user
+    action:
+      type: Unimplemented
+      intended_type: Values
+  - id: setup_user
+    description: Create profile user in database
+    action:
+      type: Unimplemented
+      intended_type: ExecuteSql
+  - id: call_get_profile
+    description: Call GET /api/profiles/{username} without authentication
+    action:
+      type: Unimplemented
+      intended_type: CallHttp
+  - id: assert_response
+    description: Assert 200 response with profile data and following set to false
+    action:
+      type: Unimplemented
+      intended_type: HttpAssert
+  - id: cleanup
+    description: Remove test user from database
+    action:
+      type: Unimplemented
+      intended_type: ExecuteSql
+- id: get_profile_nonexistent
+  description: Request for a non-existent profile - should return 404
+  subject:
+    type: Endpoint
+    method: GET
+    path: /api/profiles/{username}
+  steps:
+  - id: generate_test_data
+    description: Generate random username that does not exist
+    action:
+      type: Unimplemented
+      intended_type: Values
+  - id: cleanup_preemptive
+    description: Ensure the test username does not exist in database
+    action:
+      type: Unimplemented
+      intended_type: ExecuteSql
+  - id: call_get_profile
+    description: Call GET /api/profiles/{nonexistent_username}
+    action:
+      type: Unimplemented
+      intended_type: CallHttp
+  - id: assert_response
+    description: Assert 404 response for non-existent profile
+    action:
+      type: Unimplemented
+      intended_type: HttpAssert
+- id: get_profile_following_status_true
+  description: Authenticated user requests profile of someone they follow - should
+    return 200 with following true
+  subject:
+    type: Endpoint
+    method: GET
+    path: /api/profiles/{username}
+  steps:
+  - id: generate_test_data
+    description: Generate test values for both users
+    action:
+      type: Unimplemented
+      intended_type: Values
+  - id: setup_users_with_follow
+    description: Create both users and establish follow relationship in database
+    action:
+      type: Unimplemented
+      intended_type: ExecuteSql
+  - id: generate_token
+    description: Generate JWT token for the requesting user
+    action:
+      type: Unimplemented
+      intended_type: GenerateJwt
+  - id: call_get_profile
+    description: Call GET /api/profiles/{username} with authentication
+    action:
+      type: Unimplemented
+      intended_type: CallHttp
+  - id: assert_response
+    description: Assert 200 response with following set to true
+    action:
+      type: Unimplemented
+      intended_type: HttpAssert
+  - id: cleanup
+    description: Remove test users and follow relationship from database
+    action:
+      type: Unimplemented
+      intended_type: ExecuteSql
