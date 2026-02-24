@@ -1,0 +1,264 @@
+untouched: []
+check: []
+remove: []
+add:
+- id: create_comment_authenticated_user_returns_201
+  description: Authenticated user creates a comment on an existing article and receives
+    201 Created with the comment details
+  subject:
+    type: Endpoint
+    method: POST
+    path: /api/articles/{slug}/comments
+  steps:
+  - id: generate_test_data
+    description: Generate random values for test data
+    action:
+      type: Unimplemented
+      intended_type: Values
+  - id: setup_user_and_article
+    description: Create a test user and article in the database for testing
+    action:
+      type: Unimplemented
+      intended_type: ExecuteSql
+  - id: generate_token
+    description: Generate JWT token for the authenticated user
+    action:
+      type: Unimplemented
+      intended_type: GenerateJwt
+  - id: create_comment_request
+    description: POST request to create a comment on the article
+    action:
+      type: Unimplemented
+      intended_type: CallHttp
+  - id: assert_response
+    description: Assert 201 Created response with comment details
+    action:
+      type: Unimplemented
+      intended_type: HttpAssert
+  - id: cleanup
+    description: Clean up test data from database
+    action:
+      type: Unimplemented
+      intended_type: ExecuteSql
+- id: create_comment_without_auth_returns_401
+  description: Request without authentication token returns 401 Unauthorized
+  subject:
+    type: Endpoint
+    method: POST
+    path: /api/articles/{slug}/comments
+  steps:
+  - id: generate_test_data
+    description: Generate random values for test data
+    action:
+      type: Unimplemented
+      intended_type: Values
+  - id: setup_article
+    description: Create a test article in the database
+    action:
+      type: Unimplemented
+      intended_type: ExecuteSql
+  - id: create_comment_request
+    description: POST request without authentication token
+    action:
+      type: Unimplemented
+      intended_type: CallHttp
+  - id: assert_response
+    description: Assert 401 Unauthorized response
+    action:
+      type: Unimplemented
+      intended_type: HttpAssert
+  - id: cleanup
+    description: Clean up test data from database
+    action:
+      type: Unimplemented
+      intended_type: ExecuteSql
+- id: create_comment_user_not_found_returns_401
+  description: Request with valid JWT but user not found in database returns 401 Unauthorized
+    (line 28 in createComment.ts)
+  subject:
+    type: Endpoint
+    method: POST
+    path: /api/articles/{slug}/comments
+  steps:
+  - id: generate_test_data
+    description: Generate random values for test data
+    action:
+      type: Unimplemented
+      intended_type: Values
+  - id: setup_article
+    description: Create a test article in the database
+    action:
+      type: Unimplemented
+      intended_type: ExecuteSql
+  - id: generate_token
+    description: Generate JWT token for a non-existent user
+    action:
+      type: Unimplemented
+      intended_type: GenerateJwt
+  - id: create_comment_request
+    description: POST request with JWT for non-existent user
+    action:
+      type: Unimplemented
+      intended_type: CallHttp
+  - id: assert_response
+    description: Assert 401 Unauthorized response
+    action:
+      type: Unimplemented
+      intended_type: HttpAssert
+  - id: cleanup
+    description: Clean up test data from database
+    action:
+      type: Unimplemented
+      intended_type: ExecuteSql
+- id: create_comment_missing_comment_object_returns_400
+  description: Request missing the comment object in body returns 400 Bad Request
+    (commentCreateValidator lines 16-20)
+  subject:
+    type: Endpoint
+    method: POST
+    path: /api/articles/{slug}/comments
+  steps:
+  - id: generate_test_data
+    description: Generate random values for test data
+    action:
+      type: Unimplemented
+      intended_type: Values
+  - id: setup_user_and_article
+    description: Create a test user and article in the database
+    action:
+      type: Unimplemented
+      intended_type: ExecuteSql
+  - id: generate_token
+    description: Generate JWT token for the authenticated user
+    action:
+      type: Unimplemented
+      intended_type: GenerateJwt
+  - id: create_comment_request
+    description: POST request without comment object in body
+    action:
+      type: Unimplemented
+      intended_type: CallHttp
+  - id: assert_response
+    description: Assert 400 Bad Request with error message
+    action:
+      type: Unimplemented
+      intended_type: HttpAssert
+  - id: cleanup
+    description: Clean up test data from database
+    action:
+      type: Unimplemented
+      intended_type: ExecuteSql
+- id: create_comment_invalid_comment_type_returns_400
+  description: Request with comment as non-object (e.g. string or array) returns 400
+    Bad Request (commentCreateValidator lines 21-24)
+  subject:
+    type: Endpoint
+    method: POST
+    path: /api/articles/{slug}/comments
+  steps:
+  - id: generate_test_data
+    description: Generate random values for test data
+    action:
+      type: Unimplemented
+      intended_type: Values
+  - id: setup_user_and_article
+    description: Create a test user and article in the database
+    action:
+      type: Unimplemented
+      intended_type: ExecuteSql
+  - id: generate_token
+    description: Generate JWT token for the authenticated user
+    action:
+      type: Unimplemented
+      intended_type: GenerateJwt
+  - id: create_comment_request
+    description: POST request with comment as a string instead of object
+    action:
+      type: Unimplemented
+      intended_type: CallHttp
+  - id: assert_response
+    description: Assert 400 Bad Request with error message
+    action:
+      type: Unimplemented
+      intended_type: HttpAssert
+  - id: cleanup
+    description: Clean up test data from database
+    action:
+      type: Unimplemented
+      intended_type: ExecuteSql
+- id: create_comment_missing_body_field_returns_400
+  description: Request missing the body field in comment object returns 400 Bad Request
+    (commentCreateValidator lines 25-31)
+  subject:
+    type: Endpoint
+    method: POST
+    path: /api/articles/{slug}/comments
+  steps:
+  - id: generate_test_data
+    description: Generate random values for test data
+    action:
+      type: Unimplemented
+      intended_type: Values
+  - id: setup_user_and_article
+    description: Create a test user and article in the database
+    action:
+      type: Unimplemented
+      intended_type: ExecuteSql
+  - id: generate_token
+    description: Generate JWT token for the authenticated user
+    action:
+      type: Unimplemented
+      intended_type: GenerateJwt
+  - id: create_comment_request
+    description: POST request with comment object but no body field
+    action:
+      type: Unimplemented
+      intended_type: CallHttp
+  - id: assert_response
+    description: Assert 400 Bad Request with error message
+    action:
+      type: Unimplemented
+      intended_type: HttpAssert
+  - id: cleanup
+    description: Clean up test data from database
+    action:
+      type: Unimplemented
+      intended_type: ExecuteSql
+- id: create_comment_body_not_string_returns_400
+  description: Request with comment.body as non-string type returns 400 Bad Request
+    (commentCreateValidator lines 25-31)
+  subject:
+    type: Endpoint
+    method: POST
+    path: /api/articles/{slug}/comments
+  steps:
+  - id: generate_test_data
+    description: Generate random values for test data
+    action:
+      type: Unimplemented
+      intended_type: Values
+  - id: setup_user_and_article
+    description: Create a test user and article in the database
+    action:
+      type: Unimplemented
+      intended_type: ExecuteSql
+  - id: generate_token
+    description: Generate JWT token for the authenticated user
+    action:
+      type: Unimplemented
+      intended_type: GenerateJwt
+  - id: create_comment_request
+    description: POST request with comment.body as a number instead of string
+    action:
+      type: Unimplemented
+      intended_type: CallHttp
+  - id: assert_response
+    description: Assert 400 Bad Request with error message
+    action:
+      type: Unimplemented
+      intended_type: HttpAssert
+  - id: cleanup
+    description: Clean up test data from database
+    action:
+      type: Unimplemented
+      intended_type: ExecuteSql
