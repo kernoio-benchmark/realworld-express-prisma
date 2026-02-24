@@ -1,0 +1,299 @@
+add:
+- id: create_article_success_with_tags
+  description: Authenticated user creates article with valid data including tags returns
+    201
+  subject:
+    type: Endpoint
+    method: POST
+    path: /api/articles
+  steps:
+  - id: generate_values
+    description: Generate test data for article creation
+    action:
+      type: Unimplemented
+      intended_type: Values
+  - id: create_user
+    description: Create test user via registration endpoint
+    action:
+      type: Unimplemented
+      intended_type: CallHttp
+  - id: generate_token
+    description: Generate JWT token for authenticated user
+    action:
+      type: Unimplemented
+      intended_type: GenerateJwt
+  - id: create_article
+    description: POST request to create article with title, description, body, and
+      tagList
+    action:
+      type: Unimplemented
+      intended_type: CallHttp
+  - id: assert_response
+    description: Verify 201 status and response contains article with slug, tags,
+      author info
+    action:
+      type: Unimplemented
+      intended_type: HttpAssert
+  - id: cleanup_article
+    description: Delete created article from database
+    action:
+      type: Unimplemented
+      intended_type: ExecuteSql
+  - id: cleanup_user
+    description: Delete test user from database
+    action:
+      type: Unimplemented
+      intended_type: ExecuteSql
+- id: create_article_success_without_tags
+  description: Authenticated user creates article without tags returns 201
+  subject:
+    type: Endpoint
+    method: POST
+    path: /api/articles
+  steps:
+  - id: generate_values
+    description: Generate test data for article creation without tagList
+    action:
+      type: Unimplemented
+      intended_type: Values
+  - id: create_user
+    description: Create test user via registration endpoint
+    action:
+      type: Unimplemented
+      intended_type: CallHttp
+  - id: generate_token
+    description: Generate JWT token for authenticated user
+    action:
+      type: Unimplemented
+      intended_type: GenerateJwt
+  - id: create_article
+    description: POST request to create article with only title, description, body
+      (no tagList)
+    action:
+      type: Unimplemented
+      intended_type: CallHttp
+  - id: assert_response
+    description: Verify 201 status and response contains article without tags
+    action:
+      type: Unimplemented
+      intended_type: HttpAssert
+  - id: cleanup_article
+    description: Delete created article from database
+    action:
+      type: Unimplemented
+      intended_type: ExecuteSql
+  - id: cleanup_user
+    description: Delete test user from database
+    action:
+      type: Unimplemented
+      intended_type: ExecuteSql
+- id: create_article_unauthorized_no_token
+  description: Request without authentication token returns 401
+  subject:
+    type: Endpoint
+    method: POST
+    path: /api/articles
+  steps:
+  - id: generate_values
+    description: Generate test data for article
+    action:
+      type: Unimplemented
+      intended_type: Values
+  - id: create_article_no_auth
+    description: POST request to create article without Authorization header
+    action:
+      type: Unimplemented
+      intended_type: CallHttp
+  - id: assert_unauthorized
+    description: Verify 401 Unauthorized status
+    action:
+      type: Unimplemented
+      intended_type: HttpAssert
+- id: create_article_missing_title
+  description: Request missing required title field returns 400
+  subject:
+    type: Endpoint
+    method: POST
+    path: /api/articles
+  steps:
+  - id: generate_values
+    description: Generate test data without title
+    action:
+      type: Unimplemented
+      intended_type: Values
+  - id: create_user
+    description: Create test user via registration endpoint
+    action:
+      type: Unimplemented
+      intended_type: CallHttp
+  - id: generate_token
+    description: Generate JWT token for authenticated user
+    action:
+      type: Unimplemented
+      intended_type: GenerateJwt
+  - id: create_article_no_title
+    description: POST request with description and body but missing title
+    action:
+      type: Unimplemented
+      intended_type: CallHttp
+  - id: assert_bad_request
+    description: Verify 400 status with error indicating title is required
+    action:
+      type: Unimplemented
+      intended_type: HttpAssert
+  - id: cleanup_user
+    description: Delete test user from database
+    action:
+      type: Unimplemented
+      intended_type: ExecuteSql
+- id: create_article_missing_description
+  description: Request missing required description field returns 400
+  subject:
+    type: Endpoint
+    method: POST
+    path: /api/articles
+  steps:
+  - id: generate_values
+    description: Generate test data without description
+    action:
+      type: Unimplemented
+      intended_type: Values
+  - id: create_user
+    description: Create test user via registration endpoint
+    action:
+      type: Unimplemented
+      intended_type: CallHttp
+  - id: generate_token
+    description: Generate JWT token for authenticated user
+    action:
+      type: Unimplemented
+      intended_type: GenerateJwt
+  - id: create_article_no_description
+    description: POST request with title and body but missing description
+    action:
+      type: Unimplemented
+      intended_type: CallHttp
+  - id: assert_bad_request
+    description: Verify 400 status with error indicating description is required
+    action:
+      type: Unimplemented
+      intended_type: HttpAssert
+  - id: cleanup_user
+    description: Delete test user from database
+    action:
+      type: Unimplemented
+      intended_type: ExecuteSql
+- id: create_article_missing_body
+  description: Request missing required body field returns 400
+  subject:
+    type: Endpoint
+    method: POST
+    path: /api/articles
+  steps:
+  - id: generate_values
+    description: Generate test data without body
+    action:
+      type: Unimplemented
+      intended_type: Values
+  - id: create_user
+    description: Create test user via registration endpoint
+    action:
+      type: Unimplemented
+      intended_type: CallHttp
+  - id: generate_token
+    description: Generate JWT token for authenticated user
+    action:
+      type: Unimplemented
+      intended_type: GenerateJwt
+  - id: create_article_no_body
+    description: POST request with title and description but missing body
+    action:
+      type: Unimplemented
+      intended_type: CallHttp
+  - id: assert_bad_request
+    description: Verify 400 status with error indicating body is required
+    action:
+      type: Unimplemented
+      intended_type: HttpAssert
+  - id: cleanup_user
+    description: Delete test user from database
+    action:
+      type: Unimplemented
+      intended_type: ExecuteSql
+- id: create_article_empty_title
+  description: Request with empty string for title returns 400
+  subject:
+    type: Endpoint
+    method: POST
+    path: /api/articles
+  steps:
+  - id: generate_values
+    description: Generate test data with empty title
+    action:
+      type: Unimplemented
+      intended_type: Values
+  - id: create_user
+    description: Create test user via registration endpoint
+    action:
+      type: Unimplemented
+      intended_type: CallHttp
+  - id: generate_token
+    description: Generate JWT token for authenticated user
+    action:
+      type: Unimplemented
+      intended_type: GenerateJwt
+  - id: create_article_empty_title
+    description: POST request with title set to empty string
+    action:
+      type: Unimplemented
+      intended_type: CallHttp
+  - id: assert_bad_request
+    description: Verify 400 status with error indicating title cannot be empty
+    action:
+      type: Unimplemented
+      intended_type: HttpAssert
+  - id: cleanup_user
+    description: Delete test user from database
+    action:
+      type: Unimplemented
+      intended_type: ExecuteSql
+- id: create_article_invalid_taglist_type
+  description: Request with non-array tagList returns 400
+  subject:
+    type: Endpoint
+    method: POST
+    path: /api/articles
+  steps:
+  - id: generate_values
+    description: Generate test data with tagList as string instead of array
+    action:
+      type: Unimplemented
+      intended_type: Values
+  - id: create_user
+    description: Create test user via registration endpoint
+    action:
+      type: Unimplemented
+      intended_type: CallHttp
+  - id: generate_token
+    description: Generate JWT token for authenticated user
+    action:
+      type: Unimplemented
+      intended_type: GenerateJwt
+  - id: create_article_invalid_taglist
+    description: POST request with tagList as non-array value
+    action:
+      type: Unimplemented
+      intended_type: CallHttp
+  - id: assert_bad_request
+    description: Verify 400 status with error indicating tagList must be array
+    action:
+      type: Unimplemented
+      intended_type: HttpAssert
+  - id: cleanup_user
+    description: Delete test user from database
+    action:
+      type: Unimplemented
+      intended_type: ExecuteSql
+untouched: []
+check: []
+remove: []
