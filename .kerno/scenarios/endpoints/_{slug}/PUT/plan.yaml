@@ -1,0 +1,167 @@
+add:
+- id: update_article_success
+  description: Successfully update an existing article with valid authentication and
+    valid fields
+  subject:
+    type: Endpoint
+    method: PUT
+    path: /api/articles/{slug}
+  steps:
+  - id: generate_test_data
+    description: Generate random test data for article creation and update
+    action:
+      type: Unimplemented
+      intended_type: Values
+  - id: register_user
+    description: Register a user to get authentication
+    action:
+      type: Unimplemented
+      intended_type: CallHttp
+  - id: create_article
+    description: Create an article to update
+    action:
+      type: Unimplemented
+      intended_type: CallHttp
+  - id: update_article
+    description: Update the article with new title, description, and body
+    action:
+      type: Unimplemented
+      intended_type: CallHttp
+  - id: assert_update_response
+    description: Verify 200 OK response with updated article data
+    action:
+      type: Unimplemented
+      intended_type: HttpAssert
+  - id: cleanup
+    description: Delete the test article from database
+    action:
+      type: Unimplemented
+      intended_type: ExecuteSql
+- id: update_article_non_existent
+  description: Attempt to update a non-existent article returns error from Prisma
+  subject:
+    type: Endpoint
+    method: PUT
+    path: /api/articles/{slug}
+  steps:
+  - id: generate_test_data
+    description: Generate random test data
+    action:
+      type: Unimplemented
+      intended_type: Values
+  - id: register_user
+    description: Register a user to get authentication
+    action:
+      type: Unimplemented
+      intended_type: CallHttp
+  - id: update_non_existent
+    description: Attempt to update an article with a non-existent slug
+    action:
+      type: Unimplemented
+      intended_type: CallHttp
+  - id: assert_error_response
+    description: Verify error response (likely 500 due to Prisma error on non-existent
+      record)
+    action:
+      type: Unimplemented
+      intended_type: HttpAssert
+- id: update_article_unauthenticated
+  description: Attempt to update an article without authentication returns 401
+  subject:
+    type: Endpoint
+    method: PUT
+    path: /api/articles/{slug}
+  steps:
+  - id: generate_test_data
+    description: Generate test slug
+    action:
+      type: Unimplemented
+      intended_type: Values
+  - id: update_without_auth
+    description: Send PUT request without Authorization header
+    action:
+      type: Unimplemented
+      intended_type: CallHttp
+  - id: assert_unauthorized
+    description: Verify 401 Unauthorized response
+    action:
+      type: Unimplemented
+      intended_type: HttpAssert
+- id: update_article_invalid_body
+  description: Attempt to update an article with invalid body fields returns 400
+  subject:
+    type: Endpoint
+    method: PUT
+    path: /api/articles/{slug}
+  steps:
+  - id: generate_test_data
+    description: Generate random test data
+    action:
+      type: Unimplemented
+      intended_type: Values
+  - id: register_user
+    description: Register a user to get authentication
+    action:
+      type: Unimplemented
+      intended_type: CallHttp
+  - id: create_article
+    description: Create an article to attempt updating
+    action:
+      type: Unimplemented
+      intended_type: CallHttp
+  - id: update_with_invalid_body
+    description: Send PUT request with non-string fields (e.g. title as number)
+    action:
+      type: Unimplemented
+      intended_type: CallHttp
+  - id: assert_validation_error
+    description: Verify 400 Bad Request with validation errors
+    action:
+      type: Unimplemented
+      intended_type: HttpAssert
+  - id: cleanup
+    description: Delete the test article from database
+    action:
+      type: Unimplemented
+      intended_type: ExecuteSql
+- id: update_article_partial_fields
+  description: Update article with only some fields (title, description, or body)
+    should succeed
+  subject:
+    type: Endpoint
+    method: PUT
+    path: /api/articles/{slug}
+  steps:
+  - id: generate_test_data
+    description: Generate random test data for article creation and partial update
+    action:
+      type: Unimplemented
+      intended_type: Values
+  - id: register_user
+    description: Register a user to get authentication
+    action:
+      type: Unimplemented
+      intended_type: CallHttp
+  - id: create_article
+    description: Create an article to update
+    action:
+      type: Unimplemented
+      intended_type: CallHttp
+  - id: update_partial
+    description: Update the article with only title field
+    action:
+      type: Unimplemented
+      intended_type: CallHttp
+  - id: assert_partial_update_response
+    description: Verify 200 OK with updated title and original description/body preserved
+    action:
+      type: Unimplemented
+      intended_type: HttpAssert
+  - id: cleanup
+    description: Delete the test article from database
+    action:
+      type: Unimplemented
+      intended_type: ExecuteSql
+untouched: []
+check: []
+remove: []
