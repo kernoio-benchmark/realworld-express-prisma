@@ -1,0 +1,198 @@
+add:
+- id: delete_comment_success_by_author
+  description: |
+    Authenticated user successfully deletes their own comment.
+    Tests the happy path where the comment author deletes their comment.
+  subject:
+    type: Endpoint
+    method: DELETE
+    path: /api/articles/{slug}/comments/{id}
+  steps:
+  - id: test_data
+    description: Generate random test data for article and comment
+    action:
+      type: Unimplemented
+      intended_type: Values
+  - id: setup_user
+    description: Create test user via registration endpoint
+    action:
+      type: Unimplemented
+      intended_type: CallHttp
+  - id: setup_article
+    description: Create test article for the comment
+    action:
+      type: Unimplemented
+      intended_type: CallHttp
+  - id: setup_comment
+    description: Create test comment on the article
+    action:
+      type: Unimplemented
+      intended_type: CallHttp
+  - id: generate_token
+    description: Generate JWT for the comment author
+    action:
+      type: Unimplemented
+      intended_type: GenerateJwt
+  - id: delete_comment_request
+    description: Send DELETE request to remove the comment
+    action:
+      type: Unimplemented
+      intended_type: CallHttp
+  - id: assert_response
+    description: Verify successful deletion with 200 status and comment data returned
+    action:
+      type: Unimplemented
+      intended_type: HttpAssert
+  - id: cleanup_article
+    description: Clean up test article (cascades comment deletion if needed)
+    action:
+      type: Unimplemented
+      intended_type: CallHttp
+- id: delete_comment_without_authentication
+  description: |
+    Request to delete comment without authentication returns 401.
+    Tests that the authenticate middleware properly rejects unauthenticated requests.
+  subject:
+    type: Endpoint
+    method: DELETE
+    path: /api/articles/{slug}/comments/{id}
+  steps:
+  - id: test_data
+    description: Generate random test data
+    action:
+      type: Unimplemented
+      intended_type: Values
+  - id: setup_user
+    description: Create test user for article/comment setup
+    action:
+      type: Unimplemented
+      intended_type: CallHttp
+  - id: setup_article
+    description: Create test article
+    action:
+      type: Unimplemented
+      intended_type: CallHttp
+  - id: setup_comment
+    description: Create test comment
+    action:
+      type: Unimplemented
+      intended_type: CallHttp
+  - id: delete_without_auth
+    description: Send DELETE request without Authorization header
+    action:
+      type: Unimplemented
+      intended_type: CallHttp
+  - id: assert_unauthorized
+    description: Verify 401 Unauthorized response
+    action:
+      type: Unimplemented
+      intended_type: HttpAssert
+  - id: cleanup_article
+    description: Clean up test data
+    action:
+      type: Unimplemented
+      intended_type: CallHttp
+- id: delete_comment_by_non_author
+  description: |
+    Authenticated user attempts to delete another user's comment.
+    The code uses findFirstOrThrow with authorUsername check, which will throw an error
+    if the authenticated user is not the author. This tests authorization enforcement.
+  subject:
+    type: Endpoint
+    method: DELETE
+    path: /api/articles/{slug}/comments/{id}
+  steps:
+  - id: test_data
+    description: Generate random test data for two users
+    action:
+      type: Unimplemented
+      intended_type: Values
+  - id: setup_author
+    description: Create comment author user
+    action:
+      type: Unimplemented
+      intended_type: CallHttp
+  - id: setup_other_user
+    description: Create different user who will attempt deletion
+    action:
+      type: Unimplemented
+      intended_type: CallHttp
+  - id: setup_article
+    description: Create test article by author
+    action:
+      type: Unimplemented
+      intended_type: CallHttp
+  - id: setup_comment
+    description: Create comment by author
+    action:
+      type: Unimplemented
+      intended_type: CallHttp
+  - id: generate_token_other
+    description: Generate JWT for the non-author user
+    action:
+      type: Unimplemented
+      intended_type: GenerateJwt
+  - id: delete_by_non_author
+    description: Attempt to delete comment as non-author
+    action:
+      type: Unimplemented
+      intended_type: CallHttp
+  - id: assert_forbidden
+    description: |
+      Verify error response (likely 404 or 500 due to findFirstOrThrow).
+      Code has authorization bug - should return 403 but throws error instead.
+    action:
+      type: Unimplemented
+      intended_type: HttpAssert
+  - id: cleanup_article
+    description: Clean up test data
+    action:
+      type: Unimplemented
+      intended_type: CallHttp
+- id: delete_nonexistent_comment
+  description: |
+    Authenticated user attempts to delete a comment that doesn't exist.
+    The findFirstOrThrow will fail when comment ID is not found.
+  subject:
+    type: Endpoint
+    method: DELETE
+    path: /api/articles/{slug}/comments/{id}
+  steps:
+  - id: test_data
+    description: Generate random test data including non-existent comment ID
+    action:
+      type: Unimplemented
+      intended_type: Values
+  - id: setup_user
+    description: Create test user
+    action:
+      type: Unimplemented
+      intended_type: CallHttp
+  - id: setup_article
+    description: Create test article
+    action:
+      type: Unimplemented
+      intended_type: CallHttp
+  - id: generate_token
+    description: Generate JWT for user
+    action:
+      type: Unimplemented
+      intended_type: GenerateJwt
+  - id: delete_nonexistent
+    description: Attempt to delete comment with non-existent ID
+    action:
+      type: Unimplemented
+      intended_type: CallHttp
+  - id: assert_not_found
+    description: Verify 404 or error response when comment not found
+    action:
+      type: Unimplemented
+      intended_type: HttpAssert
+  - id: cleanup_article
+    description: Clean up test data
+    action:
+      type: Unimplemented
+      intended_type: CallHttp
+untouched: []
+check: []
+remove: []
