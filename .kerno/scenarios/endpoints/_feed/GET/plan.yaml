@@ -1,0 +1,164 @@
+add:
+- id: get_feed_authenticated_user_returns_200_with_articles
+  description: Authenticated user retrieves their article feed successfully
+  subject:
+    type: Endpoint
+    method: GET
+    path: /api/articles/feed
+  steps:
+  - id: generate_test_data
+    description: Generate test values for users and articles
+    action:
+      type: Unimplemented
+      intended_type: Values
+  - id: create_users
+    description: Create test users - one who will follow another
+    action:
+      type: Unimplemented
+      intended_type: ExecuteSql
+  - id: create_articles
+    description: Create articles authored by the followed user
+    action:
+      type: Unimplemented
+      intended_type: ExecuteSql
+  - id: create_follow_relationship
+    description: Establish follow relationship between users
+    action:
+      type: Unimplemented
+      intended_type: ExecuteSql
+  - id: generate_token
+    description: Generate JWT for the follower user
+    action:
+      type: Unimplemented
+      intended_type: GenerateJwt
+  - id: get_feed
+    description: Call GET /api/articles/feed with authentication
+    action:
+      type: Unimplemented
+      intended_type: CallHttp
+  - id: assert_response
+    description: Verify 200 response with articles from followed users
+    action:
+      type: Unimplemented
+      intended_type: HttpAssert
+  - id: cleanup
+    description: Remove test data
+    action:
+      type: Unimplemented
+      intended_type: ExecuteSql
+- id: get_feed_without_authentication_returns_401
+  description: Request to feed endpoint without authentication returns 401
+  subject:
+    type: Endpoint
+    method: GET
+    path: /api/articles/feed
+  steps:
+  - id: get_feed_unauthenticated
+    description: Call GET /api/articles/feed without Authorization header
+    action:
+      type: Unimplemented
+      intended_type: CallHttp
+  - id: assert_unauthorized
+    description: Verify 401 Unauthorized response
+    action:
+      type: Unimplemented
+      intended_type: HttpAssert
+- id: get_feed_with_invalid_token_returns_401
+  description: Request to feed endpoint with invalid JWT returns 401
+  subject:
+    type: Endpoint
+    method: GET
+    path: /api/articles/feed
+  steps:
+  - id: get_feed_invalid_token
+    description: Call GET /api/articles/feed with malformed token
+    action:
+      type: Unimplemented
+      intended_type: CallHttp
+  - id: assert_unauthorized
+    description: Verify 401 Unauthorized response
+    action:
+      type: Unimplemented
+      intended_type: HttpAssert
+- id: get_feed_with_pagination_returns_200_with_limited_articles
+  description: Authenticated user retrieves feed with limit and offset parameters
+  subject:
+    type: Endpoint
+    method: GET
+    path: /api/articles/feed
+  steps:
+  - id: generate_test_data
+    description: Generate test values for users and multiple articles
+    action:
+      type: Unimplemented
+      intended_type: Values
+  - id: create_users
+    description: Create test users with follow relationship
+    action:
+      type: Unimplemented
+      intended_type: ExecuteSql
+  - id: create_multiple_articles
+    description: Create multiple articles to test pagination
+    action:
+      type: Unimplemented
+      intended_type: ExecuteSql
+  - id: generate_token
+    description: Generate JWT for the follower user
+    action:
+      type: Unimplemented
+      intended_type: GenerateJwt
+  - id: get_feed_with_limit
+    description: Call GET /api/articles/feed with limit and offset query params
+    action:
+      type: Unimplemented
+      intended_type: CallHttp
+  - id: assert_response
+    description: Verify 200 response with limited number of articles
+    action:
+      type: Unimplemented
+      intended_type: HttpAssert
+  - id: cleanup
+    description: Remove test data
+    action:
+      type: Unimplemented
+      intended_type: ExecuteSql
+- id: get_feed_user_not_following_anyone_returns_empty_array
+  description: Authenticated user who follows no one gets empty feed
+  subject:
+    type: Endpoint
+    method: GET
+    path: /api/articles/feed
+  steps:
+  - id: generate_test_data
+    description: Generate test values for user
+    action:
+      type: Unimplemented
+      intended_type: Values
+  - id: create_user
+    description: Create test user with no follows
+    action:
+      type: Unimplemented
+      intended_type: ExecuteSql
+  - id: generate_token
+    description: Generate JWT for the user
+    action:
+      type: Unimplemented
+      intended_type: GenerateJwt
+  - id: get_feed
+    description: Call GET /api/articles/feed
+    action:
+      type: Unimplemented
+      intended_type: CallHttp
+  - id: assert_response
+    description: Verify 200 response with empty articles array
+    action:
+      type: Unimplemented
+      intended_type: HttpAssert
+  - id: cleanup
+    description: Remove test user
+    action:
+      type: Unimplemented
+      intended_type: ExecuteSql
+untouched: []
+check: []
+remove: []
