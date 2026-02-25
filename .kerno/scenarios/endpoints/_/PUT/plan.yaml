@@ -1,0 +1,179 @@
+add:
+- id: put_user_successful_update
+  description: |
+    Authenticated user successfully updates their profile with valid fields.
+    Tests the happy path where a user with valid JWT token updates one or more
+    optional fields (email, username, password, image, bio) and receives updated profile.
+  subject:
+    type: Endpoint
+    method: PUT
+    path: /api/user
+  steps:
+  - id: generate_values
+    description: Generate test data for user registration and update
+    action:
+      type: Unimplemented
+      intended_type: Values
+  - id: register_user
+    description: Create a user via registration endpoint to get a real user account
+    action:
+      type: Unimplemented
+      intended_type: CallHttp
+  - id: update_user
+    description: Call PUT /api/user with valid auth token and update fields
+    action:
+      type: Unimplemented
+      intended_type: CallHttp
+  - id: assert_update_response
+    description: Assert 200 OK response with updated user profile containing new values
+    action:
+      type: Unimplemented
+      intended_type: HttpAssert
+  - id: cleanup_user
+    description: Delete test user from database
+    action:
+      type: Unimplemented
+      intended_type: ExecuteSql
+- id: put_user_without_authentication
+  description: |
+    Request to update user profile without authentication token returns 401.
+    Tests authentication requirement by sending PUT request without Authorization header.
+  subject:
+    type: Endpoint
+    method: PUT
+    path: /api/user
+  steps:
+  - id: call_without_auth
+    description: Call PUT /api/user without Authorization header
+    action:
+      type: Unimplemented
+      intended_type: CallHttp
+  - id: assert_unauthorized
+    description: Assert 401 Unauthorized response
+    action:
+      type: Unimplemented
+      intended_type: HttpAssert
+- id: put_user_with_invalid_token
+  description: |
+    Request with malformed or invalid JWT token returns 401.
+    Tests that invalid authentication tokens are properly rejected.
+  subject:
+    type: Endpoint
+    method: PUT
+    path: /api/user
+  steps:
+  - id: call_with_bad_token
+    description: Call PUT /api/user with invalid JWT token
+    action:
+      type: Unimplemented
+      intended_type: CallHttp
+  - id: assert_unauthorized
+    description: Assert 401 Unauthorized response
+    action:
+      type: Unimplemented
+      intended_type: HttpAssert
+- id: put_user_missing_user_property
+  description: |
+    Request without 'user' property in body returns 400.
+    Tests validation that requires the request body to have a 'user' object property.
+  subject:
+    type: Endpoint
+    method: PUT
+    path: /api/user
+  steps:
+  - id: generate_values
+    description: Generate test data for user registration
+    action:
+      type: Unimplemented
+      intended_type: Values
+  - id: register_user
+    description: Create a user to get valid auth token
+    action:
+      type: Unimplemented
+      intended_type: CallHttp
+  - id: call_without_user_property
+    description: Call PUT /api/user with body missing 'user' property
+    action:
+      type: Unimplemented
+      intended_type: CallHttp
+  - id: assert_bad_request
+    description: Assert 400 Bad Request with validation error
+    action:
+      type: Unimplemented
+      intended_type: HttpAssert
+  - id: cleanup_user
+    description: Delete test user from database
+    action:
+      type: Unimplemented
+      intended_type: ExecuteSql
+- id: put_user_invalid_field_type
+  description: |
+    Request with non-object 'user' property returns 400.
+    Tests validation that ensures 'user' must be an object, not a string/number/array.
+  subject:
+    type: Endpoint
+    method: PUT
+    path: /api/user
+  steps:
+  - id: generate_values
+    description: Generate test data for user registration
+    action:
+      type: Unimplemented
+      intended_type: Values
+  - id: register_user
+    description: Create a user to get valid auth token
+    action:
+      type: Unimplemented
+      intended_type: CallHttp
+  - id: call_with_invalid_user_type
+    description: Call PUT /api/user with 'user' as string instead of object
+    action:
+      type: Unimplemented
+      intended_type: CallHttp
+  - id: assert_bad_request
+    description: Assert 400 Bad Request with validation error
+    action:
+      type: Unimplemented
+      intended_type: HttpAssert
+  - id: cleanup_user
+    description: Delete test user from database
+    action:
+      type: Unimplemented
+      intended_type: ExecuteSql
+- id: put_user_unaccepted_field
+  description: |
+    Request with fields not in accepted list returns 400.
+    Tests validation rejecting fields other than email, username, password, image, bio.
+  subject:
+    type: Endpoint
+    method: PUT
+    path: /api/user
+  steps:
+  - id: generate_values
+    description: Generate test data for user registration
+    action:
+      type: Unimplemented
+      intended_type: Values
+  - id: register_user
+    description: Create a user to get valid auth token
+    action:
+      type: Unimplemented
+      intended_type: CallHttp
+  - id: call_with_unaccepted_field
+    description: Call PUT /api/user with an unaccepted field like 'role' or 'admin'
+    action:
+      type: Unimplemented
+      intended_type: CallHttp
+  - id: assert_bad_request
+    description: Assert 400 Bad Request with validation error about unaccepted field
+    action:
+      type: Unimplemented
+      intended_type: HttpAssert
+  - id: cleanup_user
+    description: Delete test user from database
+    action:
+      type: Unimplemented
+      intended_type: ExecuteSql
+untouched: []
+check: []
+remove: []
