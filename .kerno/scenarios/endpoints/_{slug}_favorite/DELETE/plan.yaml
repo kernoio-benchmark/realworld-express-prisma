@@ -1,0 +1,185 @@
+add:
+- id: unfavorite_article_success
+  description: Authenticated user successfully unfavorites an article they previously
+    favorited
+  subject:
+    type: Endpoint
+    method: DELETE
+    path: /api/articles/{slug}/favorite
+  steps:
+  - id: generate_test_data
+    description: Generate unique identifiers for test user and article
+    action:
+      type: Unimplemented
+      intended_type: Values
+  - id: setup_user
+    description: Create test user via registration endpoint
+    action:
+      type: Unimplemented
+      intended_type: CallHttp
+  - id: setup_article
+    description: Create test article for the user to unfavorite
+    action:
+      type: Unimplemented
+      intended_type: CallHttp
+  - id: favorite_article
+    description: First favorite the article so we can unfavorite it
+    action:
+      type: Unimplemented
+      intended_type: CallHttp
+  - id: generate_token
+    description: Generate JWT token for authenticated request
+    action:
+      type: Unimplemented
+      intended_type: GenerateJwt
+  - id: unfavorite_article
+    description: Execute DELETE request to unfavorite the article
+    action:
+      type: Unimplemented
+      intended_type: CallHttp
+  - id: assert_unfavorite_response
+    description: Verify 200 response with favorited=false and decremented favoritesCount
+    action:
+      type: Unimplemented
+      intended_type: HttpAssert
+  - id: cleanup_article
+    description: Delete the test article
+    action:
+      type: Unimplemented
+      intended_type: CallHttp
+  - id: cleanup_user
+    description: Clean up test user from database
+    action:
+      type: Unimplemented
+      intended_type: ExecuteSql
+- id: unfavorite_article_unauthenticated
+  description: Request without authentication returns 401 Unauthorized
+  subject:
+    type: Endpoint
+    method: DELETE
+    path: /api/articles/{slug}/favorite
+  steps:
+  - id: generate_test_data
+    description: Generate unique identifiers for test data
+    action:
+      type: Unimplemented
+      intended_type: Values
+  - id: setup_user
+    description: Create test user and article
+    action:
+      type: Unimplemented
+      intended_type: CallHttp
+  - id: setup_article
+    description: Create test article
+    action:
+      type: Unimplemented
+      intended_type: CallHttp
+  - id: unfavorite_without_auth
+    description: Execute DELETE request without authentication token
+    action:
+      type: Unimplemented
+      intended_type: CallHttp
+  - id: assert_unauthorized
+    description: Verify 401 Unauthorized response
+    action:
+      type: Unimplemented
+      intended_type: HttpAssert
+  - id: cleanup_article
+    description: Delete the test article
+    action:
+      type: Unimplemented
+      intended_type: CallHttp
+  - id: cleanup_user
+    description: Clean up test user from database
+    action:
+      type: Unimplemented
+      intended_type: ExecuteSql
+- id: unfavorite_article_not_found
+  description: Request to unfavorite non-existent article returns 404 Not Found
+  subject:
+    type: Endpoint
+    method: DELETE
+    path: /api/articles/{slug}/favorite
+  steps:
+  - id: generate_test_data
+    description: Generate unique identifiers including non-existent slug
+    action:
+      type: Unimplemented
+      intended_type: Values
+  - id: setup_user
+    description: Create test user for authentication
+    action:
+      type: Unimplemented
+      intended_type: CallHttp
+  - id: generate_token
+    description: Generate JWT token for authenticated request
+    action:
+      type: Unimplemented
+      intended_type: GenerateJwt
+  - id: unfavorite_nonexistent_article
+    description: Execute DELETE request to unfavorite non-existent article
+    action:
+      type: Unimplemented
+      intended_type: CallHttp
+  - id: assert_not_found
+    description: Verify 404 Not Found response
+    action:
+      type: Unimplemented
+      intended_type: HttpAssert
+  - id: cleanup_user
+    description: Clean up test user from database
+    action:
+      type: Unimplemented
+      intended_type: ExecuteSql
+- id: unfavorite_article_not_previously_favorited
+  description: Authenticated user unfavorites an article they had not previously favorited
+    (edge case - should succeed based on Prisma disconnect behavior)
+  subject:
+    type: Endpoint
+    method: DELETE
+    path: /api/articles/{slug}/favorite
+  steps:
+  - id: generate_test_data
+    description: Generate unique identifiers for test user and article
+    action:
+      type: Unimplemented
+      intended_type: Values
+  - id: setup_user
+    description: Create test user via registration endpoint
+    action:
+      type: Unimplemented
+      intended_type: CallHttp
+  - id: setup_article
+    description: Create test article (not favorited)
+    action:
+      type: Unimplemented
+      intended_type: CallHttp
+  - id: generate_token
+    description: Generate JWT token for authenticated request
+    action:
+      type: Unimplemented
+      intended_type: GenerateJwt
+  - id: unfavorite_not_favorited_article
+    description: Execute DELETE request to unfavorite article that was never favorited
+    action:
+      type: Unimplemented
+      intended_type: CallHttp
+  - id: assert_response
+    description: Verify response (likely 200 with favorited=false based on Prisma
+      disconnect behavior)
+    action:
+      type: Unimplemented
+      intended_type: HttpAssert
+  - id: cleanup_article
+    description: Delete the test article
+    action:
+      type: Unimplemented
+      intended_type: CallHttp
+  - id: cleanup_user
+    description: Clean up test user from database
+    action:
+      type: Unimplemented
+      intended_type: ExecuteSql
+untouched: []
+check: []
+remove: []
