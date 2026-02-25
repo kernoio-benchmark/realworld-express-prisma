@@ -1,0 +1,205 @@
+add:
+- id: login_with_valid_credentials_returns_200_with_token
+  description: User logs in with valid email and password, receives 200 OK with user
+    object containing JWT token
+  subject:
+    type: Endpoint
+    method: POST
+    path: /api/users/login
+  steps:
+  - id: generate_test_data
+    description: Generate random email and static password for test user
+    action:
+      type: Unimplemented
+      intended_type: Values
+  - id: setup_test_user
+    description: Create test user in database with hashed password
+    action:
+      type: Unimplemented
+      intended_type: ExecuteSql
+  - id: call_login
+    description: POST to /api/users/login with valid credentials
+    action:
+      type: Unimplemented
+      intended_type: CallHttp
+  - id: assert_response
+    description: Assert 200 OK response with user object containing token, email,
+      username, bio, image
+    action:
+      type: Unimplemented
+      intended_type: HttpAssert
+  - id: cleanup
+    description: Delete test user from database
+    action:
+      type: Unimplemented
+      intended_type: ExecuteSql
+- id: login_with_nonexistent_email_returns_404
+  description: User attempts login with email that doesn't exist in database, receives
+    404 Not Found
+  subject:
+    type: Endpoint
+    method: POST
+    path: /api/users/login
+  steps:
+  - id: generate_test_data
+    description: Generate random non-existent email and password
+    action:
+      type: Unimplemented
+      intended_type: Values
+  - id: call_login
+    description: POST to /api/users/login with non-existent email
+    action:
+      type: Unimplemented
+      intended_type: CallHttp
+  - id: assert_response
+    description: Assert 404 Not Found response
+    action:
+      type: Unimplemented
+      intended_type: HttpAssert
+- id: login_with_incorrect_password_returns_403
+  description: User attempts login with correct email but wrong password, receives
+    403 Forbidden
+  subject:
+    type: Endpoint
+    method: POST
+    path: /api/users/login
+  steps:
+  - id: generate_test_data
+    description: Generate random email and two different passwords
+    action:
+      type: Unimplemented
+      intended_type: Values
+  - id: setup_test_user
+    description: Create test user with first password
+    action:
+      type: Unimplemented
+      intended_type: ExecuteSql
+  - id: call_login
+    description: POST to /api/users/login with correct email but wrong password
+    action:
+      type: Unimplemented
+      intended_type: CallHttp
+  - id: assert_response
+    description: Assert 403 Forbidden response
+    action:
+      type: Unimplemented
+      intended_type: HttpAssert
+  - id: cleanup
+    description: Delete test user from database
+    action:
+      type: Unimplemented
+      intended_type: ExecuteSql
+- id: login_missing_email_returns_400
+  description: Request missing email field returns 400 Bad Request with validation
+    error
+  subject:
+    type: Endpoint
+    method: POST
+    path: /api/users/login
+  steps:
+  - id: generate_test_data
+    description: Generate test password only
+    action:
+      type: Unimplemented
+      intended_type: Values
+  - id: call_login
+    description: POST to /api/users/login without email field
+    action:
+      type: Unimplemented
+      intended_type: CallHttp
+  - id: assert_response
+    description: Assert 400 Bad Request with error indicating email is required
+    action:
+      type: Unimplemented
+      intended_type: HttpAssert
+- id: login_missing_password_returns_400
+  description: Request missing password field returns 400 Bad Request with validation
+    error
+  subject:
+    type: Endpoint
+    method: POST
+    path: /api/users/login
+  steps:
+  - id: generate_test_data
+    description: Generate test email only
+    action:
+      type: Unimplemented
+      intended_type: Values
+  - id: call_login
+    description: POST to /api/users/login without password field
+    action:
+      type: Unimplemented
+      intended_type: CallHttp
+  - id: assert_response
+    description: Assert 400 Bad Request with error indicating password is required
+    action:
+      type: Unimplemented
+      intended_type: HttpAssert
+- id: login_with_non_string_email_returns_400
+  description: Request with non-string email type returns 400 Bad Request with validation
+    error
+  subject:
+    type: Endpoint
+    method: POST
+    path: /api/users/login
+  steps:
+  - id: generate_test_data
+    description: Generate test password
+    action:
+      type: Unimplemented
+      intended_type: Values
+  - id: call_login
+    description: POST to /api/users/login with numeric email value
+    action:
+      type: Unimplemented
+      intended_type: CallHttp
+  - id: assert_response
+    description: Assert 400 Bad Request with error indicating email must be string
+    action:
+      type: Unimplemented
+      intended_type: HttpAssert
+- id: login_with_non_string_password_returns_400
+  description: Request with non-string password type returns 400 Bad Request with
+    validation error
+  subject:
+    type: Endpoint
+    method: POST
+    path: /api/users/login
+  steps:
+  - id: generate_test_data
+    description: Generate test email
+    action:
+      type: Unimplemented
+      intended_type: Values
+  - id: call_login
+    description: POST to /api/users/login with numeric password value
+    action:
+      type: Unimplemented
+      intended_type: CallHttp
+  - id: assert_response
+    description: Assert 400 Bad Request with error indicating password must be string
+    action:
+      type: Unimplemented
+      intended_type: HttpAssert
+- id: login_missing_user_object_returns_400
+  description: Request missing user wrapper object returns 400 Bad Request with validation
+    error
+  subject:
+    type: Endpoint
+    method: POST
+    path: /api/users/login
+  steps:
+  - id: call_login
+    description: POST to /api/users/login with body missing user object wrapper
+    action:
+      type: Unimplemented
+      intended_type: CallHttp
+  - id: assert_response
+    description: Assert 400 Bad Request with error indicating user object must be
+      defined
+    action:
+      type: Unimplemented
+      intended_type: HttpAssert
+untouched: []
+check: []
+remove: []
