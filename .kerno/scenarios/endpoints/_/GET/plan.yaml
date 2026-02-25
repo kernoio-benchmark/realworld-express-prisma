@@ -3,24 +3,28 @@ remove:
   path: /home/ec2-user/aicore/examples/benchmarks/typescript/realworld-express-prisma/.kerno/scenarios/endpoints/_/GET/get_tags_success_with_data
 - id: get_tags_empty_list
   path: /home/ec2-user/aicore/examples/benchmarks/typescript/realworld-express-prisma/.kerno/scenarios/endpoints/_/GET/get_tags_empty_list
+untouched: []
+check: []
 add:
-- id: get_root_endpoint
-  description: Verify GET / endpoint response (discovering actual behavior as no implementation
-    found in code context)
+- id: get_root_simple_response
+  description: |
+    Verify GET / returns a successful response without authentication.
+    Based on common patterns, root endpoints typically return health checks or basic info.
+    This scenario discovers the actual behavior of the root endpoint.
   subject:
     type: Endpoint
     method: GET
     path: /
   steps:
-  - id: call_root
-    description: Call GET / endpoint to discover what it returns
+  - id: call_root_endpoint
+    description: Call GET / endpoint without authentication to verify it returns a
+      response
     action:
       type: Unimplemented
       intended_type: CallHttp
-  - id: assert_response
-    description: Assert the response from GET / endpoint
+  - id: assert_root_response
+    description: Assert the response is successful (expecting 200 OK or 404 if no
+      root handler exists)
     action:
       type: Unimplemented
       intended_type: HttpAssert
-untouched: []
-check: []
