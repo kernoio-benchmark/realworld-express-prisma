@@ -1,0 +1,141 @@
+untouched: []
+check: []
+remove: []
+add:
+- id: get_existing_profile_without_auth
+  description: Retrieve an existing user profile without authentication - should return
+    200 with following=false
+  subject:
+    type: Endpoint
+    method: GET
+    path: /api/profiles/{username}
+  steps:
+  - id: generate_test_data
+    description: Generate test data for profile user
+    action:
+      type: Unimplemented
+      intended_type: Values
+  - id: setup_profile_user
+    description: Create a user in the database to retrieve their profile
+    action:
+      type: Unimplemented
+      intended_type: ExecuteSql
+  - id: call_get_profile
+    description: Call GET /api/profiles/{username} without authentication
+    action:
+      type: Unimplemented
+      intended_type: CallHttp
+  - id: assert_response
+    description: Assert 200 OK with profile data and following=false
+    action:
+      type: Unimplemented
+      intended_type: HttpAssert
+  - id: cleanup
+    description: Remove test user from database
+    action:
+      type: Unimplemented
+      intended_type: ExecuteSql
+- id: get_existing_profile_with_auth_following
+  description: Retrieve an existing user profile with authentication where current
+    user follows the profile - should return 200 with following=true
+  subject:
+    type: Endpoint
+    method: GET
+    path: /api/profiles/{username}
+  steps:
+  - id: generate_test_data
+    description: Generate test data for both users
+    action:
+      type: Unimplemented
+      intended_type: Values
+  - id: setup_users
+    description: Create current user and profile user, establish following relationship
+    action:
+      type: Unimplemented
+      intended_type: ExecuteSql
+  - id: generate_token
+    description: Generate JWT for the current user
+    action:
+      type: Unimplemented
+      intended_type: GenerateJwt
+  - id: call_get_profile
+    description: Call GET /api/profiles/{username} with authentication
+    action:
+      type: Unimplemented
+      intended_type: CallHttp
+  - id: assert_response
+    description: Assert 200 OK with profile data and following=true
+    action:
+      type: Unimplemented
+      intended_type: HttpAssert
+  - id: cleanup
+    description: Remove test users from database
+    action:
+      type: Unimplemented
+      intended_type: ExecuteSql
+- id: get_existing_profile_with_auth_not_following
+  description: Retrieve an existing user profile with authentication where current
+    user does not follow the profile - should return 200 with following=false
+  subject:
+    type: Endpoint
+    method: GET
+    path: /api/profiles/{username}
+  steps:
+  - id: generate_test_data
+    description: Generate test data for both users
+    action:
+      type: Unimplemented
+      intended_type: Values
+  - id: setup_users
+    description: Create current user and profile user without following relationship
+    action:
+      type: Unimplemented
+      intended_type: ExecuteSql
+  - id: generate_token
+    description: Generate JWT for the current user
+    action:
+      type: Unimplemented
+      intended_type: GenerateJwt
+  - id: call_get_profile
+    description: Call GET /api/profiles/{username} with authentication
+    action:
+      type: Unimplemented
+      intended_type: CallHttp
+  - id: assert_response
+    description: Assert 200 OK with profile data and following=false
+    action:
+      type: Unimplemented
+      intended_type: HttpAssert
+  - id: cleanup
+    description: Remove test users from database
+    action:
+      type: Unimplemented
+      intended_type: ExecuteSql
+- id: get_non_existent_profile
+  description: Attempt to retrieve a non-existent user profile - should return 404
+    Not Found
+  subject:
+    type: Endpoint
+    method: GET
+    path: /api/profiles/{username}
+  steps:
+  - id: generate_test_data
+    description: Generate random username that doesn't exist
+    action:
+      type: Unimplemented
+      intended_type: Values
+  - id: cleanup_defensive
+    description: Defensively ensure the username doesn't exist in database
+    action:
+      type: Unimplemented
+      intended_type: ExecuteSql
+  - id: call_get_profile
+    description: Call GET /api/profiles/{username} for non-existent user
+    action:
+      type: Unimplemented
+      intended_type: CallHttp
+  - id: assert_response
+    description: Assert 404 Not Found
+    action:
+      type: Unimplemented
+      intended_type: HttpAssert
