@@ -1,0 +1,157 @@
+add:
+- id: favorite_article_with_valid_auth
+  description: User with valid authentication successfully favorites an existing article
+  subject:
+    type: Endpoint
+    method: POST
+    path: /api/articles/{slug}/favorite
+  steps:
+  - id: values
+    description: Generate test data for user and article
+    action:
+      type: Unimplemented
+      intended_type: Values
+  - id: setup_user
+    description: Create a test user in the database
+    action:
+      type: Unimplemented
+      intended_type: ExecuteSql
+  - id: setup_article
+    description: Create a test article in the database
+    action:
+      type: Unimplemented
+      intended_type: ExecuteSql
+  - id: generate_token
+    description: Generate JWT token for the test user
+    action:
+      type: Unimplemented
+      intended_type: GenerateJwt
+  - id: favorite_article
+    description: Call POST /api/articles/{slug}/favorite with valid token
+    action:
+      type: Unimplemented
+      intended_type: CallHttp
+  - id: assert_response
+    description: Assert 200 OK response with article marked as favorited
+    action:
+      type: Unimplemented
+      intended_type: HttpAssert
+  - id: cleanup
+    description: Remove test data from database
+    action:
+      type: Unimplemented
+      intended_type: ExecuteSql
+- id: favorite_article_without_auth
+  description: Request without authentication token returns 401 Unauthorized
+  subject:
+    type: Endpoint
+    method: POST
+    path: /api/articles/{slug}/favorite
+  steps:
+  - id: values
+    description: Generate test data for article slug
+    action:
+      type: Unimplemented
+      intended_type: Values
+  - id: setup_article
+    description: Create a test article in the database
+    action:
+      type: Unimplemented
+      intended_type: ExecuteSql
+  - id: favorite_article
+    description: Call POST /api/articles/{slug}/favorite without authentication
+    action:
+      type: Unimplemented
+      intended_type: CallHttp
+  - id: assert_response
+    description: Assert 401 Unauthorized response
+    action:
+      type: Unimplemented
+      intended_type: HttpAssert
+  - id: cleanup
+    description: Remove test article from database
+    action:
+      type: Unimplemented
+      intended_type: ExecuteSql
+- id: favorite_nonexistent_article
+  description: Request to favorite non-existent article returns 404 Not Found
+  subject:
+    type: Endpoint
+    method: POST
+    path: /api/articles/{slug}/favorite
+  steps:
+  - id: values
+    description: Generate test data for user and non-existent slug
+    action:
+      type: Unimplemented
+      intended_type: Values
+  - id: setup_user
+    description: Create a test user in the database
+    action:
+      type: Unimplemented
+      intended_type: ExecuteSql
+  - id: generate_token
+    description: Generate JWT token for the test user
+    action:
+      type: Unimplemented
+      intended_type: GenerateJwt
+  - id: favorite_article
+    description: Call POST /api/articles/{slug}/favorite with non-existent slug
+    action:
+      type: Unimplemented
+      intended_type: CallHttp
+  - id: assert_response
+    description: Assert 404 Not Found response
+    action:
+      type: Unimplemented
+      intended_type: HttpAssert
+  - id: cleanup
+    description: Remove test user from database
+    action:
+      type: Unimplemented
+      intended_type: ExecuteSql
+- id: favorite_already_favorited_article
+  description: User favorites an article that is already favorited (idempotency check)
+  subject:
+    type: Endpoint
+    method: POST
+    path: /api/articles/{slug}/favorite
+  steps:
+  - id: values
+    description: Generate test data for user and article
+    action:
+      type: Unimplemented
+      intended_type: Values
+  - id: setup_user
+    description: Create a test user in the database
+    action:
+      type: Unimplemented
+      intended_type: ExecuteSql
+  - id: setup_article
+    description: Create a test article and mark it as already favorited by user
+    action:
+      type: Unimplemented
+      intended_type: ExecuteSql
+  - id: generate_token
+    description: Generate JWT token for the test user
+    action:
+      type: Unimplemented
+      intended_type: GenerateJwt
+  - id: favorite_article
+    description: Call POST /api/articles/{slug}/favorite on already favorited article
+    action:
+      type: Unimplemented
+      intended_type: CallHttp
+  - id: assert_response
+    description: Assert 200 OK response with article still favorited
+    action:
+      type: Unimplemented
+      intended_type: HttpAssert
+  - id: cleanup
+    description: Remove test data from database
+    action:
+      type: Unimplemented
+      intended_type: ExecuteSql
+untouched: []
+check: []
+remove: []
